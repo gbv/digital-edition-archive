@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MyCoReWebPage>
+<MyCoReWebPage>
+
+    <section title="Neuen TEI Abzug einspielen" xml:lang="de">
+        <h1>Neuen TEI Abzug einspielen</h1>
+
+        <import-tei-snapshot project="blumenbach" />
+
+    </section>
+    <meta>
+        <log date="2023-08-14" time="11:47" lastEditor="Sebastian Hofmann" />
+    </meta>
+</MyCoReWebPage>

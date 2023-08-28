@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyCoReWebPage>
+  <section title="Einfache Suche über alle Publikationen" xml:lang="de" />
+
+  <section title="Simple search in all publications" xml:lang="en" />
+
+  <section xml:lang="all" xmlns:xed="http://www.mycore.de/xeditor">
+    <xed:form class="form-horizontal" role="form">
+      <xed:source uri="searchInput:{$id}" />
+      <xed:cancel url="{$WebApplicationBaseURL}"/>
+
+      <xed:bind xpath="query">
+        <xed:bind xpath="@mask" default="content/search/simple.xed" />
+        <xed:bind xpath="sortBy/field">
+          <xed:bind xpath="@name" default="created" />
+          <xed:bind xpath="@order" default="ascending" />
+        </xed:bind>
+
+        <xed:bind xpath="conditions[@format='xml']/boolean[@operator='and']">
+          <div class="card">
+            <div class="card-header">
+              <h3>
+                <xed:output i18n="search.simple.label" />
+              </h3>
+            </div>
+            <div class="card-body">
+      <!-- search in all metadata -->
+              <div class="form-group row">
+                <label class="col-md-3" for="inputMeta">
+                  <xed:output i18n="editor.search.metadata" />
+                </label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <xed:bind xpath="condition0[@field='allMeta'][@operator='contains']/@value" default="*">
+                      <input id="inputMeta" class="form-control" placeholder="in den Metadaten" type="text" />
+                      <span data-toggle="tooltip" class="input-group-append" title="Suchfeld für alle bibliografischen Angaben">
+                        <span class="input-group-text">
+                          <i class="fas fa-info"></i>
+                        </span>
+                      </span>
+                    </xed:bind>
+                  </div>
+                </div>
+              </div>
+
+        <!-- search in derivate content -->
+              <div class="form-group row">
+                <label class="col-md-3" for="inputContent">
+                  <xed:output i18n="editor.search.derivate" />
+                </label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <xed:bind xpath="condition1[@field='content'][@operator='contains']/@value">
+                      <input id="inputContent" class="form-control" placeholder="in den Dateien" type="text" />
+                      <span data-toggle="tooltip" class="input-group-append" title="Suchfeld für den Inhalt von Dateien">
+                        <span class="input-group-text">
+                          <i class="fas fa-info"></i>
+                        </span>
+                      </span>
+                    </xed:bind>
+                  </div>
+                </div>
+              </div>
+
+        <!-- submit -->
+              <div class="row">
+                <div class="offset-9 col-md-3">
+                  <button type="submit" xed:target="servlet_MCRQLSearchServlet" class="btn btn-primary float-right">
+                    <xed:output i18n="editor.search.search" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </xed:bind>
+      </xed:bind>
+    </xed:form>
+  </section>
+
+</MyCoReWebPage>

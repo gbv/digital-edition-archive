@@ -1,0 +1,16 @@
+[
+  {
+    "update-requestHandler": {
+      "name": "/select",
+      "class": "solr.SearchHandler",
+      "defaults": {
+        "echoParams": "explicit",
+        "rows": 20,
+        "df": "allMeta",
+        "fl": "*,score",
+        "wt": "xml",
+        "sort": "score desc"
+      }
+    }
+  }
+]

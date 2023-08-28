@@ -1,0 +1,85 @@
+[
+  {
+    "add-field": {
+      "name": "digital-edition-archive.hasFiles",
+      "type": "boolean"
+    }
+  },
+  {
+    "add-field": {
+      "name": "digital-edition-archive.title",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.author.plain",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.author.persName",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+        "name": "dea.tei.author.orgName",
+        "type": "text_general",
+        "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dei.tei.editor.plain",
+        "type": "text_general",
+        "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.editor.persName",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.editor.orgName",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.publisher.plain",
+        "type": "text_general",
+        "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.publisher.persName",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.publisher.orgName",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.tei.title",
+      "type": "text_general",
+      "stored": true
+    }
+  }
+]

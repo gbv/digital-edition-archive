@@ -1,0 +1,93 @@
+<or>
+    <and>
+        <role>admin</role>
+    </and>
+    <or>
+        <and>
+            <target>webpage</target>
+            <id>webpage:navigation</id>
+            <action>read</action>
+        </and>
+        <and>
+            <!-- shitty bug in org.mycore.frontend.MCRLayoutUtilities.itemAccess -->
+            <target>webpage</target>
+            <id>webpage:null</id>
+            <action>read</action>
+        </and>
+        <and>
+            <target>webpage</target>
+            <action>read</action>
+            <or>
+                <!-- public pages, with exceptions -->
+                <regex>webpage:/.*</regex>
+            </or>
+            <and>
+                <!-- Internal pages -->
+                <or>
+                    <and>
+                        <not>
+                            <regex>webpage:/content/search/simple.xed</regex>
+                        </not>
+                        <not>
+                            <regex>webpage:/content/search/complex.xed</regex>
+                        </not>
+                    </and>
+                    <and>
+                        <not>
+                            <role>admin</role>
+                        </not>
+                        <not>
+                            <role>editor</role>
+                        </not>
+                    </and>
+                </or>
+                <or>
+                    <not>
+                        <regex>webpage:/.*_intern\..*</regex>
+                    </not>
+                    <role>admin</role>
+                    <role>editor</role>
+                </or>
+                <or>
+                    <not>
+                        <regex>webpage:/search/search-expert.xed.*</regex>
+                    </not>
+                    <role>admin</role>
+                    <role>editor</role>
+                </or>
+                <not>
+                    <!-- editors are handled somewhere else -->
+                    <regex>webpage:/editor/.*</regex>
+                </not>
+                <not>
+                    <!-- modules are handled somewhere else -->
+                    <regex>webpage:/modules/.*</regex>
+                </not>
+                <not>
+                    <!-- authorization is handled somewhere else -->
+                    <regex>webpage:/authorization/.*</regex>
+                </not>
+                <not>
+                    <!-- authorization is handled somewhere else -->
+                    <regex>webpage:/servlets/MCRUserServlet.*</regex>
+                </not>
+                <not>
+                    <!-- we dont need that here -->
+                    <regex>webpage:/rsc/ACLE/start.*</regex>
+                </not>
+            </and>
+        </and>
+    </or>
+    <or>
+        <and>
+            <action>read</action>
+            <status>published</status>
+        </and>
+    </or>
+    <or>
+        <and>
+            <target>solr</target>
+            <action>read</action>
+        </and>
+    </or>
+</or>

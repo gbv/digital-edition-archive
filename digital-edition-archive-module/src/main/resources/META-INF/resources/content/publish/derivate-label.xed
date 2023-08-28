@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MyCoReWebPage>
+
+<MyCoReWebPage>
+
+  <section i18n="editor.derivate.legend"  xml:lang="all">
+    <xed:form xmlns:xed="http://www.mycore.de/xeditor" method="post" role="form" class="form-horizontal"
+      id="editor_derivate">
+
+      <xed:cancel url="/receive/{$objectid}"/>
+      <xed:cancel url="{$cancelUrl}"/>
+      <xed:cancel url="../index.html"/>
+      <xed:source uri="mcrobject:{$derivateid}"/>
+
+      <xed:bind xpath="/mycorederivate/@ID"/>
+      <xed:bind xpath="/mycorederivate/@version"/>
+
+
+      <fieldset>
+        <legend>
+          <xed:output i18n="editor.derivate.legend"/>
+        </legend>
+
+        <xed:bind xpath="/mycorederivate/derivate">
+          <bind xpath="linkmetas"/>
+          <bind xpath="internals"/>
+					<!-- Input Title -->
+          <xed:bind xpath="../@label">
+            <div class="form-group {$xed-validation-marker}">
+              <label class="col-md-4 control-label" for="title">
+                <xed:output i18n="editor.derivate.label.label"/>
+              </label>
+              <div class="col-md-6">
+                <input id="title" placeholder="{i18n:editor.derivate.placeholder.label}"
+                  class="form-control input-md" type="text"/>
+              </div>
+              <xed:validate display="here" required="true">
+                <xed:output i18n="editor.derivate.validate.label"/>
+              </xed:validate>
+            </div>
+          </xed:bind>
+          <xed:bind xpath="classifications[@class='MCRMetaClassification']/classification[@classid='derivate_types']/@categid">
+            <div class="form-group {$xed-validation-marker}">
+              <label class="col-md-4 control-label" for="title">
+                <xed:output i18n="editor.derivate.label.classification"/>
+              </label>
+              <div class="col-md-6">
+                <select class="form-control">
+ 			      <option value=""><xed:output i18n="editor.derivate.please.select"/></option>
+  			      <xed:include uri="xslStyle:items2options:classification:editor:-1:children:derivate_types" />
+			    </select>
+              </div>
+              <xed:validate display="here" required="true">
+                <xed:output i18n="editor.derivate.validate.label"/>
+              </xed:validate>
+            </div>
+          </xed:bind>
+        </xed:bind>
+        
+        <xed:bind xpath="/mycorederivate/service"/>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="save"></label>
+          <div class="col-md-8">
+
+            <button id="save" class="btn btn-success updateobject" type="submit" xed:target="servlet"
+              xed:href="UpdateDerivateServlet">
+              <xed:output i18n="common.button.save"/>
+            </button>
+            <xed:output value="'&#160;'"/>
+            <button id="cancel" class="btn btn-danger" type="submit" xed:target="cancel">
+              <xed:output i18n="common.button.cancel"/>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+
+
+      <xed:cleanup-rule xpath="//condition"
+        relevant-if="(string-length(@value) &gt; 0) or value[string-length(text()) &gt; 0 ]"/>
+    </xed:form>
+  </section>
+
+</MyCoReWebPage>

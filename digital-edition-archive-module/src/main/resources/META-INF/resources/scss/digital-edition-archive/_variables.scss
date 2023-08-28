@@ -1,0 +1,29 @@
+/* ---------------------------------------------------------------------------
+   override bootstrap sass variables specified here:
+   http://getbootstrap.com/customize/#less-variables
+----------------------------------------------------------------------------*/
+
+$font-family-sans-serif: "Open Sans", Helvetica, Arial, sans-serif;
+
+$primary-: white;
+$primary:      #4c74b0;
+$secondary:    #4c74b0;
+$info:         #146d9d;
+$gray-light:   #CCCCCC;
+$light-blue:   #E3EAF2;
+
+$link-color: $primary;
+
+$dropdown-color: white;
+$dropdown-bg: $primary;
+$dropdown-border-radius: 0;
+$dropdown-border-width: 0;
+$dropdown-spacer: 0;
+
+$pagination-bg: $primary;
+$pagination-hover-bg: lighten($pagination-bg, 10%);
+$pagination-disabled-bg: $gray-light;
+
+/* ---------------------------------------------------------------------------
+   project specific variables
+----------------------------------------------------------------------------*/
