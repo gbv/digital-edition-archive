@@ -10,7 +10,7 @@
                 exclude-result-prefixes="mcri18n mcrversion mcrlayoututils mcrurl"
                 version="3.0">
 
-    <xsl:include href="default-parameters.xsl"/>
+    <xsl:include href="resource:xsl/default-parameters.xsl"/>
     <xsl:include href="xslInclude:functions"/>
     <xsl:include href="xslInclude:components-3"/>
     <xsl:include href="common-layout.xsl"/>
@@ -130,7 +130,7 @@
         <div id="header_box" class="clearfix container">
             <div style="font-size:200%;margin:6px" id="project_logo_box">
                 <a href="{concat($WebApplicationBaseURL,substring($loaded_navigation_xml/@hrefStartingPage,2),$HttpSession)}">
-                    Digitales Editionsarchiv des GBV
+                    Digitales Editionen-Archiv
                 </a>
             </div>
         </div>
