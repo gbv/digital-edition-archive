@@ -51,7 +51,7 @@ MCR.Solr.Core.classification.ServerURL=%MCR.Solr.ServerURL%
 
 ### Initialize the application
 * change into CLI directory (see above)
-* load default data by running: `bin/digital-edition-archive.sh process config/setup-commands.txt`
+* load default data by running: `bin/digital-edition-archive.sh process resource setup-commands.txt`
 
 ### Run web server
 * Change to `digital-edition-archive-webapp` directory

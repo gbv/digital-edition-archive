@@ -1,0 +1,9 @@
+init superuser
+
+reload solr configuration main in core main
+reload solr configuration classification in core classification
+
+update classification from uri resource:classifications/rfc5646.xml
+update classification from url http://www.mycore.org/classifications/state.xml
+update classification from url http://www.mycore.org/classifications/mcr-roles.xml
+update classification from url http://mycore.de/classifications/derivate_types.xml
