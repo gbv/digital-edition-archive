@@ -16,8 +16,9 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import org.jdom2.*;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -28,12 +29,16 @@ import org.mycore.datamodel.niofs.MCRPath;
 import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
 import org.mycore.frontend.MCRFrontendUtil;
 import org.mycore.frontend.fileupload.MCRUploadHelper;
-import org.mycore.webtools.upload.*;
-import org.mycore.webtools.upload.exception.*;
+import org.mycore.webtools.upload.MCRDefaultUploadHandler;
+import org.mycore.webtools.upload.MCRFileUploadBucket;
+import org.mycore.webtools.upload.MCRUploadHandler;
+import org.mycore.webtools.upload.exception.MCRInvalidFileException;
+import org.mycore.webtools.upload.exception.MCRInvalidUploadParameterException;
+import org.mycore.webtools.upload.exception.MCRMissingParameterException;
+import org.mycore.webtools.upload.exception.MCRUploadForbiddenException;
+import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
 public class DEATEIUploadHandler implements MCRUploadHandler {
-
-    private static BiPredicate<Path, BasicFileAttributes> condition;
 
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications)
         throws MCRUploadServerException {
@@ -47,10 +52,10 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
             Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
             MCRObjectID derivateId = createDerivateIfNotExists(objectID);
-            if (imagesDirectory != null) {
-                importImages(imagesDirectory, derivateId);
+            if (!(imagesDirectory == null)) {
+                throw new MCRUploadServerException("Object does not exist!");
             }
-
+            importImages(imagesDirectory, derivateId);
             saveTEIFileInDerivate(tei, objectID, MCRPath.getPath(derivateId.toString(), "/"));
 
             return objectID;
@@ -208,17 +213,26 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     @Override
-    public void begin(String uploadID, Map<String, List<String>> parameters) throws MCRUploadForbiddenException,
-        MCRUploadServerException, MCRMissingParameterException, MCRBadUploadParameterException {
+    public String begin(Map<String, List<String>> parameters) throws MCRUploadForbiddenException,
+        MCRUploadServerException, MCRMissingParameterException, MCRInvalidUploadParameterException {
+        String project;
         if (parameters.containsKey("project")) {
-            String project = parameters.get("project").get(0);
+            project = parameters.get("project").get(0);
             if (project.isEmpty()) {
-                throw new MCRBadUploadParameterException("project", "", "empty");
+                throw new MCRInvalidUploadParameterException("project", "", "empty");
             }
         } else {
             throw new MCRMissingParameterException("project");
         }
 
+        try {
+            MCRMetadataManager.checkCreatePrivilege(
+                    MCRObjectID.getInstance(MCRObjectID.formatID(project, "tei", 0)));
+        } catch (MCRAccessException e) {
+            throw new MCRUploadForbiddenException("mcr.upload.forbidden");
+        }
+
+        return UUID.randomUUID().toString();
     }
 
     @Override
@@ -260,7 +274,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
     @Override
     public void validateFileMetadata(String name, long size)
-        throws MCRUploadForbiddenException, MCRBadFileException, MCRUploadServerException {
+        throws MCRInvalidFileException {
         new MCRDefaultUploadHandler().validateFileMetadata(name, size);
     }
 
