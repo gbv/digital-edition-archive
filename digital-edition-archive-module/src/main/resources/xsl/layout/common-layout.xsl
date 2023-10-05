@@ -44,7 +44,7 @@
           </xsl:if>
           <a id="currentUser" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
             <xsl:choose>
-              <xsl:when test="count($currentUserInfo/user/attribute[@name='realName'])&gt;0 and string-length(currentUserInfo/user/attribute[@name='realName'][0]) &gt;0">
+              <xsl:when test="count($currentUserInfo/user/attribute[@name='realName'])&gt;0 and string-length($currentUserInfo/user/attribute[@name='realName'][0]) &gt;0">
                 <xsl:value-of select="$currentUserInfo/user/attribute[@name='realName']"/>
               </xsl:when>
               <xsl:otherwise>

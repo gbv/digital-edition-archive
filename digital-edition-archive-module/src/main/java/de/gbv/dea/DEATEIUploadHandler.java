@@ -52,7 +52,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
             Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
             MCRObjectID derivateId = createDerivateIfNotExists(objectID);
-            if (!(imagesDirectory == null)) {
+            if (imagesDirectory == null) {
                 throw new MCRUploadServerException("Object does not exist!");
             }
             importImages(imagesDirectory, derivateId);
