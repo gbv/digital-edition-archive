@@ -1,8 +1,5 @@
-# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
-name: Maven Snapshot deploy
-
+name: docker container deploy
 on:
   push:
     branches:
@@ -24,7 +21,7 @@ jobs:
           distribution: 'adopt'
           server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
 
-      - name: Publish to OSSRH with Apache Maven
+      - name: Build with Maven
         run: mvn --batch-mode package
       - name: Login to Docker Hub
         if: success()
@@ -32,7 +29,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build the mir Docker images and push them
+      - name: Build the dea Docker images and push them
         if: success()
         run: |
           docker build . --file Dockerfile --tag vzgreposis/digital-edition-archive:${GITHUB_REF_NAME}
