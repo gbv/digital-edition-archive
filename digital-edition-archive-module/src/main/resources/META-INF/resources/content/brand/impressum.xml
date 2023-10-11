@@ -2,72 +2,93 @@
 <!DOCTYPE MyCoReWebPage>
 <MyCoReWebPage>
   <section xml:lang="de" title="Impressum">
-  <div>
+  <div class="impressum">
     <h2>Impressum</h2>
-    <h3>Diensteanbieter</h3>
-    <p>
-      Webredaktion der MyCoRe-Community vertreten durch<br /><br />
-      MyCoRe-Geschäftsstelle<br />
-      V. i. A. Dr. Wiebke Oeltjen<br />
-      RRZ der Universität Hamburg<br />
-      Schlüterstr. 70<br />
-      D-20146 Hamburg
-    </p>
-    <h3>Kontakt</h3>
-    <p>
-      Tel: +49 (0)40-42838-2652<br />
-      e-Mail: info@mycore.de
-    </p>
+    <p>Digitales Editionen-Archiv koordiniert durch die Verbundzentrale des GBV (VZG)</p>
 
-    <h3>Rechtliche Hinweise</h3>
-    <h4>Inhalt</h4>
-    <p>
-      Alle Inhalte unserer Website wurden sorgfältig geprüft. Wir bemühen uns,
-      die Informationen aktuell und inhaltlich richtig sowie vollständig
-      anzubieten. Dennoch können wir nicht ausschließen, dass Fehler
-      enthalten sind. Auch können wir keine Garantie für die Vollständigkeit,
-      Richtigkeit und letzte Aktualität übernehmen.
-    </p>
-    <p>
-      Die unter www.mycore.de und www.mycore.org angebotenen Inhalte und
-      Informationen können jederzeit und ohne gesonderte Ankündigung durch
-      die MyCoRe-Redaktion geändert, ergänzt oder entfernt werden.
-    </p>
+    <address>
+    Verbundzentrale des GBV (VZG)<br/>
+    Platz der Göttinger Sieben 1<br/>
+    37073 Göttingen<br/>
+    </address>
 
-    <h4>Haftung für Links</h4>
-    <p>
-      Unsere Website enthält Links zu externen Webseiten Dritter, auf deren Inhalt
-      wir keinen Einfluss haben. Für den Inhalt der verlinkten Seiten sind
-      ausschließlich die jeweiligen Anbieter oder Betreiber der Seiten
-      verantwortlich. Zum Zeitpunkt der Verlinkung haben wir die verlinkten
-      Seiten auf mögliche Rechtsverstöße überprüft, und es waren keine
-      rechtswidrigen Inhalte erkennbar. Eine permanente inhaltliche Kontrolle
-      der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
-      Rechtsverletzung nicht zumutbar. Trotz sorgfältiger Kontrolle
-      übernehmen wir keine Haftung für die Inhalte externer Links. Sollten
-      Sie trotzdem auf strafbare oder zweifelhafte Webseiteninhalte
-      aufmerksam werden, auf die von der MyCoRe-Website durch Links verwiesen
-      wird, teilen Sie uns dies bitte mit, sodass wir derartige Links
-      umgehend entfernen können.
-    </p>
+    In Kooperation mit:
+    <ol>
+      <li>Niedersächsische Akademie der Wissenschaften zu Göttingen</li>
+      <li>Max Weber Stiftung – Deutsche Geisteswissenschaftliche Institute im Ausland (MWS)</li>
+    </ol>
 
-    <h4>Urheberrecht</h4>
-    <p>
-      Die durch den Diensteanbieter erstellten Inhalte und Werke auf diesen
-      Webseiten unterliegen dem deutschen Urheberrecht und sind
-      urheberrechtlich geschützt. Sie dürfen nur zum privaten,
-      wissenschaftlichen und nichtgewerblichen Gebrauch zum Zweck der
-      Information kopiert und ausgedruckt werden. Soweit die Inhalte auf
-      dieser Seite nicht vom Betreiber erstellt wurden, werden die
-      Urheberrechte Dritter beachtet. Sollten Sie auf eine
-      Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
-      entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden
-      wir derartige Inhalte umgehend entfernen.
-    </p>
+    <p>Die nachstehenden Informationen enthalten die gesetzlich vorgesehenen Pflichtangaben zur Anbieterkennzeichnung zu den datenschutzrechtlichen Informationspflichten sowie weitere wichtige rechtliche Hinweise zur Internetpräsenz des kartenspeicher.gbv.de .</p>
 
+    <b>Anbieter</b>
+    <p>Anbieter dieser Internetpräsenz ist im Rechtsinne die Verbundzentrale des GBV (VZG).</p>
+
+    <b>Adresse</b>
+    <address>
+    Verbundzentrale des GBV (VZG)<br/>
+    Platz der Göttinger Sieben 1<br/>
+    37073 Göttingen<br/>
+    Tel.: +49(0)551/39-31000<br/>
+    E-Mail: dms-list.lists(at)gbv.de<br/>
+    Internet: www.gbv.de<br/>
+    </address>
+
+    <b>Rechtsform</b>
+    <p>Landesbetrieb des Landes Niedersachsen § 26 LHO. Die VZG ist ein rechtlich unselbständiger nachgeordneter Teil der Landesverwaltung des Landes Niedersachsen mit Sitz in Göttingen. Die Dienst- und Rechtsaufsicht wird vom Niedersächsischen Ministerium für Wissenschaft und Kultur, Hannover ausgeübt.</p>
+
+    <b>Vertreter</b>
+    <p>Die Verbundzentrale des GBV (VZG) wird gesetzlich vertreten durch ihren Direktor, Reiner Diedrichs.</p>
+
+    <b>Zuständige Aufsichtsbehörde</b>
+    <p>Die Dienst- und Rechtsaufsicht wird vom Niedersächsischen Ministerium für Wissenschaft und Kultur, Hannover ausgeübt.</p>
+
+    <b>Umsatzsteueridentifikationsnummer</b>
+    <p>Die Umsatzsteueridentifikationsnummer der VZG lautet: DE815123124</p>
+
+    <b>Redaktionsverantwortliche</b>
+    <p>Redaktionsverantwortlich für die Internetpräsenz des Portals ‚Kartenspeicher' nach § 55 Abs. 2 RStV ist:</p>
+
+    <b>Koordination</b>
+    <address>
+    Verbundzentrale des GBV (VZG)<br/>
+    Frank Dührkohp<br/>
+    Platz der Göttinger Sieben 1<br/>
+    37073 Göttingen<br/>
+    Tel: +49 (0)551/39-31304<br/>
+    E-Mail: frank.duehrkohp(at)gbv.de<br/>
+    </address>
+
+    <b>Haftung für Inhalte</b>
+    <p>Die Verbundzentrale des GBV (VZG) ist um Richtigkeit und Aktualität der hier bereitgestellten Informationen bemüht. Die Inhalte der Seiten wurden mit größter Sorgfalt erstellt, dennoch können Fehler und Unklarheiten nicht vollständig ausgeschlossen werden. Die VZG übernimmt daher keine Gewähr für die Aktualität, Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Informationen.</p>
+
+    <p>Die Angaben zu den Einrichtungen, Objekten und Bildern beruhen auf den uns zur Verfügung gestellten Informationen und sind von den aufgeführten Einrichtungen direkt erstellt. Für deren Vollständigkeit und Richtigkeit können wir keine Gewähr oder Haftung übernehmen.</p>
+
+    <p>Insbesondere sind wir als Dienstanbieter nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+
+    <p>Für Schäden materieller oder immaterieller Art, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen unmittelbar oder mittelbar verursacht werden, haftet die VZG nicht, sofern ihr nicht nachweislich vorsätzliches oder grob fahrlässiges Verschulden zur Last fällt.</p>
+
+    <p>Die VZG behält es sich vor, Teile des Internetangebots oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.</p>
+
+    <b>Haftung für Links</b>
+    <p>Unser Angebot enthält Verknüpfungen (Links) zu Webseiten von anderen Einrichtungen, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die VZG identifiziert sich deshalb ausdrücklich nicht mit dem Inhalt der verlinkten Seiten und macht sich die fremden Inhalte nicht zu Eigen.</p>
+
+    <p>Die gesetzten Links werden im wissenschaftlichen Sinne zitiert und zur Information für Studium, Forschung und Lehre zur Verfügung gestellt. Wir haben die verlinkten Seiten zum Zeitpunkt der erstmaligen Verknüpfung auf mögliche Rechtsverstöße überprüft. Inhalte, durch die eine mögliche zivil- oder strafrechtliche Verantwortlichkeit ausgelöst wird, waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar.</p>
+
+    <p>Wenn die VZG feststellt oder von anderen darauf hingewiesen wird, dass ein externes Angebot, auf das sie per Link verknüpft hat, eine zivil- oder strafrechtliche Verantwortlichkeit auslöst, wird sie diesen Link umgehend entfernen. Die VZG distanziert sich ausdrücklich von derartigen Inhalten.</p>
+
+    <b>Hinweise zum Urheber- und Kennzeichenrecht</b>
+    <p>Das Layout der Homepage, die verwendeten Grafiken, sämtliche Informationen und Bilder auf diesem Kulturportal sowie der Quellcode dieser Seiten und der dahinter liegenden Datenbank sind urheberrechtlich geschützt. Eine kommerzielle Verwendung der auf diesem Server angebotenen Informationen ist nicht gestattet. Die auf diesen Seiten verwendeten Bilder und Texte sind von den Kultureinrichtungen Niedersachsens für dieses Portal zur Verfügung gestellt. Rechte und Verantwortung für diese Texte und Fotos liegen bei den jeweiligen Einrichtungen. Die Weiterverwendung ist erst nach vorheriger Rücksprache mit den Einrichtungen gestattet. Die Urheberrechte sind zu beachten.</p>
+
+    <p>Alle innerhalb des Internetangebotes genannten und ggf. durch Dritte geschützten Marken- und Warenzeichen unterliegen uneingeschränkt den Bestimmungen des jeweils gültigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigentümer. Allein aufgrund der bloßen Nennung ist nicht der Schluss zu ziehen, dass Markenzeichen nicht durch Rechte Dritter geschützt sind.</p>
+
+    <p>Jede vom Urheberrechtsgesetz nicht zugelassene Verwertung bedarf vorheriger ausdrücklicher Zustimmung der zur Verfügung stellenden Einrichtung. Dies gilt insbesondere für Vervielfältigung, Bearbeitung, Übersetzung, Einspeicherung, Verarbeitung bzw. Wiedergabe von Inhalten in Datenbanken oder anderen elektronischen Medien und Systemen. Fotokopien und Downloads von Web-Seiten für den privaten, wissenschaftlichen und nicht kommerziellen Gebrauch dürfen hergestellt werden.</p>
+
+    <p>Das Urheberrecht für die verwendeten Logos liegt ausdrücklich bei den Einrichtungen, deren Logos gezeigt werden. Wir erlauben ausdrücklich und begrüßen das Zitieren unserer Dokumente und Webseiten sowie das Setzen von Links auf unsere Website.</p>
+
+    © VZG. Alle Rechte vorbehalten.
   </div>
   </section>
   <meta>
-    <log date="2015-03-25" time="11:59" labelPath=" » Impressum" lastEditor="Kathleen Neumann" />
+    <log date="2023-10-11" time="11:47" labelPath=" » Impressum" lastEditor="Sebastian Hofmann" />
   </meta>
 </MyCoReWebPage>
