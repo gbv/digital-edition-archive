@@ -20,6 +20,7 @@
             <or>
                 <!-- public pages, with exceptions -->
                 <regex>webpage:/.*</regex>
+                <regex>webpage:http[s]?://.*</regex>
             </or>
             <and>
                 <!-- Internal pages -->

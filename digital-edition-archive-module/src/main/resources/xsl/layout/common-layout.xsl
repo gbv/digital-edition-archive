@@ -135,6 +135,9 @@
           </xsl:attribute>
           <a href="{$url}" class="nav-link">
             <xsl:apply-templates select="." mode="linkText"/>
+            <xsl:if test="@type='extern'">
+              &#8239;<i class="fas fa-external-link-alt">  </i>
+            </xsl:if>
           </a>
         </li>
       </xsl:when>
