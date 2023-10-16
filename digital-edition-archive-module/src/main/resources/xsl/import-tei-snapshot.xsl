@@ -13,6 +13,7 @@
         <script src="{$WebApplicationBaseURL}js/import-tei-snapshot.js"> </script>
         <script src="{$WebApplicationBaseURL}modules/webtools/upload/js/upload-api.js"> </script>
         <script src="{$WebApplicationBaseURL}modules/webtools/upload/js/upload-gui.js"> </script>
+        <link rel="stylesheet" type="text/css" href="{$WebApplicationBaseURL}modules/webtools/upload/css/upload-gui.css" />
 
         <div class="import-tei-snapshot">
             <div class="file-upload-box well well-sm col-10 col-offset-1"

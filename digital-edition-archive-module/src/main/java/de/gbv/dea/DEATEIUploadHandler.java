@@ -10,12 +10,16 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.*;
-import java.util.function.BiPredicate;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -40,35 +44,51 @@ import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
 public class DEATEIUploadHandler implements MCRUploadHandler {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications)
         throws MCRUploadServerException {
-        if (Files.isDirectory(fileOrDirectory)) {
-            // file is a directory and should be named like 000001, 000002, 000003, ...
-            // and should contain a file named 000001*.xml
-            // and should contain a directory name images
-            MCRObjectID objectID = getObjectIDFromDirectory(fileOrDirectory, project);
-            Path teiFile = findTEIFile(fileOrDirectory);
-            Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications);
+        try {
+            if (Files.isDirectory(fileOrDirectory)) {
+                // file is a directory and should be named like 000001, 000002, 000003, ...
+                // and should contain a file named 000001*.xml
+                // and should contain a directory name images
+                MCRObjectID objectID = getObjectIDFromDirectory(fileOrDirectory, project);
+                Path teiFile = findTEIFile(fileOrDirectory);
+                Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications);
 
-            Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
-            MCRObjectID derivateId = createDerivateIfNotExists(objectID);
-            if (imagesDirectory == null) {
-                throw new MCRUploadServerException("Object does not exist!");
+                Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
+                MCRObjectID derivateId = createDerivateIfNotExists(objectID);
+
+                LOGGER.info("Processing object " + objectID);
+                if (imagesDirectory != null) {
+                    importImages(imagesDirectory, derivateId);
+                } else {
+                    LOGGER.warn("No images directory found for object " + objectID);
+                }
+
+                saveTEIFileInDerivate(tei, objectID, MCRPath.getPath(derivateId.toString(), "/"));
+
+                return objectID;
+            } else if (Files.isRegularFile(fileOrDirectory)) {
+                // file is a file and should be named like 000001*.xml
+            } else {
+                // file is neither a directory nor a file
             }
-            importImages(imagesDirectory, derivateId);
-            saveTEIFileInDerivate(tei, objectID, MCRPath.getPath(derivateId.toString(), "/"));
-
-            return objectID;
-        } else if (Files.isRegularFile(fileOrDirectory)) {
-            // file is a file and should be named like 000001*.xml
-        } else {
-            // file is neither a directory nor a file
+        } catch (Throwable t) {
+            LOGGER.error("Error while processing " + fileOrDirectory.toString(), t);
+            throw t;
         }
         return null;
     }
 
     private void importImages(Path imagesDirectory, MCRObjectID derivateId) throws MCRUploadServerException {
         MCRPath root = MCRPath.getPath(derivateId.toString(), "/");
+        try {
+            Files.createDirectories(root);
+        } catch (IOException e) {
+            throw new MCRUploadServerException("mcr.upload.import.failed", e);
+        }
         final MCRTreeCopier copier;
         try {
             copier = new MCRTreeCopier(imagesDirectory, root, false, true);
@@ -138,7 +158,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 MCRObjectID id = MCRObjectID.getInstance(formattedIDString);
                 return id;
             } else {
-                throw new IllegalArgumentException("Name does not consist of 6 digits.");
+                throw new IllegalArgumentException("Name "+ file+" does not consist of 6 digits.");
             }
         } else {
             throw new IllegalArgumentException("Path is not a directory.");

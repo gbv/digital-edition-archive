@@ -123,14 +123,14 @@ public class DEATEISplitter {
             splitDocumentList = new ArrayList<>();
         }
 
-        Element originalBody = this.original.doc()
-            .getRootElement().getChild("text", TEI_NS).getChild("body", TEI_NS);
+        Element originalText = this.original.doc()
+            .getRootElement().getChild("text", TEI_NS);
 
-        Stub newStub = copyAncestors(originalBody.getChildren().get(0), null);
+        Stub newStub = copyAncestors(originalText.getChildren().get(0), null);
         current = newStub.teiFile;
         copyTarget = newStub.newEl;
 
-        traverse(originalBody);
+        traverse(originalText);
 
         return splitDocumentList;
     }
