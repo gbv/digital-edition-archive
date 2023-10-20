@@ -130,7 +130,7 @@
         <div id="header_box" class="clearfix container">
             <div style="font-size:200%;margin:6px" id="project_logo_box">
                 <a href="{concat($WebApplicationBaseURL,substring($loaded_navigation_xml/@hrefStartingPage,2),$HttpSession)}">
-                    Digitales Editionen-Archiv
+                    Digitales Text-Archiv
                 </a>
             </div>
         </div>
