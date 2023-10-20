@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +32,7 @@ import org.mycore.access.MCRAccessException;
 import org.mycore.common.MCRException;
 import org.mycore.datamodel.metadata.*;
 import org.mycore.datamodel.niofs.MCRPath;
+import org.mycore.datamodel.niofs.utils.MCRRecursiveDeleter;
 import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
 import org.mycore.frontend.MCRFrontendUtil;
 import org.mycore.frontend.fileupload.MCRUploadHelper;
@@ -45,9 +48,14 @@ import org.mycore.webtools.upload.exception.MCRUploadServerException;
 public class DEATEIUploadHandler implements MCRUploadHandler {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final String FILE_NAME_PATTERN = "(?<number>[0-9]{6}).*\\.xml";
+
+    private static final String DERIVATE_TYPES_CLASS = "derivate_types";
+    private static final String DERIVATE_TYPES_CONTENT = "content";
+    private static final String DERIVATE_TYPES_ORIGINAL = "original";
 
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications)
-        throws MCRUploadServerException {
+            throws MCRUploadServerException, MCRInvalidFileException, IOException {
         try {
             if (Files.isDirectory(fileOrDirectory)) {
                 // file is a directory and should be named like 000001, 000002, 000003, ...
@@ -58,22 +66,30 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications);
 
                 Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
-                MCRObjectID derivateId = createDerivateIfNotExists(objectID);
+                MCRObjectID contentDerivate = createDerivateIfNotExists(objectID, DERIVATE_TYPES_CONTENT);
 
                 LOGGER.info("Processing object " + objectID);
                 if (imagesDirectory != null) {
-                    importImages(imagesDirectory, derivateId);
+                    importImages(imagesDirectory, contentDerivate);
                 } else {
                     LOGGER.warn("No images directory found for object " + objectID);
                 }
 
-                saveTEIFileInDerivate(tei, objectID, MCRPath.getPath(derivateId.toString(), "/"));
+                splitTEIFileToDerivate(tei, objectID, MCRPath.getPath(contentDerivate.toString(), "/"));
 
                 return objectID;
             } else if (Files.isRegularFile(fileOrDirectory)) {
                 // file is a file and should be named like 000001*.xml
-            } else {
-                // file is neither a directory nor a file
+                if (!fileOrDirectory.toString().endsWith(".xml")) {
+                    throw new MCRInvalidFileException(fileOrDirectory.toString(), "Not a TEI file.");
+                } else if (!fileOrDirectory.getFileName().toString().matches(FILE_NAME_PATTERN)) {
+                    throw new MCRInvalidFileException(fileOrDirectory.toString(),
+                        "File name does not match pattern. [0-9]{6}.*\\.xml");
+                }
+
+                MCRObjectID objectID = getObjectIDFromFile(fileOrDirectory, project);
+                importOrUpdateTEIMyCoReObject(fileOrDirectory, objectID, classifications);
+                return objectID;
             }
         } catch (Throwable t) {
             LOGGER.error("Error while processing " + fileOrDirectory.toString(), t);
@@ -110,22 +126,30 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         }
     }
 
-    private static MCRObjectID createDerivateIfNotExists(MCRObjectID objectID) {
-        MCRObjectID derivateId;
+    private static MCRObjectID createDerivateIfNotExists(MCRObjectID objectID, String contentType) {
         if (!MCRMetadataManager.exists(objectID)) {
             return null;
         }
         MCRObject object = MCRMetadataManager.retrieveMCRObject(objectID);
-        if (object.getStructure().getDerivates().isEmpty()) {
+
+        String ctName = DERIVATE_TYPES_CLASS + ":" + contentType;
+        var derivates = object.getStructure().getDerivates().stream()
+                .filter(link -> link.getClassifications().stream()
+                .anyMatch(classification -> classification.toString().equals(ctName)))
+                .toList();
+
+        if(derivates.size() == 1) {
+            return derivates.get(0).getXLinkHrefID();
+        } else if(derivates.size() > 1) {
+            throw new MCRException("Object " + objectID + " has more than one derivate of type " + contentType);
+        } else {
             try {
-                derivateId = MCRUploadHelper.createDerivate(objectID, Collections.emptyList()).getId();
+                var contentTypeClass = MCRUploadHelper.getClassifications(ctName);
+                return MCRUploadHelper.createDerivate(objectID, contentTypeClass).getId();
             } catch (MCRAccessException e) {
                 throw new MCRException("Error while creating derivate for object " + objectID, e);
             }
-        } else {
-            derivateId = object.getStructure().getDerivates().get(0).getXLinkHrefID();
         }
-        return derivateId;
     }
 
     private Path findImagesDirectory(Path fileOrDirectory, MCRObjectID objectID) {
@@ -139,34 +163,56 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
     public Path findTEIFile(Path directory) {
         try {
-            return Files
-                .find(directory, 1,
-                    (path, basicFileAttributes) -> path.getFileName().toString().matches("[0-9]{6}.*\\.xml"))
+            return Files.find(directory, 1,
+                    (path, basicFileAttributes) -> path.getFileName().toString().matches(FILE_NAME_PATTERN))
                 .findFirst().orElse(null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+
     public MCRObjectID getObjectIDFromDirectory(Path path, String project) throws IllegalArgumentException {
         // path is a directory and should be named like 000001
-        if (Files.isDirectory(path)) {
-            String file = path.getFileName().toString();
-            if (file.matches("[0-9]{6}")) {
-                int number = Integer.parseInt(file);
-                String formattedIDString = MCRObjectID.formatID(project + "_tei_", number);
-                MCRObjectID id = MCRObjectID.getInstance(formattedIDString);
-                return id;
-            } else {
-                throw new IllegalArgumentException("Name "+ file+" does not consist of 6 digits.");
-            }
-        } else {
+        if (!Files.isDirectory(path)) {
             throw new IllegalArgumentException("Path is not a directory.");
         }
+
+        String file = path.getFileName().toString();
+        if (!file.matches("[0-9]{6}")) {
+            throw new IllegalArgumentException("Name " + file + " does not consist of 6 digits.");
+
+        }
+
+        int number = Integer.parseInt(file);
+        String formattedIDString = MCRObjectID.formatID(project + "_tei_", number);
+        return MCRObjectID.getInstance(formattedIDString);
+
+    }
+
+    public MCRObjectID getObjectIDFromFile(Path file, String project) throws IllegalArgumentException {
+        if (!Files.isRegularFile(file)) {
+            throw new IllegalArgumentException("File is not a regular file.");
+        }
+
+        String fileName = file.getFileName().toString();
+        Pattern pattern = Pattern.compile(FILE_NAME_PATTERN);
+        Matcher matcher = pattern.matcher(fileName);
+        String numberStr;
+
+        if (matcher.find()) {
+            numberStr = matcher.group("number");
+        } else {
+            throw new IllegalArgumentException("File name does not match pattern. [0-9]{6}.*\\.xml");
+        }
+
+        int number = Integer.parseInt(numberStr);
+        String formattedIDString = MCRObjectID.formatID(project + "_tei_", number);
+        return MCRObjectID.getInstance(formattedIDString);
     }
 
     public Document importOrUpdateTEIMyCoReObject(Path teiFile, MCRObjectID objectID,
-        List<MCRMetaClassification> classifications) {
+        List<MCRMetaClassification> classifications) throws IOException {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
 
@@ -194,7 +240,38 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         } catch (MCRAccessException e) {
             throw new MCRException("Error while updating object " + objectID, e);
         }
+
+        storeFileInOriginalDerivate(teiFile, objectID);
+
         return teiDocument;
+    }
+
+    /**
+     * Due to the fact that the original tei file is seperated in to several files, the original tei file is stored in
+     * the original derivate.
+     *
+     * This method stores the given TEI file in the original derivate of the given object. If the derivate does not
+     * exist, it will be created. If it exists, all files will be deleted. The given file will be stored as main
+     * document.
+     * @param teiFile the TEI file to store
+     * @param objectID the object id of the object to store the TEI file in
+     * @throws IOException if an I/O error occurs
+     */
+    private static void storeFileInOriginalDerivate(Path teiFile, MCRObjectID objectID) throws IOException {
+        // create or use existing derivate to store the original TEI file
+        MCRObjectID originalDerivate = createDerivateIfNotExists(objectID, DERIVATE_TYPES_ORIGINAL);
+        Path fileName = teiFile.getFileName();
+        MCRPath originalDerivatePath = MCRPath.getPath(originalDerivate.toString(), "/");
+        Files.walkFileTree(originalDerivatePath, MCRRecursiveDeleter.instance());
+        Path fn = originalDerivatePath.resolve(fileName.toString());
+        Files.copy(teiFile, fn);
+        MCRDerivate mcrDerivate = MCRMetadataManager.retrieveMCRDerivate(originalDerivate);
+        mcrDerivate.getDerivate().getInternals().setMainDoc(fileName.toString());
+        try {
+            MCRMetadataManager.update(mcrDerivate);
+        } catch (MCRAccessException e) {
+            throw new MCRException("Error while updating derivate " + originalDerivate, e);
+        }
     }
 
     public Document parseTEI(Path teiFile) {
@@ -206,7 +283,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         }
     }
 
-    public static void saveTEIFileInDerivate(Document tei, MCRObjectID objectID, MCRPath root) {
+    public static void splitTEIFileToDerivate(Document tei, MCRObjectID objectID, MCRPath root) {
         Path transcriptionFolderPath = root.resolve("tei/").resolve("transcription");
         if (!Files.exists(transcriptionFolderPath)) {
             try {
@@ -266,7 +343,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 .map((f) -> {
                     try {
                         return this.traverse(f, project, classifications);
-                    } catch (MCRUploadServerException e) {
+                    } catch (MCRUploadServerException | MCRInvalidFileException | IOException e) {
                         throw new MCRException(e);
                     }
                 })

@@ -46,6 +46,30 @@
 
     <xsl:template match="tei:TEI">
         <xsl:apply-templates select="tei:teiHeader/*"/>
+        <xsl:call-template name="displayDownloadLink"/>
+    </xsl:template>
+
+    <xsl:template name="displayDownloadLink">
+        <xsl:variable name="originalDerivate"
+                      select="ancestor::mycoreobject/structure/derobjects/derobject[count(classification[@classid='derivate_types' and @categid='original'])&gt;0][1]"/>
+        <xsl:if test="$originalDerivate">
+            <xsl:variable name="odId" select="$originalDerivate/@xlink:href"/>
+            <xsl:variable name="odMainDoc" select="$originalDerivate/maindoc/text()"/>
+
+            <xsl:if test="string-length($odId) &gt; 0 and string-length($odMainDoc) &gt; 0">
+                <xsl:call-template name="displayMetadataKV">
+                    <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.download')"/>
+                    <xsl:with-param name="value">
+                        <a href="{$WebApplicationBaseURL}servlets/MCRDerivateContentTransformerServlet/{$odId}/{$odMainDoc}"
+                           download="{$odMainDoc}">
+                            <xsl:value-of select="$odMainDoc"/>
+                        </a>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:if>
+
+
     </xsl:template>
 
     <xsl:template match="tei:titleStmt">

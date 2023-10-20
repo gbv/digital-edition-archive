@@ -7,6 +7,7 @@ import org.mycore.datamodel.classifications2.MCRCategoryID;
 import org.mycore.datamodel.metadata.MCRMetaClassification;
 import org.mycore.frontend.cli.annotation.MCRCommand;
 import org.mycore.frontend.cli.annotation.MCRCommandGroup;
+import org.mycore.webtools.upload.exception.MCRInvalidFileException;
 import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class DEAImportCommands {
             files.forEach(file -> {
                 try {
                     uploader.traverse(file, "blumenbach", List.of(classification));
-                } catch (MCRUploadServerException e) {
+                } catch (MCRUploadServerException | MCRInvalidFileException | IOException e) {
                     throw new MCRException("Error while processing directory " + file.toString(), e);
                 }
             });
