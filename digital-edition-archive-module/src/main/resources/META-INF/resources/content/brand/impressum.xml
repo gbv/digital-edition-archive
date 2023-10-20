@@ -4,7 +4,7 @@
   <section xml:lang="de" title="Impressum">
   <div class="impressum">
     <h2>Impressum</h2>
-    <p>Digitales Editionen-Archiv koordiniert durch die Verbundzentrale des GBV (VZG)</p>
+    <p>Digitales Text-Archiv</p>
 
     <address>
     Verbundzentrale des GBV (VZG)<br/>
@@ -18,7 +18,7 @@
       <li>Max Weber Stiftung – Deutsche Geisteswissenschaftliche Institute im Ausland (MWS)</li>
     </ol>
 
-    <p>Die nachstehenden Informationen enthalten die gesetzlich vorgesehenen Pflichtangaben zur Anbieterkennzeichnung zu den datenschutzrechtlichen Informationspflichten sowie weitere wichtige rechtliche Hinweise zur Internetpräsenz des kartenspeicher.gbv.de .</p>
+    <p>Die nachstehenden Informationen enthalten die gesetzlich vorgesehenen Pflichtangaben zur Anbieterkennzeichnung zu den datenschutzrechtlichen Informationspflichten sowie weitere wichtige rechtliche Hinweise zur Internetpräsenz des textarchiv.gbv.de .</p>
 
     <b>Anbieter</b>
     <p>Anbieter dieser Internetpräsenz ist im Rechtsinne die Verbundzentrale des GBV (VZG).</p>
@@ -72,12 +72,12 @@
     <b>Haftung für Links</b>
     <p>Unser Angebot enthält Verknüpfungen (Links) zu Webseiten von anderen Einrichtungen, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die VZG identifiziert sich deshalb ausdrücklich nicht mit dem Inhalt der verlinkten Seiten und macht sich die fremden Inhalte nicht zu Eigen.</p>
 
-    <p>Die gesetzten Links werden im wissenschaftlichen Sinne zitiert und zur Information für Studium, Forschung und Lehre zur Verfügung gestellt. Wir haben die verlinkten Seiten zum Zeitpunkt der erstmaligen Verknüpfung auf mögliche Rechtsverstöße überprüft. Inhalte, durch die eine mögliche zivil- oder strafrechtliche Verantwortlichkeit ausgelöst wird, waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar.</p>
+    <p>Die gesetzten Links werden im wissenschaftlichen Sinne zitiert und zur Information für Studium, Forschung und Lehre zur Verfügung gestellt. Die verlinkten Seiten wurden zum Zeitpunkt der erstmaligen Verknüpfung auf mögliche Rechtsverstöße überprüft. Inhalte, durch die eine mögliche zivil- oder strafrechtliche Verantwortlichkeit ausgelöst wird, waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar.</p>
 
     <p>Wenn die VZG feststellt oder von anderen darauf hingewiesen wird, dass ein externes Angebot, auf das sie per Link verknüpft hat, eine zivil- oder strafrechtliche Verantwortlichkeit auslöst, wird sie diesen Link umgehend entfernen. Die VZG distanziert sich ausdrücklich von derartigen Inhalten.</p>
 
     <b>Hinweise zum Urheber- und Kennzeichenrecht</b>
-    <p>Das Layout der Homepage, die verwendeten Grafiken, sämtliche Informationen und Bilder auf diesem Kulturportal sowie der Quellcode dieser Seiten und der dahinter liegenden Datenbank sind urheberrechtlich geschützt. Eine kommerzielle Verwendung der auf diesem Server angebotenen Informationen ist nicht gestattet. Die auf diesen Seiten verwendeten Bilder und Texte sind von den Kultureinrichtungen Niedersachsens für dieses Portal zur Verfügung gestellt. Rechte und Verantwortung für diese Texte und Fotos liegen bei den jeweiligen Einrichtungen. Die Weiterverwendung ist erst nach vorheriger Rücksprache mit den Einrichtungen gestattet. Die Urheberrechte sind zu beachten.</p>
+    <p>Das Layout der Homepage, die verwendeten Grafiken, sämtliche Informationen und Bilder auf diesem Portal sowie der Quellcode dieser Seiten und der dahinter liegenden Datenbank sind urheberrechtlich geschützt. Eine kommerzielle Verwendung der auf diesem Server angebotenen Informationen ist im Rahmen der Lizenzen der jeweiligen Inhalte gestattet. Die auf diesen Seiten verwendeten Bilder und Texte sind von den Partnereinrichtungen für dieses Portal zur Verfügung gestellt. Rechte und Verantwortung für diese Texte und Fotos liegen bei den jeweiligen Einrichtungen. Die Weiterverwendung ist erst nach vorheriger Rücksprache mit den Einrichtungen gestattet. Die Urheberrechte sind zu beachten.</p>
 
     <p>Alle innerhalb des Internetangebotes genannten und ggf. durch Dritte geschützten Marken- und Warenzeichen unterliegen uneingeschränkt den Bestimmungen des jeweils gültigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigentümer. Allein aufgrund der bloßen Nennung ist nicht der Schluss zu ziehen, dass Markenzeichen nicht durch Rechte Dritter geschützt sind.</p>
 
@@ -89,6 +89,6 @@
   </div>
   </section>
   <meta>
-    <log date="2023-10-11" time="11:47" labelPath=" » Impressum" lastEditor="Sebastian Hofmann" />
+    <log date="2023-10-20" time="11:47" labelPath=" » Impressum" lastEditor="Frank Dührkohp" />
   </meta>
 </MyCoReWebPage>
