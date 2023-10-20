@@ -2,7 +2,7 @@
 <!DOCTYPE MyCoReWebPage>
 <MyCoReWebPage>
 
-    <section title="Neuen TEI Abzug einspielen" xml:lang="de">
+    <section title="TEI Abzug für Blumenbach einspielen" xml:lang="de">
         <h1>Neuen TEI Abzug einspielen</h1>
 
         <import-tei-snapshot project="blumenbach" />

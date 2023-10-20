@@ -33,9 +33,13 @@
     <!-- work with content menu  -->
     <label xml:lang="de">Erfassen</label>
     <label xml:lang="en">Publish</label>
-    <item href="/content/publish/tei_intern.xml" type="intern">
-      <label xml:lang="de">Neuen TEI Abzug einspielen</label>
-      <label xml:lang="en">add new TEI snapshot </label>
+    <item href="/content/publish/tei_blumenbach_intern.xml" type="intern">
+      <label xml:lang="de">TEI Abzug für Blumenbach einspielen</label>
+      <label xml:lang="en">add TEI snapshot for blumenbach</label>
+    </item>
+    <item href="/content/publish/tei_lod_intern.xml" type="intern">
+      <label xml:lang="de">TEI Abzug für LOD einspielen</label>
+      <label xml:lang="en">add TEI snapshot for LOD</label>
     </item>
   </menu>
   <menu id="user">

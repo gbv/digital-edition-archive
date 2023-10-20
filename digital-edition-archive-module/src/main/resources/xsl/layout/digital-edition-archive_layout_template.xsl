@@ -157,16 +157,30 @@
                     </ul>
                 </div>
 
-                <form action="{$WebApplicationBaseURL}servlets/solr/select?q={0}" class="form-inline my-2 my-lg-0"
-                      role="search">
+                <form action="{$WebApplicationBaseURL}servlets/solr/select" method="get" class="form-inline my-2 my-lg-0"
+                      role="search" id="mainSearch">
                     <div class="form-group">
-                        <input name="q" placeholder="Suche" class="form-control mr-sm-2 search-query" id="searchInput"
-                               type="text"/>
+                        <input name="q" placeholder="Suche" class="form-control mr-sm-2 search-query"
+                               id="searchInput"
+                               type="text"
+                        />
+                        <input name="fq" type="hidden" value="objectKind:mycoreobject" />
                     </div>
                     <button type="submit" class="btn btn-primary my-2 my-sm-0">
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
+                <script>
+                    window.addEventListener('load', function () {
+                       document.getElementById('mainSearch').addEventListener('submit', function (event) {
+                           var searchInput = document.getElementById('searchInput');
+                           if (searchInput.value === '') {
+                               event.preventDefault();
+                               searchInput.focus();
+                           }
+                       }); 
+                    });
+                </script>
 
             </div><!-- /container -->
         </div>
