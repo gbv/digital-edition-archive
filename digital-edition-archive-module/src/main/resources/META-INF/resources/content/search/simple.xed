@@ -62,7 +62,22 @@
                 </div>
               </div>
 
-              <xed:bind xpath="condition2[@field='objectKind'][@operator='=']/@value">
+              <div class="form-group row">
+                <label class="col-md-3" for="inputContent">
+                  <xed:output i18n="editor.search.project" />
+                </label>
+                <div class="col-md-9">
+                    <xed:bind xpath="condition2[@field='objectProject'][@operator='=']/@value">
+                      <select class="custom-select">
+                        <option selected="selected" value=""><xed:output i18n="editor.search.project.all" /></option>
+                        <option value="blumenbach"><xed:output i18n="editor.search.project.blumenbach" /></option>
+                        <option value="lod"><xed:output i18n="editor.search.project.lod" /></option>
+                      </select>
+                    </xed:bind>
+                </div>
+              </div>
+
+              <xed:bind xpath="condition3[@field='objectKind'][@operator='=']/@value">
                 <input class="form-control" type="hidden" value="mycoreobject" />
               </xed:bind>
 
