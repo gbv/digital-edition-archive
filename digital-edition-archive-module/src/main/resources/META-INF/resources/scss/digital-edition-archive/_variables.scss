@@ -13,12 +13,20 @@ $gray-light:   #CCCCCC;
 $light-blue:   #E3EAF2;
 
 $link-color: $primary;
+$link-hover-color: lighten($primary, 20%);
 
 $dropdown-color: white;
+$dropdown-link-color: white;
+$dropdown-link-hover-color: lighten($primary, 20%);
+$dropdown-link-hover-bg: $primary;
+
 $dropdown-bg: $primary;
 $dropdown-border-radius: 0;
 $dropdown-border-width: 0;
 $dropdown-spacer: 0;
+
+$nav-link-hover-color: $dropdown-link-hover-color;
+
 
 $pagination-bg: $primary;
 $pagination-hover-bg: lighten($pagination-bg, 10%);

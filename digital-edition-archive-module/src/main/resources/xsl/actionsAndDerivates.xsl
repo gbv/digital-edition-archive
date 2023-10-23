@@ -95,31 +95,27 @@
           <span class="fa fa-cog" aria-hidden="true"></span> Aktionen
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          <li class="dropdown-item" role="presentation">
-            <a role="menuitem" tabindex="-1" href="{$WebApplicationBaseURL}content/publish/{$objectType}.xed?id={$id}">
-              <xsl:value-of select="mcri18n:translate('object.editObject')" />
-            </a>
-          </li>
-          <li class="dropdown-item" role="presentation">
-            <!-- 
-            <a href="{$ServletsBaseURL}derivate/create{$HttpSession}?id={$id}" role="menuitem" tabindex="-1">
-              <xsl:value-of select="mcri18n:translate('derivate.addDerivate')" />
-            </a>
-            -->
-            <a href="#mcr-file-upload-{@ID}" role="menuitem" data-toggle="collapse" tabindex="-1">
-              <xsl:value-of select="mcri18n:translate('derivate.addDerivate')" />
-            </a>
-            
-          </li>
+        <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <a class="dropdown-item" tabindex="-1"
+             href="{$WebApplicationBaseURL}content/publish/{$objectType}.xed?id={$id}">
+            <xsl:value-of select="mcri18n:translate('object.editObject')"/>
+          </a>
+          <!--
+          <a href="{$ServletsBaseURL}derivate/create{$HttpSession}?id={$id}" role="menuitem" tabindex="-1">
+            <xsl:value-of select="mcri18n:translate('derivate.addDerivate')" />
+          </a>
+          -->
+          <a class="dropdown-item" href="#mcr-file-upload-{@ID}" role="menuitem" data-toggle="collapse" tabindex="-1">
+            <xsl:value-of select="mcri18n:translate('derivate.addDerivate')"/>
+          </a>
+
           <xsl:if test="$accessdelete">
-            <li class="dropdown-item" role="presentation">
-              <a href="{$ServletsBaseURL}object/delete{$HttpSession}?id={$id}" role="menuitem" tabindex="-1">
-                <xsl:value-of select="mcri18n:translate('object.delObject')" />
-              </a>
-            </li>
+            <a class="dropdown-item" href="{$ServletsBaseURL}object/delete{$HttpSession}?id={$id}" role="menuitem"
+               tabindex="-1">
+              <xsl:value-of select="mcri18n:translate('object.delObject')"/>
+            </a>
           </xsl:if>
-        </ul>
+        </div>
       </div>
 
     </xsl:if>
