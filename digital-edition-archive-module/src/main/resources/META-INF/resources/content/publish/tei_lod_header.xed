@@ -8,71 +8,75 @@
       <xed:cancel url="../index.xml" />
       <xed:bind xpath="/mycoreobject">
         <xed:bind xpath="@ID" initially="lod_tei_00000000" />
-        <xed:bind xpath="metadata/def.teiContainer[@class='MCRMetaXML'][@notinherit='true']/teiContainer/tei:TEI/tei:teiHeader">
+        <xed:bind xpath="metadata/def.teiContainer[@class='MCRMetaXML'][@notinherit='true']/teiContainer/tei:TEI">
           <div class="card">
             <div class="card-header">
               <h3><xed:output i18n="editor.legend.lod_tei" /></h3>
             </div>
             <div class="card-body">
-              <!-- Input Title -->
-              <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:title[@type='original']">
-                <div class="form-group row {$xed-validation-marker}">
-                  <label class="col-md-4 control-label" for="title">
-                    <xed:output i18n="editor.label.title" />
-                  </label>
-                  <div class="col-md-6">
-                    <input id="title" placeholder="{i18n:editor.placeholder.title}" class="form-control input-md"
-                      type="text" />
-                  </div>
-                  <xed:validate display="here" required="true">
-                    <xed:output i18n="editor.validate.title" />
-                  </xed:validate>
-                </div>
-              </xed:bind>
+              <xed:bind xpath="tei:teiHeader">
 
-              <!-- Input Author -->
-              <xed:bind xpath="tei:fileDesc/tei:titleStmt">
-                <div class="form-group row">
-                  <label class="col-md-4 control-label" for="creator">
-                    <xed:output i18n="editor.label.author" />
-                  </label>
-                  <div class="col-md-6">
-                    <xed:repeat xpath="tei:author">
-                      <xed:bind xpath="tei:persName/tei:surname[@xml:lang='en']">
-                        <div class="form-group row">
-                          <div class="col-sm-8">
-                            <input id="creator" placeholder="{i18n:editor.placeholder.author}" class="form-control input-md"
-                              type="text" />
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="btn-group btn-group-sm pull-right">
-                              <xed:controls />
+                <!-- Input Title -->
+                <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+                  <div class="form-group row {$xed-validation-marker}">
+                    <label class="col-md-4 control-label" for="title">
+                      <xed:output i18n="editor.label.title" />
+                    </label>
+                    <div class="col-md-6">
+                      <input id="title" placeholder="{i18n:editor.placeholder.title}" class="form-control input-md"
+                        type="text" />
+                    </div>
+                    <xed:validate display="here" required="true">
+                      <xed:output i18n="editor.validate.title" />
+                    </xed:validate>
+                  </div>
+                </xed:bind>
+  
+                <!-- Input Author -->
+                <xed:bind xpath="tei:fileDesc/tei:titleStmt">
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label" for="creator">
+                      <xed:output i18n="editor.label.author" />
+                    </label>
+                    <div class="col-md-6">
+                      <xed:repeat xpath="tei:author">
+                        <xed:bind xpath="tei:persName/tei:surname[@xml:lang='en']">
+                          <div class="form-group row">
+                            <div class="col-sm-8">
+                              <input id="creator" placeholder="{i18n:editor.placeholder.author}" class="form-control input-md"
+                                type="text" />
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="btn-group btn-group-sm pull-right">
+                                <xed:controls />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </xed:bind>
-                    </xed:repeat>
+                        </xed:bind>
+                      </xed:repeat>
+                    </div>
                   </div>
-                </div>
-              </xed:bind>
-              <xed:bind xpath="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:orgName[@xml:id='MWS']" default="Max-Weber-Stiftung" />
-              <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:repository" default="DEA" />
-
-              <!-- Input Archivnummer -->
-              <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno">
-                <div class="form-group row {$xed-validation-marker}">
-                  <label class="col-md-4 control-label" for="archivnr">
-                    <xed:output i18n="editor.label.archivnr" />
-                  </label>
-                  <div class="col-md-6">
-                    <input id="title" placeholder="{i18n:editor.placeholder.archivnr}" class="form-control input-md"
-                      type="text" />
+                </xed:bind>
+                <xed:bind xpath="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:orgName[@xml:id='MWS']" default="Max-Weber-Stiftung" />
+                <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:repository" default="DEA" />
+  
+                <!-- Input Archivnummer -->
+                <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno">
+                  <div class="form-group row {$xed-validation-marker}">
+                    <label class="col-md-4 control-label" for="archivnr">
+                      <xed:output i18n="editor.label.archivnr" />
+                    </label>
+                    <div class="col-md-6">
+                      <input id="title" placeholder="{i18n:editor.placeholder.archivnr}" class="form-control input-md"
+                        type="text" />
+                    </div>
+                    <xed:validate display="here" required="true">
+                      <xed:output i18n="editor.validate.archivnr" />
+                    </xed:validate>
                   </div>
-                  <xed:validate display="here" required="true">
-                    <xed:output i18n="editor.validate.archivnr" />
-                  </xed:validate>
-                </div>
+                </xed:bind>
               </xed:bind>
+              <xed:bind xpath="tei:text/tei:body/tei:p" default="dummy" />
 
               <!-- Button (Double) -->
               <div class="form-group row">
