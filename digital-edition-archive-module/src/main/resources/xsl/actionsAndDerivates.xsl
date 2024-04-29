@@ -96,8 +96,17 @@
           <span class="caret"></span>
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        
+          <xsl:variable name="objectProjectID" select="substring-before($id,concat('_', $objectType))" />
+          <xsl:variable name="editorFileName">
+            <xsl:choose>
+              <xsl:when test="contains('lod gazin', $objectProjectID)"><xsl:value-of select="concat($objectType, '_', $objectProjectID, '_header.xed')" /></xsl:when>
+              <xsl:otherwise><xsl:value-of select="concat($objectType,'.xed')" /></xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+        
           <a class="dropdown-item" tabindex="-1"
-             href="{$WebApplicationBaseURL}content/publish/{$objectType}.xed?id={$id}">
+             href="{$WebApplicationBaseURL}content/publish/{$editorFileName}?id={$id}">
             <xsl:value-of select="mcri18n:translate('object.editObject')"/>
           </a>
           <!--

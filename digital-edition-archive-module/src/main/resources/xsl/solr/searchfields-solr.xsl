@@ -10,10 +10,10 @@
             <xsl:value-of select="count(structure/derobjects/derobject)&gt;0"/>
         </field>
         <field name="digital-edition-archive.title">
-            <xsl:value-of select="metadata/def.title/title"/>
+            <xsl:value-of select="metadata/def.teiContainer/teiContainer/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']"/>
         </field>
 
-        <xsl:apply-templates select="metadata/def.teiContainer/def.teiContainer/tei:TEI"/>
+        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:TEI"/>
     </xsl:template>
 
     <xsl:template match="tei:TEI">

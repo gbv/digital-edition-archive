@@ -41,7 +41,7 @@
     </titleStmt>
     -->
     <xsl:template match="/mycoreobject[contains(@ID,'_tei_')]" mode="frontpage">
-        <xsl:apply-templates select="metadata/def.teiContainer/def.teiContainer/tei:TEI"/>
+        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:TEI"/>
     </xsl:template>
 
     <xsl:template match="tei:TEI">
@@ -93,7 +93,7 @@
             <xsl:call-template name="displayMetadataKV">
                 <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.author')"/>
                 <xsl:with-param name="value">
-                    <xsl:apply-templates mode="displayMetadata"/>
+                    <xsl:apply-templates mode="displayMetadata" select="tei:persName/tei:surname" />
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
