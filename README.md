@@ -56,5 +56,5 @@ MCR.Solr.Core.classification.ServerURL=%MCR.Solr.ServerURL%
 ### Run web server
 * Change to `digital-edition-archive-webapp` directory
 * Run Jetty with the command: `mvn jetty:run` (end with `ctrl+c`)
-* Open your browser with: http://localhost:8080/digital-edition-archive
+* Open your browser with: http://localhost:8080/
 * (Fast rebuild and Jetty restart `mvn clean install && cd digital-edition-archive-webapp && mvn jetty:run` (End with ctrl+c))
