@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE MyCoReWebPage>
 <MyCoReWebPage>
-  <section xml:lang="all" title="Erfassungsmaske LOD-HEader">
+  <section xml:lang="all" title="Erfassungsmaske LOD-Header">
 
     <xed:form xmlns:xed="http://www.mycore.de/xeditor" xmlns:tei="http://www.tei-c.org/ns/1.0" method="post" role="form" class="form-horizontal">
       <xed:source uri="mcrobject:{$id}" />
