@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +29,12 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.mycore.access.MCRAccessException;
 import org.mycore.common.MCRException;
-import org.mycore.datamodel.metadata.*;
+import org.mycore.datamodel.metadata.MCRDerivate;
+import org.mycore.datamodel.metadata.MCRMetaClassification;
+import org.mycore.datamodel.metadata.MCRMetadataManager;
+import org.mycore.datamodel.metadata.MCRObject;
+import org.mycore.datamodel.metadata.MCRObjectID;
+import org.mycore.datamodel.metadata.validator.MCREditorOutValidator;
 import org.mycore.datamodel.niofs.MCRPath;
 import org.mycore.datamodel.niofs.utils.MCRRecursiveDeleter;
 import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
@@ -234,6 +238,12 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
             DEAUtils.setTEI(object, rootElement);
         }
         object.getService().setState("published");
+
+        try {
+            MCREditorOutValidator ev = new MCREditorOutValidator(object.createXML(), objectID);
+        } catch (JDOMException e) {
+            throw new MCRException("Error while validating object " + objectID, e);
+        }
 
         try {
             MCRMetadataManager.update(object);

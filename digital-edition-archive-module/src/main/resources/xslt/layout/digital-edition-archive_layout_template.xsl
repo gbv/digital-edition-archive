@@ -10,10 +10,10 @@
                 exclude-result-prefixes="mcri18n mcrversion mcrlayoututils mcrurl"
                 version="3.0">
 
-    <xsl:include href="resource:xsl/default-parameters.xsl"/>
+    <xsl:include href="resource:xslt/default-parameters.xsl"/>
     <xsl:include href="xslInclude:functions"/>
     <xsl:include href="xslInclude:components-3"/>
-    <xsl:include href="common-layout.xsl"/>
+    <xsl:include href="resource:xslt/layout/common-layout.xsl"/>
 
     <xsl:output method="html" indent="yes" omit-xml-declaration="yes"
                 media-type="text/html"
@@ -25,6 +25,7 @@
     <xsl:variable name="fontawesome.version" select="'5.10.1'"/>
     <xsl:variable name="jquery.version" select="'3.1.1'"/>
     <xsl:variable name="jquery.migrate.version" select="'1.4.1'"/>
+    <xsl:variable name="jquery.confirm.version" select="'3.3.4'"/>
     <!-- End of various versions -->
     <xsl:variable name="PageTitle" select="/*/@title"/>
 
@@ -44,11 +45,12 @@
                       rel="stylesheet"/>
                 <link href="{$WebApplicationBaseURL}rsc/sass/scss/bootstrap-digital-edition-archive.css"
                       rel="stylesheet"/>
+                <link href="{$WebApplicationBaseURL}webjars/jquery-confirm/{$jquery.confirm.version}/dist/jquery-confirm.min.css" rel="stylesheet" />
                 <script type="text/javascript"
                         src="{$WebApplicationBaseURL}webjars/jquery/{$jquery.version}/jquery.min.js"></script>
                 <script type="text/javascript"
                         src="{$WebApplicationBaseURL}webjars/jquery-migrate/{$jquery.migrate.version}/jquery-migrate.min.js"></script>
-
+                <script type="text/javascript" src="{$WebApplicationBaseURL}webjars/jquery-confirm/{$jquery.confirm.version}/dist/jquery-confirm.min.js"></script>
                 <xsl:copy-of select="head/*"/>
             </head>
 
