@@ -134,12 +134,6 @@
             <groupId>org.mycore</groupId>
             <artifactId>mycore-mets</artifactId>
         </dependency>
-        <!-- replace this with the settings of the JDBC driver for your database -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.mycore</groupId>
             <artifactId>mycore-webtools</artifactId>
