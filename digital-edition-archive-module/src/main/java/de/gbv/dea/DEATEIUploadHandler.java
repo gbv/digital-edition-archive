@@ -46,6 +46,7 @@ import org.mycore.webtools.upload.MCRUploadHandler;
 import org.mycore.webtools.upload.exception.MCRInvalidFileException;
 import org.mycore.webtools.upload.exception.MCRInvalidUploadParameterException;
 import org.mycore.webtools.upload.exception.MCRMissingParameterException;
+import org.mycore.webtools.upload.exception.MCRUploadException;
 import org.mycore.webtools.upload.exception.MCRUploadForbiddenException;
 import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
@@ -216,7 +217,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     public Document importOrUpdateTEIMyCoReObject(Path teiFile, MCRObjectID objectID,
-        List<MCRMetaClassification> classifications) throws IOException {
+        List<MCRMetaClassification> classifications) throws IOException, MCRInvalidFileException {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
 
@@ -241,8 +242,10 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
         try {
             MCREditorOutValidator ev = new MCREditorOutValidator(object.createXML(), objectID);
-        } catch (JDOMException e) {
-            throw new MCRException("Error while validating object " + objectID, e);
+            ev.generateValidMyCoReObject();
+        } catch (RuntimeException|JDOMException e) {
+            String fileName = teiFile.getFileName().toString();
+            throw new MCRInvalidFileException(fileName, "fileupload.tei.file.invalid", true, fileName, e.getMessage());
         }
 
         try {
@@ -343,7 +346,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     @Override
-    public URI commit(MCRFileUploadBucket bucket) throws MCRUploadServerException {
+    public URI commit(MCRFileUploadBucket bucket) throws MCRUploadException {
         Map<String, List<String>> parameters = bucket.getParameters();
         String project = getProject(bucket.getParameters());
         List<MCRMetaClassification> classifications = MCRDefaultUploadHandler.getClassifications(parameters);
@@ -363,7 +366,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 .findFirst()
                 .get());
         } catch (MCRException e) {
-            if (e.getCause() instanceof MCRUploadServerException muse) {
+            if (e.getCause() instanceof MCRUploadException muse) {
                 throw muse;
             } else {
                 throw e;
