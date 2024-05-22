@@ -90,8 +90,7 @@
 
     </xsl:template>
 
-    <!-- TODO: titleStmt can be in fileDesc and in sourceDesc/biblFull -->
-    <xsl:template match="tei:titleStmt">
+    <xsl:template match="tei:fileDesc/tei:titleStmt">
         <h2 class="heading-metadata">
             <xsl:for-each select="tei:title[@type='main']">
                 <xsl:value-of select="."/>
@@ -206,7 +205,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="tei:editionStmt">
+    <xsl:template match="tei:fileDesc/tei:editionStmt">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.edition')"/>
             <xsl:with-param name="value">
@@ -215,11 +214,11 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:edition">
+    <xsl:template match="tei:fileDesc/tei:edition">
 
     </xsl:template>
 
-    <xsl:template match="tei:teiHeader/tei:fileDesc/tei:extent">
+    <xsl:template match="tei:fileDesc/tei:extent">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.fileDesc.extent')"/>
             <xsl:with-param name="value">
@@ -228,7 +227,7 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:publicationStmt">
+    <xsl:template match="tei:fileDesc/tei:publicationStmt">
         <xsl:for-each select="tei:publisher">
             <xsl:call-template name="displayMetadataKV">
                 <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.publisher')"/>
@@ -239,7 +238,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template match="tei:notesStmt">
+    <xsl:template match="tei:fileDesc/tei:notesStmt">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.noteStmt')"/>
             <xsl:with-param name="value">
