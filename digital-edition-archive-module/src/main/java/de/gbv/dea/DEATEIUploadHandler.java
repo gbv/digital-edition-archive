@@ -221,22 +221,21 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
 
-        Document documentWithHeaderOnly = teiDocument.clone();
-        Element rootElement = documentWithHeaderOnly.getRootElement();
-        Element teiHeader = rootElement.getChild("teiHeader", TEI_NS).detach();
-        rootElement.removeContent();
-        rootElement.addContent(teiHeader);
+        Document documentWithHeaderOnly = new Document();
+        documentWithHeaderOnly.setRootElement(teiDocument.getRootElement().getChild("teiHeader", TEI_NS).clone());
+
+        Element teiHeader = documentWithHeaderOnly.getRootElement();
 
         MCRObject object;
         if (exists) {
             object = MCRMetadataManager.retrieveMCRObject(objectID);
-            DEAUtils.setTEI(object, rootElement);
+            DEAUtils.setTEI(object, teiHeader);
         } else {
             object = new MCRObject();
             object.setId(objectID);
             object.setSchema("datamodel-tei.xsd");
             object.setImportMode(true);
-            DEAUtils.setTEI(object, rootElement);
+            DEAUtils.setTEI(object, teiHeader);
         }
         object.getService().setState("published");
 

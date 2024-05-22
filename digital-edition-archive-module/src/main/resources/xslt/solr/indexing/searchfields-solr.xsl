@@ -28,17 +28,17 @@
             <xsl:value-of select="count(structure/derobjects/derobject)&gt;0"/>
         </field>
         <field name="digital-edition-archive.title">
-            <xsl:value-of select="metadata/def.teiContainer/teiContainer/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']"/>
+            <xsl:value-of select="metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']"/>
         </field>
 
-        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:TEI"/>
+        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"/>
     </xsl:template>
 
-    <xsl:template match="tei:TEI">
-        <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']" />
-        <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:author"/>
-        <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:editor"/>
-        <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher"/>
+    <xsl:template match="tei:teiHeader">
+        <xsl:apply-templates select="tei:fileDesc/tei:titleStmt/tei:title[@type='main']" />
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:author"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:editor"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:publisher"/>
     </xsl:template>
 
     <xsl:template match="tei:title">

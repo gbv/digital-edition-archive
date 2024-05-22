@@ -8,7 +8,7 @@
   <metadata>
     <element name="teiContainer" type="xml" style="dontknow" notinherit="true" heritable="false">
       <xs:sequence>
-        <xs:element ref="tei:TEI" />
+        <xs:element ref="tei:teiHeader" />
       </xs:sequence>
     </element>
   </metadata>

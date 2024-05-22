@@ -59,11 +59,11 @@
     </titleStmt>
     -->
     <xsl:template match="/mycoreobject[contains(@ID,'_tei_')]" mode="frontpage">
-        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:TEI"/>
+        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"/>
     </xsl:template>
 
-    <xsl:template match="tei:TEI">
-        <xsl:apply-templates select="tei:teiHeader/*"/>
+    <xsl:template match="tei:teiHeader">
+        <xsl:apply-templates />
         <xsl:call-template name="displayDownloadLink"/>
     </xsl:template>
 
@@ -90,6 +90,7 @@
 
     </xsl:template>
 
+    <!-- TODO: titleStmt can be in fileDesc and in sourceDesc/biblFull -->
     <xsl:template match="tei:titleStmt">
         <h2 class="heading-metadata">
             <xsl:for-each select="tei:title[@type='main']">
