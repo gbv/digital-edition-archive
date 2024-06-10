@@ -22,7 +22,7 @@ RUN set -eux; \
 RUN rm -rf /usr/local/tomcat/webapps/* && \
     mkdir /opt/dea/ && \
     chown mcr:mcr -R /opt/dea/ && \
-    sed -ri "s/<\/Service>/<Connector protocol=\"AJP\/1.3\" packetSize=\"$PACKET_SIZE\" tomcatAuthentication=\"false\" scheme=\"https\" secretRequired=\"false\" allowedRequestAttributesPattern=\".*\" encodedSolidusHandling=\"decode\" address=\"0.0.0.0\" port=\"8009\" redirectPort=\"8443\" \/>&/g" /usr/local/tomcat/conf/server.xml
+    sed -ri "s/<\/Service>/<Connector protocol=\"AJP\/1.3\" packetSize=\"$PACKET_SIZE\" tomcatAuthentication=\"false\" scheme=\"https\" secretRequired=\"false\" allowedRequestAttributesPattern=\".*\" encodedSolidusHandling=\"passthrough\" address=\"0.0.0.0\" port=\"8009\" redirectPort=\"8443\" \/>&/g" /usr/local/tomcat/conf/server.xml
 COPY --chown=mcr:mcr digital-edition-archive-webapp/target/digital-edition-archive-*.war /opt/dea/dea.war
 COPY --chown=mcr:mcr digital-edition-archive-cli/target/digital-edition-archive-cli-*.tar.gz /opt/dea/dea.tar.gz
 COPY --chown=mcr:mcr docker-log4j2.xml /opt/dea/log4j2.xml
