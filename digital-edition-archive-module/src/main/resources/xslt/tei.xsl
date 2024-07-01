@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ This file is part of ***  M y C o R e  ***
+  ~ See http://www.mycore.de/ for details.
+  ~
+  ~ MyCoRe is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ MyCoRe is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with MyCoRe.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
@@ -41,11 +59,11 @@
     </titleStmt>
     -->
     <xsl:template match="/mycoreobject[contains(@ID,'_tei_')]" mode="frontpage">
-        <xsl:apply-templates select="metadata/def.teiContainer/def.teiContainer/tei:TEI"/>
+        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"/>
     </xsl:template>
 
-    <xsl:template match="tei:TEI">
-        <xsl:apply-templates select="tei:teiHeader/*"/>
+    <xsl:template match="tei:teiHeader">
+        <xsl:apply-templates />
         <xsl:call-template name="displayDownloadLink"/>
     </xsl:template>
 
@@ -72,7 +90,7 @@
 
     </xsl:template>
 
-    <xsl:template match="tei:titleStmt">
+    <xsl:template match="tei:fileDesc/tei:titleStmt">
         <h2 class="heading-metadata">
             <xsl:for-each select="tei:title[@type='main']">
                 <xsl:value-of select="."/>
@@ -93,7 +111,7 @@
             <xsl:call-template name="displayMetadataKV">
                 <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.author')"/>
                 <xsl:with-param name="value">
-                    <xsl:apply-templates mode="displayMetadata"/>
+                    <xsl:apply-templates mode="displayMetadata" select="tei:persName/tei:surname" />
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
@@ -187,7 +205,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="tei:editionStmt">
+    <xsl:template match="tei:fileDesc/tei:editionStmt">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.edition')"/>
             <xsl:with-param name="value">
@@ -196,11 +214,11 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:edition">
+    <xsl:template match="tei:fileDesc/tei:edition">
 
     </xsl:template>
 
-    <xsl:template match="tei:teiHeader/tei:fileDesc/tei:extent">
+    <xsl:template match="tei:fileDesc/tei:extent">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.fileDesc.extent')"/>
             <xsl:with-param name="value">
@@ -209,7 +227,7 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:publicationStmt">
+    <xsl:template match="tei:fileDesc/tei:publicationStmt">
         <xsl:for-each select="tei:publisher">
             <xsl:call-template name="displayMetadataKV">
                 <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.publisher')"/>
@@ -220,7 +238,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template match="tei:notesStmt">
+    <xsl:template match="tei:fileDesc/tei:notesStmt">
         <xsl:call-template name="displayMetadataKV">
             <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.noteStmt')"/>
             <xsl:with-param name="value">

@@ -41,6 +41,10 @@
       <label xml:lang="de">TEI Abzug für LOD einspielen</label>
       <label xml:lang="en">add TEI snapshot for LOD</label>
     </item>
+    <item href="/content/publish/tei_lod_header.xed" type="intern">
+      <label xml:lang="de">TEI Metadaten erfassen</label>
+      <label xml:lang="en">Add TEI metadata</label>
+    </item>
   </menu>
   <menu id="user">
     <label xml:lang="de">Nutzermenü</label>

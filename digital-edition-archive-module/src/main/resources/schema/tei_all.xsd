@@ -3,10 +3,9 @@
   <xs:import namespace="http://www.tei-c.org/ns/Examples" schemaLocation="tei_all_teix.xsd"/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="tei_all_xml.xsd"/>
   <!--
-    Schema generated from ODD source 2023-04-04T17:12:19Z. .
-    TEI Edition: Version 4.6.0. Last updated on
-            4th April 2023, revision f18deffba
-    TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.6.0/
+    Schema generated from ODD source 2023-11-16T19:54:15Z. . 
+    TEI Edition: P5 Version 4.7.0. Last updated on 16th November 2023, revision e5dd73ed0 
+    TEI Edition Location: https://www.tei-c.org/Vault/P5/4.7.0/ 
     
   -->
   <!-- TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium (info@tei-c.org). -->
@@ -51,31 +50,31 @@
   <xs:complexType name="macro.xtext" mixed="true">
     <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.gLike"/>
   </xs:complexType>
-  <xs:group name="anyElement-xenoData">
+  <xs:group name="anyElement_xenoData_1">
     <xs:choice>
       <xs:any namespace="##other" processContents="skip"/>
       <xs:any namespace="##local" processContents="skip"/>
     </xs:choice>
   </xs:group>
-  <xs:group name="anyElement-egXML">
+  <xs:group name="anyElement_egXML_2">
     <xs:choice>
       <xs:any namespace="##other" processContents="skip"/>
       <xs:any namespace="##local" processContents="skip"/>
     </xs:choice>
   </xs:group>
-  <xs:group name="anyElement-content">
+  <xs:group name="anyElement_content_3">
     <xs:choice>
       <xs:any namespace="##other" processContents="skip"/>
       <xs:any namespace="##local" processContents="skip"/>
     </xs:choice>
   </xs:group>
-  <xs:group name="anyElement-constraint">
+  <xs:group name="anyElement_constraint_4">
     <xs:choice>
       <xs:any namespace="##other" processContents="skip"/>
       <xs:any namespace="##local" processContents="skip"/>
     </xs:choice>
   </xs:group>
-  <xs:group name="anyElement-datatype">
+  <xs:group name="anyElement_datatype_5">
     <xs:choice>
       <xs:any namespace="##other" processContents="skip"/>
       <xs:any namespace="##local" processContents="skip"/>
@@ -558,29 +557,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</xs:documentation>
     <xs:attributeGroup ref="tei:att.datable.w3c.attributes"/>
     <xs:attributeGroup ref="tei:att.datable.iso.attributes"/>
     <xs:attributeGroup ref="tei:att.datable.custom.attributes"/>
-    <xs:attributeGroup ref="tei:att.datable.attribute.calendar"/>
     <xs:attributeGroup ref="tei:att.datable.attribute.period"/>
-  </xs:attributeGroup>
-  <xs:attributeGroup name="att.datable.attribute.calendar">
-    <xs:attribute name="calendar">
-      <xs:annotation>
-        <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
-      </xs:annotation>
-      <xs:simpleType>
-        <xs:restriction>
-          <xs:simpleType>
-            <xs:list>
-              <xs:simpleType>
-                <xs:restriction base="xs:anyURI">
-                  <xs:pattern value="\S+"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:list>
-          </xs:simpleType>
-          <xs:minLength value="1"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
   </xs:attributeGroup>
   <xs:attributeGroup name="att.datable.attribute.period">
     <xs:attribute name="period">
@@ -4652,6 +4629,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element ref="tei:idno"/>
       <xs:element ref="tei:lang"/>
       <xs:group ref="tei:model.persNamePart"/>
+      <xs:element ref="tei:eventName"/>
       <xs:element ref="tei:objectName"/>
     </xs:choice>
   </xs:group>
@@ -4664,6 +4642,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element ref="tei:idno"/>
       <xs:element ref="tei:lang"/>
       <xs:group ref="tei:model.persNamePart_alternation"/>
+      <xs:element ref="tei:eventName"/>
       <xs:element ref="tei:objectName"/>
     </xs:choice>
   </xs:group>
@@ -4676,6 +4655,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element ref="tei:idno"/>
       <xs:element ref="tei:lang"/>
       <xs:group ref="tei:model.persNamePart_sequence"/>
+      <xs:element ref="tei:eventName"/>
       <xs:element ref="tei:objectName"/>
     </xs:sequence>
   </xs:group>
@@ -4688,6 +4668,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element minOccurs="0" ref="tei:idno"/>
       <xs:element minOccurs="0" ref="tei:lang"/>
       <xs:group minOccurs="0" ref="tei:model.persNamePart_sequenceOptional"/>
+      <xs:element minOccurs="0" ref="tei:eventName"/>
       <xs:element minOccurs="0" ref="tei:objectName"/>
     </xs:sequence>
   </xs:group>
@@ -4700,6 +4681,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:idno"/>
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:lang"/>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.persNamePart_sequenceOptionalRepeatable"/>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:eventName"/>
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:objectName"/>
     </xs:sequence>
   </xs:group>
@@ -4712,6 +4694,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <xs:element maxOccurs="unbounded" ref="tei:idno"/>
       <xs:element maxOccurs="unbounded" ref="tei:lang"/>
       <xs:group maxOccurs="unbounded" ref="tei:model.persNamePart_sequenceRepeatable"/>
+      <xs:element maxOccurs="unbounded" ref="tei:eventName"/>
       <xs:element maxOccurs="unbounded" ref="tei:objectName"/>
     </xs:sequence>
   </xs:group>
@@ -5203,6 +5186,30 @@ Suggested values include: 1] full (full form); 2] pref (prefix); 3] suff (suffix
       <xs:element ref="tei:place"/>
     </xs:sequence>
   </xs:group>
+  <xs:attributeGroup name="att.calendarSystem.attributes">
+    <xs:attributeGroup ref="tei:att.calendarSystem.attribute.calendar"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="att.calendarSystem.attribute.calendar">
+    <xs:attribute name="calendar">
+      <xs:annotation>
+        <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:simpleType>
+            <xs:list>
+              <xs:simpleType>
+                <xs:restriction base="xs:anyURI">
+                  <xs:pattern value="\S+"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:list>
+          </xs:simpleType>
+          <xs:minLength value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
   <xs:attributeGroup name="att.duration.iso.attributes">
     <xs:attributeGroup ref="tei:att.duration.iso.attribute.dur-iso"/>
   </xs:attributeGroup>
@@ -5567,7 +5574,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="foreign">
                       <xs:annotation>
-                        <xs:documentation>(foreign) </xs:documentation>
+                        <xs:documentation>(foreign) foreign words</xs:documentation>
                       </xs:annotation>
                     </xs:enumeration>
                   </xs:restriction>
@@ -6140,6 +6147,25 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</xs:documentation>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -6373,6 +6399,7 @@ Measures]</xs:documentation>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.canonical.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attributeGroup ref="tei:att.calendarSystem.attributes"/>
       <xs:attributeGroup ref="tei:att.duration.attributes"/>
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
       <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
@@ -6391,6 +6418,7 @@ Measures]</xs:documentation>
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attributeGroup ref="tei:att.calendarSystem.attributes"/>
       <xs:attributeGroup ref="tei:att.canonical.attributes"/>
       <xs:attributeGroup ref="tei:att.duration.attributes"/>
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
@@ -6945,6 +6973,25 @@ Elements]</xs:documentation>
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -6959,6 +7006,25 @@ Elements]</xs:documentation>
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -6995,6 +7061,25 @@ Elements]</xs:documentation>
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.canonical.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7018,6 +7103,25 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -7069,6 +7173,25 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.canonical.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7624,6 +7747,25 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</xs:documentatio
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.canonical.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7638,6 +7780,25 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</xs:documentatio
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.canonical.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7652,6 +7813,25 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</xs:documentatio
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.canonical.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7819,6 +7999,25 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
           </xs:union>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="availability">
@@ -7868,6 +8067,25 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.pointing.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -7992,7 +8210,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
   </xs:element>
   <xs:element name="samplingDecl">
     <xs:annotation>
-      <xs:documentation>(sampling declaration) contains a prose description of the rationale and methods used in sampling texts in the creation of a corpus or collection. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 15.3.2. Declarable Elements]</xs:documentation>
+      <xs:documentation>(sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 15.3.2. Declarable Elements]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
@@ -8303,9 +8521,18 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
           <xs:documentation>specifies the full formal name of the namespace concerned.</xs:documentation>
         </xs:annotation>
         <xs:simpleType>
-          <xs:restriction base="xs:anyURI">
-            <xs:pattern value="\S*"/>
-          </xs:restriction>
+          <xs:union>
+            <xs:simpleType>
+              <xs:restriction base="xs:anyURI">
+                <xs:pattern value="\S+"/>
+              </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:length value="0"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:union>
         </xs:simpleType>
       </xs:attribute>
     </xs:complexType>
@@ -8520,6 +8747,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</xs:d
         </xs:sequence>
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
+      <xs:attributeGroup ref="tei:att.datcat.attributes"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="category">
@@ -8539,6 +8767,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</xs:d
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:category"/>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
+      <xs:attributeGroup ref="tei:att.datcat.attributes"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="catDesc">
@@ -8623,6 +8852,25 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <xs:attributeGroup ref="tei:att.canonical.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="unitDef">
@@ -8640,6 +8888,25 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
       <xs:attributeGroup ref="tei:att.canonical.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="conversion">
@@ -8651,6 +8918,25 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
       <xs:attributeGroup ref="tei:att.formula.attributes"/>
       <xs:attributeGroup ref="tei:att.locatable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="fromUnit" use="required">
         <xs:simpleType>
           <xs:restriction base="xs:anyURI">
@@ -8691,6 +8977,25 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="ident" use="required" type="xs:Name">
         <xs:annotation>
           <xs:documentation>supplies an identifier for the application, independent of its version number or display name.</xs:documentation>
@@ -8754,6 +9059,25 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="langUsage">
@@ -8794,7 +9118,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
           </xs:attribute>
           <xs:attribute name="usage" type="xs:nonNegativeInteger">
             <xs:annotation>
-              <xs:documentation>specifies the approximate percentage (by volume) of the text which uses this language.</xs:documentation>
+              <xs:documentation>specifies the approximate percentage of the text which uses this language.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>
@@ -8994,7 +9318,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
       <xs:documentation>(non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]</xs:documentation>
     </xs:annotation>
     <xs:complexType mixed="true">
-      <xs:group minOccurs="0" ref="tei:anyElement-xenoData"/>
+      <xs:group minOccurs="0" ref="tei:anyElement_xenoData_1"/>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.declarable.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
@@ -9006,8 +9330,8 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
     </xs:annotation>
     <xs:complexType>
       <xs:choice>
-        <xs:element ref="tei:list"/>
-        <xs:element ref="tei:listChange"/>
+        <xs:element maxOccurs="unbounded" ref="tei:list"/>
+        <xs:element maxOccurs="unbounded" ref="tei:listChange"/>
         <xs:element maxOccurs="unbounded" ref="tei:change"/>
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
@@ -9026,6 +9350,25 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
           <xs:attributeGroup ref="tei:att.docStatus.attributes"/>
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
           <xs:attribute name="target">
             <xs:annotation>
               <xs:documentation>(target) points to one or more elements that belong to this change.</xs:documentation>
@@ -9966,14 +10309,8 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
       <xs:complexContent>
         <xs:extension base="tei:macro.phraseSeq">
           <xs:attributeGroup ref="tei:att.global.attributes"/>
-          <xs:attribute name="when">
-            <xs:annotation>
-              <xs:documentation>(when) gives the value of the date in standard form, i.e. YYYY-MM-DD.</xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-              <xs:union memberTypes="xs:date xs:gYear xs:gMonth xs:gDay xs:gYearMonth xs:gMonthDay xs:time xs:dateTime"/>
-            </xs:simpleType>
-          </xs:attribute>
+          <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attributeGroup ref="tei:att.calendarSystem.attributes"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -10088,7 +10425,7 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
     <xs:attribute name="version">
       <xs:annotation>
         <xs:documentation>specifies the version number of the Unicode Standard in which this property name is defined.
-Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3.2; 8] 4.0; 9] 4.1; 10] 5.0; 11] 5.1; 12] 5.2; 13] 6.0; 14] 6.1; 15] 6.2; 16] 6.3; 17] 7.0; 18] 8.0; 19] 9.0; 20] 10.0; 21] 11.0; 22] 12.0; 23] 12.1; 24] unassigned</xs:documentation>
+Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3.2; 8] 4.0; 9] 4.1; 10] 5.0; 11] 5.1; 12] 5.2; 13] 6.0; 14] 6.1; 15] 6.2; 16] 6.3; 17] 7.0; 18] 8.0; 19] 9.0; 20] 10.0; 21] 11.0; 22] 12.0; 23] 12.1; 24] 13.0; 25] 14.0; 26] 15.0; 27] unassigned</xs:documentation>
       </xs:annotation>
       <xs:simpleType>
         <xs:union>
@@ -10293,6 +10630,33 @@ Suggested values include: 1] 1.0.1; 2] 1.1; 3] 2.0; 4] 2.1; 5] 3.0; 6] 3.1; 7] 3
           <xs:simpleType>
             <xs:restriction base="xs:token">
               <xs:enumeration value="12.1">
+                <xs:annotation>
+                  <xs:documentation/>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="13.0">
+                <xs:annotation>
+                  <xs:documentation/>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="14.0">
+                <xs:annotation>
+                  <xs:documentation/>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="15.0">
                 <xs:annotation>
                   <xs:documentation/>
                 </xs:annotation>
@@ -14626,16 +14990,14 @@ Sample values include: 1] cap (capital); 2] noHyph (no hyphen)</xs:documentation
         <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.headLike"/>
         <xs:choice>
           <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
-          <xs:sequence>
-            <xs:element minOccurs="0" ref="tei:msContents"/>
-            <xs:element minOccurs="0" ref="tei:physDesc"/>
-            <xs:element minOccurs="0" ref="tei:history"/>
-            <xs:element minOccurs="0" ref="tei:additional"/>
-            <xs:choice>
-              <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:msPart"/>
-              <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:msFrag"/>
-            </xs:choice>
-          </xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="tei:msContents"/>
+            <xs:element ref="tei:physDesc"/>
+            <xs:element ref="tei:history"/>
+            <xs:element ref="tei:additional"/>
+            <xs:element ref="tei:msPart"/>
+            <xs:element ref="tei:msFrag"/>
+          </xs:choice>
         </xs:choice>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
@@ -14873,6 +15235,7 @@ Sample values include: 1] binding; 2] endband; 3] slipcase; 4] support; 5] tie</
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attributeGroup ref="tei:att.calendarSystem.attributes"/>
       <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
@@ -14890,6 +15253,25 @@ Sample values include: 1] binding; 2] endband; 3] slipcase; 4] support; 5] tie</
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -14928,6 +15310,25 @@ Sample values include: 1] binding; 2] endband; 3] slipcase; 4] support; 5] tie</
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -15034,6 +15435,25 @@ Sample values include: 1] binding; 2] endband; 3] slipcase; 4] support; 5] tie</
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="msName">
@@ -15619,6 +16039,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="contemporary">
         <xs:annotation>
           <xs:documentation>(contemporary) specifies whether or not the binding is contemporary with the majority of its contents</xs:documentation>
@@ -15672,6 +16111,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="contemporary">
         <xs:annotation>
           <xs:documentation>(contemporary) specifies whether or not the seal is contemporary with the item to which it is affixed</xs:documentation>
@@ -15737,6 +16195,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -15751,6 +16228,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -15764,6 +16260,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
         <xs:extension base="tei:macro.specialPara">
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -15773,11 +16288,14 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
       <xs:documentation>(additional) groups additional information, combining bibliographic information about a manuscript or other object, or surrogate copies of it, with curatorial or administrative information. [10.9. Additional Information]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="tei:adminInfo"/>
-        <xs:element minOccurs="0" ref="tei:surrogates"/>
-        <xs:element minOccurs="0" ref="tei:listBibl"/>
-      </xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="tei:adminInfo"/>
+          <xs:element minOccurs="0" ref="tei:surrogates"/>
+          <xs:element minOccurs="0" ref="tei:listBibl"/>
+        </xs:sequence>
+        <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
+      </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
     </xs:complexType>
   </xs:element>
@@ -15844,6 +16362,25 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -15870,13 +16407,13 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
         <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.headLike"/>
         <xs:choice>
           <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
-          <xs:sequence>
-            <xs:element minOccurs="0" ref="tei:msContents"/>
-            <xs:element minOccurs="0" ref="tei:physDesc"/>
-            <xs:element minOccurs="0" ref="tei:history"/>
-            <xs:element minOccurs="0" ref="tei:additional"/>
-            <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:msPart"/>
-          </xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="tei:msContents"/>
+            <xs:element ref="tei:physDesc"/>
+            <xs:element ref="tei:history"/>
+            <xs:element ref="tei:additional"/>
+            <xs:element ref="tei:msPart"/>
+          </xs:choice>
         </xs:choice>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
@@ -15896,12 +16433,12 @@ Suggested values include: 1] paper; 2] parch (parchment); 3] mixed</xs:documenta
         <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.headLike"/>
         <xs:choice>
           <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
-          <xs:sequence>
-            <xs:element minOccurs="0" ref="tei:msContents"/>
-            <xs:element minOccurs="0" ref="tei:physDesc"/>
-            <xs:element minOccurs="0" ref="tei:history"/>
-            <xs:element minOccurs="0" ref="tei:additional"/>
-          </xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="tei:msContents"/>
+            <xs:element ref="tei:physDesc"/>
+            <xs:element ref="tei:history"/>
+            <xs:element ref="tei:additional"/>
+          </xs:choice>
         </xs:choice>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
@@ -17523,6 +18060,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.personal.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17539,6 +18095,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.personal.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17638,6 +18213,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.personal.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17653,6 +18247,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17668,6 +18281,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17683,6 +18315,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17698,6 +18349,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17713,6 +18383,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17730,6 +18419,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17746,6 +18454,25 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17763,6 +18490,41 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
           <xs:attributeGroup ref="tei:att.naming.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
           <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="eventName">
+    <xs:annotation>
+      <xs:documentation>(name of an event) contains a proper noun or noun phrase used to refer to an event. [13.2.4. Event Names]</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tei:macro.phraseSeq">
+          <xs:attributeGroup ref="tei:att.global.attributes"/>
+          <xs:attributeGroup ref="tei:att.datable.attributes"/>
+          <xs:attributeGroup ref="tei:att.editLike.attributes"/>
+          <xs:attributeGroup ref="tei:att.personal.attributes"/>
+          <xs:attributeGroup ref="tei:att.typed.attributes"/>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17790,6 +18552,25 @@ Sample values include: 1] sponsor; 2] recommend; 3] discredit; 4] pledged</xs:do
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17814,6 +18595,25 @@ Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWor
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -17850,6 +18650,25 @@ Sample values include: 1] caesarean (caesarean section); 2] vaginal (vaginal del
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -17877,6 +18696,25 @@ Sample values include: 1] caesarean (caesarean section); 2] vaginal (vaginal del
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="death">
@@ -17900,6 +18738,25 @@ Sample values include: 1] proclaimed; 2] assumed; 3] verified; 4] clinical; 5] b
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -17930,13 +18787,32 @@ Sample values include: 1] primary; 2] secondary; 3] undergraduate; 4] graduate; 
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
   <xs:element name="event">
     <xs:annotation>
-      <xs:documentation>(event) contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. Basic Principles]</xs:documentation>
+      <xs:documentation>(event) contains data relating to anything of significance that happens in time. [13.3.1. Basic Principles]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
@@ -17945,6 +18821,7 @@ Sample values include: 1] primary; 2] secondary; 3] undergraduate; 4] graduate; 
         <xs:choice>
           <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
           <xs:group maxOccurs="unbounded" ref="tei:model.labelLike"/>
+          <xs:element maxOccurs="unbounded" ref="tei:eventName"/>
         </xs:choice>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:group ref="tei:model.noteLike"/>
@@ -17954,15 +18831,50 @@ Sample values include: 1] primary; 2] secondary; 3] undergraduate; 4] graduate; 
           <xs:element ref="tei:idno"/>
           <xs:element ref="tei:ptr"/>
         </xs:choice>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tei:event"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="tei:event"/>
+          <xs:element ref="tei:listEvent"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="tei:model.personLike"/>
+          <xs:element ref="tei:listPerson"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="tei:model.placeLike"/>
+          <xs:element ref="tei:listPlace"/>
+        </xs:choice>
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.objectLike"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="tei:relation"/>
+          <xs:element ref="tei:listRelation"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
-      <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attributeGroup ref="tei:att.locatable.attributes"/>
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.sortable.attributes"/>
-      <xs:attributeGroup ref="tei:att.locatable.attributes"/>
+      <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="faith">
@@ -17988,6 +18900,25 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -18003,6 +18934,25 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -18018,6 +18968,25 @@ Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrili
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
           <xs:attribute name="value">
             <xs:annotation>
               <xs:documentation>supplies a coded value for gender identity</xs:documentation>
@@ -18074,6 +19043,25 @@ Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing</xs:doc
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="tags">
         <xs:annotation>
           <xs:documentation>supplies one or more valid language tags for the languages specified</xs:documentation>
@@ -18113,6 +19101,25 @@ Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing</xs:doc
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
           <xs:attribute name="tag" use="required">
             <xs:annotation>
               <xs:documentation>supplies a valid language tag for the language concerned.</xs:documentation>
@@ -18187,7 +19194,10 @@ Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing</xs:doc
           <xs:element ref="tei:listRelation"/>
         </xs:choice>
         <xs:sequence maxOccurs="unbounded">
-          <xs:group maxOccurs="unbounded" ref="tei:model.eventLike"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="tei:event"/>
+            <xs:element ref="tei:listEvent"/>
+          </xs:choice>
           <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element ref="tei:relation"/>
             <xs:element ref="tei:listRelation"/>
@@ -18298,6 +19308,25 @@ Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing</xs:doc
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="nationality">
@@ -18320,6 +19349,25 @@ Sample values include: 1] birth; 2] naturalised; 3] self-assigned</xs:documentat
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -18347,6 +19395,25 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</xs:documentatio
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -18733,6 +19800,25 @@ Suggested values include: 1] conjecture (conjecture); 2] selfIdentification (sel
               </xs:union>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
           <xs:attribute name="value">
             <xs:annotation>
               <xs:documentation>(value) supplies a regularized value for personal pronouns.
@@ -18818,6 +19904,25 @@ Sample values include: 1] e (e); 2] he (he); 3] she (she); 4] they (they)</xs:do
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="relation">
@@ -18834,6 +19939,25 @@ Sample values include: 1] e (e); 2] he (he); 3] she (she); 4] they (they)</xs:do
       <xs:attributeGroup ref="tei:att.canonical.attributes"/>
       <xs:attributeGroup ref="tei:att.sortable.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="name">
         <xs:annotation>
           <xs:documentation>supplies a name for the kind of relationship of which this is an instance.</xs:documentation>
@@ -18926,6 +20050,25 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</xs:
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -18941,6 +20084,25 @@ Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent</xs:
           <xs:attributeGroup ref="tei:att.editLike.attributes"/>
           <xs:attributeGroup ref="tei:att.datable.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
           <xs:attribute name="value">
             <xs:annotation>
               <xs:documentation>supplies a coded value for sex</xs:documentation>
@@ -18984,6 +20146,25 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:pattern value="[^\p{C}\p{Z}]+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
@@ -19035,6 +20216,25 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="terrain">
@@ -19060,6 +20260,25 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
       <xs:attributeGroup ref="tei:att.editLike.attributes"/>
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="trait">
@@ -19092,11 +20311,30 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
       <xs:attributeGroup ref="tei:att.naming.attributes"/>
       <xs:attributeGroup ref="tei:att.typed.attributes"/>
       <xs:attributeGroup ref="tei:att.dimensions.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="objectName">
     <xs:annotation>
-      <xs:documentation>(name of an object) contains a proper noun or noun phrase used to refer to an object. [13.2.4. Object Names]</xs:documentation>
+      <xs:documentation>(name of an object) contains a proper noun or noun phrase used to refer to an object. [13.2.5. Object Names]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:complexContent>
@@ -19106,26 +20344,45 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
           <xs:attributeGroup ref="tei:att.global.attributes"/>
           <xs:attributeGroup ref="tei:att.personal.attributes"/>
           <xs:attributeGroup ref="tei:att.typed.attributes"/>
+          <xs:attribute name="calendar">
+            <xs:annotation>
+              <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:simpleType>
+                  <xs:list>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:anyURI">
+                        <xs:pattern value="\S+"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
   <xs:element name="object">
     <xs:annotation>
-      <xs:documentation>contains a description of a single identifiable physical object. [13.3.5. Objects]</xs:documentation>
+      <xs:documentation>contains a description of a single identifiable physical object. [13.3.6. Objects]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="tei:objectIdentifier"/>
         <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.headLike"/>
         <xs:choice>
-          <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:model.pLike"/>
-          <xs:sequence>
-            <xs:element minOccurs="0" ref="tei:msContents"/>
-            <xs:element minOccurs="0" ref="tei:physDesc"/>
-            <xs:element minOccurs="0" ref="tei:history"/>
-            <xs:element minOccurs="0" ref="tei:additional"/>
-          </xs:sequence>
+          <xs:group maxOccurs="unbounded" ref="tei:model.pLike"/>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="tei:msContents"/>
+            <xs:element ref="tei:physDesc"/>
+            <xs:element ref="tei:history"/>
+            <xs:element ref="tei:additional"/>
+          </xs:choice>
         </xs:choice>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:group ref="tei:model.noteLike"/>
@@ -19145,7 +20402,7 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
   </xs:element>
   <xs:element name="listObject">
     <xs:annotation>
-      <xs:documentation>(list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.5. Objects]</xs:documentation>
+      <xs:documentation>(list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.6. Objects]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
@@ -19171,7 +20428,7 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
   </xs:element>
   <xs:element name="objectIdentifier">
     <xs:annotation>
-      <xs:documentation>(object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects]</xs:documentation>
+      <xs:documentation>(object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.6. Objects]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
@@ -19190,7 +20447,7 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
   </xs:element>
   <xs:element name="nym">
     <xs:annotation>
-      <xs:documentation>(canonical name) contains the definition for a canonical name or name component of any kind. [13.3.6. Names and Nyms]</xs:documentation>
+      <xs:documentation>(canonical name) contains the definition for a canonical name or name component of any kind. [13.3.7. Names and Nyms]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
@@ -19225,7 +20482,7 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
   </xs:element>
   <xs:element name="listNym">
     <xs:annotation>
-      <xs:documentation>(list of canonical names) contains a list of nyms, that is, standardized names for any thing. [13.3.6. Names and Nyms]</xs:documentation>
+      <xs:documentation>(list of canonical names) contains a list of nyms, that is, standardized names for any thing. [13.3.7. Names and Nyms]</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
@@ -21842,6 +23099,25 @@ Suggested values include: 1] initial; 2] final</xs:documentation>
       <xs:attributeGroup ref="tei:att.scoping.attributes"/>
       <xs:attributeGroup ref="tei:att.ranging.attributes"/>
       <xs:attributeGroup ref="tei:att.datable.attributes"/>
+      <xs:attribute name="calendar">
+        <xs:annotation>
+          <xs:documentation>indicates one or more systems or calendars to which the date represented by the content of this element belongs.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction>
+            <xs:simpleType>
+              <xs:list>
+                <xs:simpleType>
+                  <xs:restriction base="xs:anyURI">
+                    <xs:pattern value="\S+"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:list>
+            </xs:simpleType>
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="precision">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -22231,9 +23507,18 @@ Sample values include: 1] ignorance; 2] incompleteness; 3] credibility; 4] impre
         <xs:documentation>(namespace) specifies the namespace to which the element(s) being specified belongs.</xs:documentation>
       </xs:annotation>
       <xs:simpleType>
-        <xs:restriction base="xs:anyURI">
-          <xs:pattern value="\S*"/>
-        </xs:restriction>
+        <xs:union>
+          <xs:simpleType>
+            <xs:restriction base="xs:anyURI">
+              <xs:pattern value="\S+"/>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:length value="0"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:union>
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
@@ -23796,7 +25081,7 @@ Suggested values include: 1] alternate; 2] default; 3] height; 4] id; 5] label; 
       <xs:choice>
         <xs:element ref="tei:valList"/>
         <xs:group maxOccurs="unbounded" ref="tei:model.contentPart"/>
-        <xs:group maxOccurs="unbounded" ref="tei:anyElement-content"/>
+        <xs:group maxOccurs="unbounded" ref="tei:anyElement_content_3"/>
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attribute name="autoPrefix" default="true">
@@ -23845,7 +25130,7 @@ Suggested values include: 1] alternate; 2] default; 3] height; 4] id; 5] label; 
       <xs:documentation>(constraint rules) the formal rules of a constraint [22.5. Element Specifications]</xs:documentation>
     </xs:annotation>
     <xs:complexType mixed="true">
-      <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:anyElement-constraint"/>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:anyElement_constraint_4"/>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
     </xs:complexType>
   </xs:element>
@@ -23884,7 +25169,7 @@ Suggested values include: 1] alternate; 2] default; 3] height; 4] id; 5] label; 
           </xs:union>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="scheme" use="required">
+      <xs:attribute name="scheme">
         <xs:annotation>
           <xs:documentation>supplies the name of the language in which the constraints are defined
 Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
@@ -23961,6 +25246,7 @@ Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
       </xs:sequence>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attributeGroup ref="tei:att.identified.attributes"/>
+      <xs:attributeGroup ref="tei:att.namespaceable.attributes"/>
       <xs:attribute name="usage" default="opt">
         <xs:annotation>
           <xs:documentation>specifies the optionality of the attribute.</xs:documentation>
@@ -23985,16 +25271,6 @@ Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="ns">
-        <xs:annotation>
-          <xs:documentation>(namespace) specifies the namespace to which this attribute belongs</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:anyURI">
-            <xs:pattern value="\S*"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="attRef">
@@ -24003,15 +25279,10 @@ Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
-      <xs:attribute name="class">
+      <xs:attribute name="class" type="xs:Name">
         <xs:annotation>
           <xs:documentation>the name of the attribute class</xs:documentation>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:pattern value="[^\p{C}\p{Z}]+"/>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="name" type="xs:Name">
         <xs:annotation>
@@ -24027,7 +25298,7 @@ Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
     <xs:complexType>
       <xs:choice>
         <xs:element ref="tei:dataRef"/>
-        <xs:group ref="tei:anyElement-datatype"/>
+        <xs:group ref="tei:anyElement_datatype_5"/>
       </xs:choice>
       <xs:attributeGroup ref="tei:att.global.attributes"/>
       <xs:attribute name="minOccurs" default="1" type="xs:nonNegativeInteger">
@@ -24270,7 +25541,7 @@ Suggested values include: 1] schematron (ISO Schematron)</xs:documentation>
               <xs:list>
                 <xs:simpleType>
                   <xs:restriction base="xs:anyURI">
-                    <xs:pattern value="\S*"/>
+                    <xs:pattern value="\S+"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:list>

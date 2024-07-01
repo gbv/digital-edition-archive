@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ This file is part of ***  M y C o R e  ***
+  ~ See http://www.mycore.de/ for details.
+  ~
+  ~ MyCoRe is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ MyCoRe is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with MyCoRe.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <xsl:stylesheet version="3.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -74,10 +92,11 @@
                 });
             });
             $('.file-upload-box').on('shown.bs.collapse', function() {
-                if (!$(this).attr('id').contains("_derivate_")) {
-                    this.scrollIntoView();
+                if ($(this).attr('id').indexOf("_derivate_")==-1) {
+                  this.scrollIntoView();
                 }
             });
+            $('.confirm_deletion').confirm();
         });
       </script> 
     </xsl:if>
@@ -96,8 +115,17 @@
           <span class="caret"></span>
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        
+          <xsl:variable name="objectProjectID" select="substring-before($id,concat('_', $objectType))" />
+          <xsl:variable name="editorFileName">
+            <xsl:choose>
+              <xsl:when test="contains('lod gazin', $objectProjectID)"><xsl:value-of select="concat($objectType, '_', $objectProjectID, '_header.xed')" /></xsl:when>
+              <xsl:otherwise><xsl:value-of select="concat($objectType,'.xed')" /></xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+        
           <a class="dropdown-item" tabindex="-1"
-             href="{$WebApplicationBaseURL}content/publish/{$objectType}.xed?id={$id}">
+             href="{$WebApplicationBaseURL}content/publish/{$editorFileName}?id={$id}">
             <xsl:value-of select="mcri18n:translate('object.editObject')"/>
           </a>
           <!--

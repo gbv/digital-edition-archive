@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +29,12 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.mycore.access.MCRAccessException;
 import org.mycore.common.MCRException;
-import org.mycore.datamodel.metadata.*;
+import org.mycore.datamodel.metadata.MCRDerivate;
+import org.mycore.datamodel.metadata.MCRMetaClassification;
+import org.mycore.datamodel.metadata.MCRMetadataManager;
+import org.mycore.datamodel.metadata.MCRObject;
+import org.mycore.datamodel.metadata.MCRObjectID;
+import org.mycore.datamodel.metadata.validator.MCREditorOutValidator;
 import org.mycore.datamodel.niofs.MCRPath;
 import org.mycore.datamodel.niofs.utils.MCRRecursiveDeleter;
 import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
@@ -42,6 +46,7 @@ import org.mycore.webtools.upload.MCRUploadHandler;
 import org.mycore.webtools.upload.exception.MCRInvalidFileException;
 import org.mycore.webtools.upload.exception.MCRInvalidUploadParameterException;
 import org.mycore.webtools.upload.exception.MCRMissingParameterException;
+import org.mycore.webtools.upload.exception.MCRUploadException;
 import org.mycore.webtools.upload.exception.MCRUploadForbiddenException;
 import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
@@ -212,28 +217,35 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     public Document importOrUpdateTEIMyCoReObject(Path teiFile, MCRObjectID objectID,
-        List<MCRMetaClassification> classifications) throws IOException {
+        List<MCRMetaClassification> classifications) throws IOException, MCRInvalidFileException {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
 
-        Document documentWithHeaderOnly = teiDocument.clone();
-        Element rootElement = documentWithHeaderOnly.getRootElement();
-        Element teiHeader = rootElement.getChild("teiHeader", TEI_NS).detach();
-        rootElement.removeContent();
-        rootElement.addContent(teiHeader);
+        Document documentWithHeaderOnly = new Document();
+        documentWithHeaderOnly.setRootElement(teiDocument.getRootElement().getChild("teiHeader", TEI_NS).clone());
+
+        Element teiHeader = documentWithHeaderOnly.getRootElement();
 
         MCRObject object;
         if (exists) {
             object = MCRMetadataManager.retrieveMCRObject(objectID);
-            DEAUtils.setTEI(object, rootElement);
+            DEAUtils.setTEI(object, teiHeader);
         } else {
             object = new MCRObject();
             object.setId(objectID);
             object.setSchema("datamodel-tei.xsd");
             object.setImportMode(true);
-            DEAUtils.setTEI(object, rootElement);
+            DEAUtils.setTEI(object, teiHeader);
         }
         object.getService().setState("published");
+
+        try {
+            MCREditorOutValidator ev = new MCREditorOutValidator(object.createXML(), objectID);
+            ev.generateValidMyCoReObject();
+        } catch (RuntimeException|JDOMException e) {
+            String fileName = teiFile.getFileName().toString();
+            throw new MCRInvalidFileException(fileName, "fileupload.tei.file.invalid", true, fileName, e.getMessage());
+        }
 
         try {
             MCRMetadataManager.update(object);
@@ -333,7 +345,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     @Override
-    public URI commit(MCRFileUploadBucket bucket) throws MCRUploadServerException {
+    public URI commit(MCRFileUploadBucket bucket) throws MCRUploadException {
         Map<String, List<String>> parameters = bucket.getParameters();
         String project = getProject(bucket.getParameters());
         List<MCRMetaClassification> classifications = MCRDefaultUploadHandler.getClassifications(parameters);
@@ -353,7 +365,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 .findFirst()
                 .get());
         } catch (MCRException e) {
-            if (e.getCause() instanceof MCRUploadServerException muse) {
+            if (e.getCause() instanceof MCRUploadException muse) {
                 throw muse;
             } else {
                 throw e;
