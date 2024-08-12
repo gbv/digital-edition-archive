@@ -117,8 +117,10 @@
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
         
           <xsl:variable name="objectProjectID" select="substring-before($id,concat('_', $objectType))" />
+          <xsl:message><xsl:value-of select="$objectType" /></xsl:message>
           <xsl:variable name="editorFileName">
             <xsl:choose>
+              <xsl:when test="$objectType = 'edition'">tei_edition.xed</xsl:when>
               <xsl:when test="contains('lod gazin', $objectProjectID)"><xsl:value-of select="concat($objectType, '_', $objectProjectID, '_header.xed')" /></xsl:when>
               <xsl:otherwise><xsl:value-of select="concat($objectType,'.xed')" /></xsl:otherwise>
             </xsl:choose>

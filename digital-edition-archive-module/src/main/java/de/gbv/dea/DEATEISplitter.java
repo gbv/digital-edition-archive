@@ -21,13 +21,9 @@ public class DEATEISplitter {
 
     private TeiFile original;
 
-    private TeiFile current;
-
     private Element copyTarget;
 
     private List<TeiFile> splitDocumentList = new ArrayList<>();
-
-    private int count = 0;
 
     private int size = -1;
 
@@ -83,7 +79,6 @@ public class DEATEISplitter {
                         facs = facs.substring("images/".length());
                     }
                     Stub newStub = copyAncestors(element, facs);
-                    current = newStub.teiFile;
                     copyTarget = newStub.newEl;
                     continue;
                 }
@@ -127,7 +122,6 @@ public class DEATEISplitter {
             .getRootElement().getChild("text", TEI_NS);
 
         Stub newStub = copyAncestors(originalText.getChildren().get(0), null);
-        current = newStub.teiFile;
         copyTarget = newStub.newEl;
 
         traverse(originalText);
@@ -135,9 +129,9 @@ public class DEATEISplitter {
         return splitDocumentList;
     }
 
-    public static record TeiFile(String name, Document doc) {
+    public record TeiFile(String name, Document doc) {
     }
 
-    public static record Stub(Element newEl, TeiFile teiFile) {
+    public record Stub(Element newEl, TeiFile teiFile) {
     }
 }

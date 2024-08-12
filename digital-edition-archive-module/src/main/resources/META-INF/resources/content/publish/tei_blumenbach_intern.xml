@@ -5,7 +5,7 @@
     <section title="TEI Abzug für Blumenbach einspielen" xml:lang="de">
         <h1>Neuen TEI Abzug einspielen</h1>
 
-        <import-tei-snapshot project="blumenbach" />
+        <import-tei-snapshot project="blumenbach" updloadHandler="Blumenbach" />
 
     </section>
     <meta>

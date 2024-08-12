@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This file is part of ***  M y C o R e  ***
+  ~ See http://www.mycore.de/ for details.
+  ~
+  ~ MyCoRe is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ MyCoRe is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with MyCoRe.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!DOCTYPE MyCoReWebPage>
+<MyCoReWebPage xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xed="http://www.mycore.de/xeditor">
+    <section xml:lang="all" title="Erfassungsmaske TEI-Edition">
+
+        <xed:form method="post" role="form" class="form-horizontal">
+            <xed:source uri="mcrobject:{$id}"/>
+            <xed:cancel url="../index.xml"/>
+
+            <xed:post-processor class="de.gbv.dea.DEATEISorter"/>
+
+            <xed:bind xpath="/mycoreobject">
+                <xed:bind xpath="@ID">
+                    <input type="hidden" id="mycoreID"/>
+                </xed:bind>
+                <xed:bind
+                        xpath="metadata/def.teiContainer[@class='MCRMetaXML'][@notinherit='true']/teiContainer/tei:teiHeader">
+
+                    <h3>
+                        <xed:output i18n="editor.legend.project"/>
+                    </h3>
+
+
+                    <fieldset class="mt-4 p-3 border">
+                        <legend>
+                            <xed:output i18n="editor.legend.project.information"/>
+                        </legend>
+
+                        <xed:bind
+                                xpath="../../../../service/servstates[@class='MCRMetaClassification']/servstate[@classid='state']/@categid">
+                            <div class="form-group row">
+                                <div class="col-md-3 col-12">
+                                    <label for="state-{xed:generate-id()}"
+                                           class="col-form-label state-label">
+                                        <xed:output i18n="editor.label.project.state"/>
+                                    </label>
+                                </div>
+                                <div class="col-md-9 col-12">
+                                    <select id="state-{xed:generate-id()}"
+                                            class="form-control state-select">
+                                        <option value="">
+                                            <xed:output i18n="editor.label.choose"/>
+                                        </option>
+                                        <xed:include
+                                                uri="xslStyle:items2options:classification:editor:-1:children:state"/>
+                                        <xed:validate display="here" required="true"
+                                                      i18n="editor.label.validate.project.state" />
+                                    </select>
+                                </div>
+                            </div>
+                        </xed:bind>
+
+                        <!-- Projektkürzel -->
+                        <xed:bind xpath="tei:fileDesc/tei:editionStmt/tei:edition/@xml:id">
+                            <div class="form-group row">
+                                <label for="project-abbreviation-{xed:generate-id()}"
+                                       class="col-md-3 col-12 col-form-label project-abbreviation-label">
+                                    <xed:output i18n="editor.label.project.abbreviation"/>
+                                </label>
+                                <div class="col-md-9 col-12">
+                                    <input id="project-abbreviation-{xed:generate-id()}" type="text"
+                                           class="form-control project-abbreviation-input {$xed-validation-marker}"/>
+                                    <xed:validate display="here" required="true"
+                                                  i18n="editor.label.validate.project.abbreviation" />
+                                </div>
+                            </div>
+                        </xed:bind>
+
+
+                        <!-- Projekttitel -->
+                        <xed:bind xpath="tei:fileDesc/tei:editionStmt/tei:edition">
+                            <div class="form-group row">
+                                <label for="project-title-{xed:generate-id()}"
+                                       class="col-md-3 col-12 col-form-label project-title-label">
+                                    <xed:output i18n="editor.label.project.title"/>
+                                </label>
+                                <div class="col-md-9 col-12">
+                                    <input id="project-title-{xed:generate-id()}" type="text"
+                                           class="form-control project-title-input {$xed-validation-marker}"/>
+                                    <xed:validate display="here" required="true"
+                                                  i18n="editor.label.validate.edition.title" />
+                                </div>
+                            </div>
+                        </xed:bind>
+
+                        <!-- Serientitel -->
+                        <xed:bind xpath="tei:fileDesc/tei:seriesStmt">
+                            <!-- Haupttitel -->
+                            <xed:bind xpath="tei:title[@type='main'][@level='s']">
+                                <div class="form-group row">
+                                    <label for="series-title-main-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label series-title-main-label">
+                                        <xed:output i18n="editor.label.project.series.main.title"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <input id="series-title-main-{xed:generate-id()}"
+                                               type="text"
+                                               class="form-control series-title-main-input {$xed-validation-marker}"/>
+                                    </div>
+                                </div>
+                            </xed:bind>
+
+                            <!-- Untertitel -->
+                            <xed:bind xpath="tei:title[@type='sub'][@level='s']">
+                                <div class="form-group row">
+                                    <label for="series-title-sub-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label series-title-sub-label">
+                                        <xed:output i18n="editor.label.project.series.sub.title"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <input id="series-title-sub-{xed:generate-id()}" type="text"
+                                               class="form-control series-title-sub-input {$xed-validation-marker}"/>
+                                    </div>
+                                </div>
+                            </xed:bind>
+                        </xed:bind>
+
+                        <!-- Projektbeschreibung -->
+                        <xed:bind xpath="tei:encodingDesc/tei:projectDesc">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-12 col-form-label project-description-label">
+                                    <xed:output i18n="editor.label.project.description"/>
+                                </label>
+                                <div class="col-md-9 col-12">
+                                    <xed:repeat xpath="tei:p" min="1" max="5">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <textarea
+                                                        class="form-control mb-2 project-description-textarea {$xed-validation-marker}"></textarea>
+                                            </div>
+                                            <div class="col-3 text-right">
+                                                <div class="btn-group">
+                                                    <xed:controls>append remove up down</xed:controls>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </xed:repeat>
+                                </div>
+                            </div>
+                        </xed:bind>
+                    </fieldset>
+
+
+                    <fieldset class="mt-4 p-3 border">
+                        <legend>
+                            <xed:output i18n="editor.legend.project.person.information"/>
+                        </legend>
+
+                        <!-- Projektverantwortlicher -->
+                        <xed:bind xpath="tei:fileDesc/tei:editionStmt/tei:editor/tei:persName">
+                            <fieldset class="p-3 border-left border-right border-top">
+                                <legend>
+                                    <xed:output i18n="editor.legend.project.responsible"/>
+                                </legend>
+
+                                <!-- Vorname -->
+                                <xed:bind xpath="tei:forename">
+                                    <div class="form-group row">
+                                        <label for="project-responsible-fore-name-{xed:generate-id()}"
+                                               class="col-md-3 col-12 col-form-label project-responsible-fore-name-label">
+                                            <xed:output i18n="editor.label.project.editor.foreName"/>
+                                        </label>
+                                        <div class="col-md-9 col-12">
+                                            <input id="project-responsible-fore-name-{xed:generate-id()}" type="text"
+                                                   class="form-control project-responsible-fore-name-input {$xed-validation-marker}"/>
+                                        </div>
+                                    </div>
+                                </xed:bind>
+
+                                <!-- Nachname -->
+                                <xed:bind xpath="tei:surname">
+                                    <div class="form-group row">
+                                        <label for="project-responsible-sure-name-{xed:generate-id()}"
+                                               class="col-md-3 col-12 col-form-label project-responsible-sure-name-label">
+                                            <xed:output i18n="editor.label.project.editor.surName"/>
+                                        </label>
+                                        <div class="col-md-9 col-12">
+                                            <input id="project-responsible-sure-name-{xed:generate-id()}" type="text"
+                                                   class="form-control project-responsible-sure-name-input {$xed-validation-marker}"/>
+                                        </div>
+                                    </div>
+                                </xed:bind>
+                            </fieldset>
+                        </xed:bind>
+
+                        <!-- Projektmitarbeiter -->
+                        <div class="list-group">
+                            <xed:repeat xpath="tei:fileDesc/tei:editionStmt/tei:respStmt">
+                                <div class="list-group-item">
+                                    <fieldset>
+                                        <legend>
+                                            <xed:output i18n="editor.legend.project.person"/>
+                                        </legend>
+                                        <div class="form-group row">
+                                            <xed:bind xpath="tei:resp/@ref">
+                                                <div class="col-md-3 col-12">
+                                                    <label for="role-{xed:generate-id()}"
+                                                           class="col-form-label role-label">
+                                                        <xed:output i18n="editor.label.project.person.role"/>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-8">
+                                                    <select id="role-{xed:generate-id()}"
+                                                            class="form-control role-select {$xed-validation-marker}">
+                                                        <option value="">
+                                                            <xed:output i18n="editor.label.choose"/>
+                                                        </option>
+                                                        <xed:include
+                                                                uri="xslStyle:items2options:classification:editor:-1:children:marcrelator"/>
+                                                    </select>
+                                                </div>
+                                            </xed:bind>
+                                            <div class="col-md-3 col-4 text-right">
+                                                <div class="btn-group">
+                                                    <xed:controls>append remove up down</xed:controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <xed:bind xpath="tei:persName">
+                                            <div class="form-group row">
+                                                <xed:bind xpath="tei:forename">
+                                                    <div class="col-md-3 col-12">
+                                                        <label for="fore-name-{xed:generate-id()}"
+                                                               class="col-form-label fore-name-label">
+                                                            <xed:output
+                                                                    i18n="editor.label.project.person.forename"/>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9 col-12">
+                                                        <input id="fore-name-{xed:generate-id()}" type="text"
+                                                               class="form-control fore-name-input {$xed-validation-marker}"/>
+                                                    </div>
+                                                </xed:bind>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <xed:bind xpath="tei:surname">
+                                                    <div class="col-md-3 col-12">
+                                                        <label for="surname-{xed:generate-id()}"
+                                                               class="col-form-label surname-label">
+                                                            <xed:output i18n="editor.label.project.person.surname"/>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-md-9 col-12">
+                                                        <input id="surname-{xed:generate-id()}" type="text"
+                                                               class="form-control surname-input {$xed-validation-marker}"/>
+                                                    </div>
+                                                </xed:bind>
+                                            </div>
+                                        </xed:bind>
+                                    </fieldset>
+
+                                </div>
+                            </xed:repeat>
+                        </div>
+
+                    </fieldset>
+
+                    <fieldset class="mt-4 p-3 border">
+                        <legend>
+                            <xed:output i18n="editor.legend.project.publication.info"/>
+                        </legend>
+
+
+                        <xed:bind xpath="tei:fileDesc/tei:publicationStmt">
+                            <!-- Veröffentlichende Institution -->
+                            <xed:bind xpath="tei:publisher/tei:orgName[@role='hostingInstitution']">
+                                <div class="form-group row {$xed-validation-marker}">
+                                    <label for="publication-institution-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label publication-institution-label">
+                                        <xed:output i18n="editor.label.project.publication.institution"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <input id="publication-institution-{xed:generate-id()}" type="text"
+                                               class="form-control publication-institution-input"/>
+                                    </div>
+                                </div>
+                            </xed:bind>
+
+                            <!-- Veröffentlichungsdatum -->
+                            <xed:bind xpath="tei:date[@type='publication']">
+                                <div class="form-group row {$xed-validation-marker}">
+                                    <label for="publication-date-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label publication-date-label">
+                                        <xed:output i18n="editor.label.project.publication.date"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <input id="publication-date-{xed:generate-id()}" type="text"
+                                               class="form-control publication-date-input"/>
+                                    </div>
+                                </div>
+                            </xed:bind>
+
+                            <!-- Veröffentlichungsdatum -->
+                            <xed:bind xpath="tei:pubPlace">
+                                <div class="form-group row {$xed-validation-marker}">
+                                    <label for="publication-place-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label publication-place-label">
+                                        <xed:output i18n="editor.label.project.publication.place"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <input id="publication-place-{xed:generate-id()}" type="text"
+                                               class="form-control publication-place-input"/>
+                                    </div>
+                                </div>
+                            </xed:bind>
+
+
+                            <!-- Lizenz Text-->
+                            <xed:bind xpath="tei:availability[@corresp='#text']/tei:licence/@target">
+                                <div class="form-group row {$xed-validation-marker}">
+                                    <label for="licence-text-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label licence-text-label">
+                                        <xed:output i18n="editor.label.project.publication.licence.text"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <select id="licence-text-{xed:generate-id()}"
+                                                class="form-control licence-text-select">
+                                            <option value="">
+                                                <xed:output i18n="editor.label.choose"/>
+                                            </option>
+                                            <xed:include
+                                                    uri="xslStyle:items2options:classification:editor:-1:children:mir_licenses"/>
+                                        </select>
+                                    </div>
+                                </div>
+                            </xed:bind>
+
+                            <xed:bind xpath="tei:availability[@corresp='#image']/tei:licence/@target">
+                                <div class="form-group row {$xed-validation-marker}">
+                                    <label for="licence-image-{xed:generate-id()}"
+                                           class="col-md-3 col-12 col-form-label licence-image-label">
+                                        <xed:output i18n="editor.label.project.publication.licence.image"/>
+                                    </label>
+                                    <div class="col-md-9 col-12">
+                                        <select id="licence-image-{xed:generate-id()}"
+                                                class="form-control licence-image-select">
+                                            <option value="">
+                                                <xed:output i18n="editor.label.choose"/>
+                                            </option>
+                                            <xed:include
+                                                    uri="xslStyle:items2options:classification:editor:-1:children:mir_licenses"/>
+                                        </select>
+                                    </div>
+                                </div>
+                            </xed:bind>
+                        </xed:bind>
+
+
+                    </fieldset>
+                </xed:bind>
+            </xed:bind>
+
+            <div class="form-group row mt-2">
+                <div class="col-md-12 text-right">
+                    <div class="btn-group">
+                        <button id="cancel" class="btn btn-secondary" type="submit" xed:target="cancel">
+                            <xed:output i18n="common.button.cancel"/>
+                        </button>
+
+                        <button id="debug" class="btn btn-info" type="submit" xed:target="debug">
+                            <xed:output i18n="common.button.debug"/>
+                        </button>
+
+                        <xed:choose>
+                            <xed:when test="contains(/mycoreobject/@ID, '_00000000')">
+                                <button id="save" class="btn btn-info createobject" type="submit" xed:target="servlet"
+                                        xed:href="CreateObjectServlet">
+                                    <xed:output i18n="common.button.save"/>
+                                </button>
+                            </xed:when>
+                            <xed:otherwise>
+                                <button id="save" class="btn btn-info updateobject" type="submit" xed:target="servlet"
+                                        xed:href="UpdateObjectServlet">
+                                    <xed:output i18n="common.button.save"/>
+                                </button>
+                            </xed:otherwise>
+                        </xed:choose>
+                    </div>
+                </div>
+            </div>
+
+        </xed:form>
+
+        <script>
+            /**
+             * Set the project abbreviation as the type in the MyCoReID
+             */
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const mycoreIDEl = document.getElementById('mycoreID');
+                const abbrevInput = document.querySelector('.project-abbreviation-input');
+
+                if (mycoreIDEl) {
+                    let project, doctype, number;
+                    if (mycoreIDEl.value !== '') {
+                        [project, doctype, number] = mycoreID.value.split('_');
+                        if (abbrevInput) {
+                            abbrevInput.value = project;
+                            abbrevInput.disabled = 'true';
+                        }
+                    } else {
+                        doctype = 'edition';
+                        number = '00000000';
+                        abbrevInput.addEventListener('change', (event) => {
+                            project = event.target.value;
+                            document.getElementById('mycoreID').value = `${project}_${doctype}_${number}`;
+                        });
+                    }
+
+
+                }
+            });
+        </script>
+
+    </section>
+</MyCoReWebPage>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>de.gbv.dea</groupId>
     <artifactId>digital-edition-archive</artifactId>
-    <version>2023.06.01-SNAPSHOT</version>
+    <version>2023.06-SNAPSHOT</version>
   </parent>
   <artifactId>digital-edition-archive-cli</artifactId>
   <packaging>pom</packaging>

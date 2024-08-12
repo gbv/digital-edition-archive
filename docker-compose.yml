@@ -42,6 +42,7 @@ services:
       - ${APP_DATA}:/mcr/data/
       - ${APP_LOGS}:/mcr/logs/
       - ${APP_TMP}:/mcr/tmp/
+      - ./:/mcr/dev/
     depends_on:
       - db
       - solr

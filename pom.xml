@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.gbv.dea</groupId>
     <artifactId>digital-edition-archive</artifactId>
-    <version>2023.06.01-SNAPSHOT</version>
+    <version>2023.06-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>digital-edition-archive</name>
     <description>The main Maven Project for digital-edition-archive</description>
@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>11.0.15
         </jetty.version>        <!-- specifiy the MyCoRe version here (release nr or *-SNAPSHOT): -->
-        <mycore.version>2023.06.2-SNAPSHOT</mycore.version>
+        <mycore.version>2023.06.3-SNAPSHOT</mycore.version>
 
     </properties>    <!-- put your Git or SVN URLs here -->
     <scm>

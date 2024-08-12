@@ -4,15 +4,14 @@ import static de.gbv.dea.DEAUtils.TEI_NS;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,25 +20,22 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.mycore.access.MCRAccessException;
+import org.mycore.common.MCRConstants;
 import org.mycore.common.MCRException;
-import org.mycore.datamodel.metadata.MCRDerivate;
 import org.mycore.datamodel.metadata.MCRMetaClassification;
 import org.mycore.datamodel.metadata.MCRMetadataManager;
 import org.mycore.datamodel.metadata.MCRObject;
 import org.mycore.datamodel.metadata.MCRObjectID;
 import org.mycore.datamodel.metadata.validator.MCREditorOutValidator;
 import org.mycore.datamodel.niofs.MCRPath;
-import org.mycore.datamodel.niofs.utils.MCRRecursiveDeleter;
-import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
 import org.mycore.frontend.MCRFrontendUtil;
-import org.mycore.frontend.fileupload.MCRUploadHelper;
+import org.mycore.services.i18n.MCRTranslation;
 import org.mycore.webtools.upload.MCRDefaultUploadHandler;
 import org.mycore.webtools.upload.MCRFileUploadBucket;
 import org.mycore.webtools.upload.MCRUploadHandler;
@@ -50,37 +46,46 @@ import org.mycore.webtools.upload.exception.MCRUploadException;
 import org.mycore.webtools.upload.exception.MCRUploadForbiddenException;
 import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
-public class DEATEIUploadHandler implements MCRUploadHandler {
+import de.gbv.dea.shelfmark.ShelfMarkMappingManager;
 
-    private static final Logger LOGGER = LogManager.getLogger();
+public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
+
     public static final String FILE_NAME_PATTERN = "(?<number>[0-9]{6}).*\\.xml";
-
-    private static final String DERIVATE_TYPES_CLASS = "derivate_types";
-    private static final String DERIVATE_TYPES_CONTENT = "content";
-    private static final String DERIVATE_TYPES_ORIGINAL = "original";
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications)
-            throws MCRUploadServerException, MCRInvalidFileException, IOException {
+        throws MCRUploadServerException, MCRInvalidFileException, IOException {
+        Objects.requireNonNull(project, () -> MCRTranslation.translate("fileupload.tei.project.missing"));
         try {
             if (Files.isDirectory(fileOrDirectory)) {
                 // file is a directory and should be named like 000001, 000002, 000003, ...
                 // and should contain a file named 000001*.xml
                 // and should contain a directory name images
-                MCRObjectID objectID = getObjectIDFromDirectory(fileOrDirectory, project);
                 Path teiFile = findTEIFile(fileOrDirectory);
+                Document parsedTEI = parseTEI(teiFile);
+                String shelfmark = getShelfmarkFromTEIFile(parsedTEI).orElseThrow(
+                    () -> new MCRInvalidFileException(teiFile.toString(), "fileupload.tei.file.missingShelfmark", true,
+                        teiFile.toString()));
+
+                MCRObjectID objectID = ShelfMarkMappingManager.getMappedMycoreID(shelfmark, project)
+                        .map(MCRObjectID::getInstance)
+                        .orElseGet(()-> MCRMetadataManager.getMCRObjectIDGenerator().getNextFreeId(project,"tei"));
+
+
                 Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications);
 
                 Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
-                MCRObjectID contentDerivate = createDerivateIfNotExists(objectID, DERIVATE_TYPES_CONTENT);
+                MCRObjectID contentDerivate = DEAUtils.createDerivateIfNotExists(objectID,
+                    DEAUtils.DERIVATE_TYPES_CONTENT);
 
                 LOGGER.info("Processing object " + objectID);
                 if (imagesDirectory != null) {
-                    importImages(imagesDirectory, contentDerivate);
+                    DEAUtils.importImages(imagesDirectory, contentDerivate);
                 } else {
                     LOGGER.warn("No images directory found for object " + objectID);
                 }
 
-                splitTEIFileToDerivate(tei, objectID, MCRPath.getPath(contentDerivate.toString(), "/"));
+                DEAUtils.splitTEIFileToDerivate(tei, objectID, MCRPath.getPath(contentDerivate.toString(), "/"));
 
                 return objectID;
             } else if (Files.isRegularFile(fileOrDirectory)) {
@@ -103,58 +108,13 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         return null;
     }
 
-    private void importImages(Path imagesDirectory, MCRObjectID derivateId) throws MCRUploadServerException {
-        MCRPath root = MCRPath.getPath(derivateId.toString(), "/");
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new MCRUploadServerException("mcr.upload.import.failed", e);
+    public Optional<String> getShelfmarkFromTEIFile(Document tei) {
+        Attribute idAttr = tei.getRootElement().getChild("teiHeader", TEI_NS).getChild("fileDesc", TEI_NS)
+            .getAttribute("id", MCRConstants.XML_NAMESPACE);
+        if (idAttr != null) {
+            return Optional.of(idAttr.getValue());
         }
-        final MCRTreeCopier copier;
-        try {
-            copier = new MCRTreeCopier(imagesDirectory, root, false, true);
-        } catch (NoSuchFileException e) {
-            throw new MCRException(e);
-        }
-
-        try {
-            Files.walkFileTree(imagesDirectory, copier);
-        } catch (IOException e) {
-            throw new MCRUploadServerException("mcr.upload.import.failed", e);
-        }
-
-        MCRDerivate theDerivate = MCRMetadataManager.retrieveMCRDerivate(derivateId);
-
-        String mainDoc = theDerivate.getDerivate().getInternals().getMainDoc();
-        if (mainDoc == null || mainDoc.isEmpty()) {
-            MCRDefaultUploadHandler.setDefaultMainFile(theDerivate);
-        }
-    }
-
-    private static MCRObjectID createDerivateIfNotExists(MCRObjectID objectID, String contentType) {
-        if (!MCRMetadataManager.exists(objectID)) {
-            return null;
-        }
-        MCRObject object = MCRMetadataManager.retrieveMCRObject(objectID);
-
-        String ctName = DERIVATE_TYPES_CLASS + ":" + contentType;
-        var derivates = object.getStructure().getDerivates().stream()
-                .filter(link -> link.getClassifications().stream()
-                .anyMatch(classification -> classification.toString().equals(ctName)))
-                .toList();
-
-        if(derivates.size() == 1) {
-            return derivates.get(0).getXLinkHrefID();
-        } else if(derivates.size() > 1) {
-            throw new MCRException("Object " + objectID + " has more than one derivate of type " + contentType);
-        } else {
-            try {
-                var contentTypeClass = MCRUploadHelper.getClassifications(ctName);
-                return MCRUploadHelper.createDerivate(objectID, contentTypeClass).getId();
-            } catch (MCRAccessException e) {
-                throw new MCRException("Error while creating derivate for object " + objectID, e);
-            }
-        }
+        return Optional.empty();
     }
 
     private Path findImagesDirectory(Path fileOrDirectory, MCRObjectID objectID) {
@@ -169,30 +129,11 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     public Path findTEIFile(Path directory) {
         try {
             return Files.find(directory, 1,
-                    (path, basicFileAttributes) -> path.getFileName().toString().matches(FILE_NAME_PATTERN))
+                (path, basicFileAttributes) -> path.getFileName().toString().matches(FILE_NAME_PATTERN))
                 .findFirst().orElse(null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    public MCRObjectID getObjectIDFromDirectory(Path path, String project) throws IllegalArgumentException {
-        // path is a directory and should be named like 000001
-        if (!Files.isDirectory(path)) {
-            throw new IllegalArgumentException("Path is not a directory.");
-        }
-
-        String file = path.getFileName().toString();
-        if (!file.matches("[0-9]{6}")) {
-            throw new IllegalArgumentException("Name " + file + " does not consist of 6 digits.");
-
-        }
-
-        int number = Integer.parseInt(file);
-        String formattedIDString = MCRObjectID.formatID(project + "_tei_", number);
-        return MCRObjectID.getInstance(formattedIDString);
-
     }
 
     public MCRObjectID getObjectIDFromFile(Path file, String project) throws IllegalArgumentException {
@@ -217,7 +158,8 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
     }
 
     public Document importOrUpdateTEIMyCoReObject(Path teiFile, MCRObjectID objectID,
-        List<MCRMetaClassification> classifications) throws IOException, MCRInvalidFileException {
+        List<MCRMetaClassification> classifications) throws IOException,
+        MCRInvalidFileException {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
 
@@ -242,7 +184,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         try {
             MCREditorOutValidator ev = new MCREditorOutValidator(object.createXML(), objectID);
             ev.generateValidMyCoReObject();
-        } catch (RuntimeException|JDOMException e) {
+        } catch (RuntimeException | JDOMException e) {
             String fileName = teiFile.getFileName().toString();
             throw new MCRInvalidFileException(fileName, "fileupload.tei.file.invalid", true, fileName, e.getMessage());
         }
@@ -253,37 +195,9 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
             throw new MCRException("Error while updating object " + objectID, e);
         }
 
-        storeFileInOriginalDerivate(teiFile, objectID);
+        DEAUtils.storeFileInOriginalDerivate(teiFile, objectID);
 
         return teiDocument;
-    }
-
-    /**
-     * Due to the fact that the original tei file is seperated in to several files, the original tei file is stored in
-     * the original derivate.
-     *
-     * This method stores the given TEI file in the original derivate of the given object. If the derivate does not
-     * exist, it will be created. If it exists, all files will be deleted. The given file will be stored as main
-     * document.
-     * @param teiFile the TEI file to store
-     * @param objectID the object id of the object to store the TEI file in
-     * @throws IOException if an I/O error occurs
-     */
-    private static void storeFileInOriginalDerivate(Path teiFile, MCRObjectID objectID) throws IOException {
-        // create or use existing derivate to store the original TEI file
-        MCRObjectID originalDerivate = createDerivateIfNotExists(objectID, DERIVATE_TYPES_ORIGINAL);
-        Path fileName = teiFile.getFileName();
-        MCRPath originalDerivatePath = MCRPath.getPath(originalDerivate.toString(), "/");
-        Files.walkFileTree(originalDerivatePath, MCRRecursiveDeleter.instance());
-        Path fn = originalDerivatePath.resolve(fileName.toString());
-        Files.copy(teiFile, fn);
-        MCRDerivate mcrDerivate = MCRMetadataManager.retrieveMCRDerivate(originalDerivate);
-        mcrDerivate.getDerivate().getInternals().setMainDoc(fileName.toString());
-        try {
-            MCRMetadataManager.update(mcrDerivate);
-        } catch (MCRAccessException e) {
-            throw new MCRException("Error while updating derivate " + originalDerivate, e);
-        }
     }
 
     public Document parseTEI(Path teiFile) {
@@ -293,32 +207,6 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
         } catch (IOException | JDOMException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void splitTEIFileToDerivate(Document tei, MCRObjectID objectID, MCRPath root) {
-        Path transcriptionFolderPath = root.resolve("tei/").resolve("transcription");
-        if (!Files.exists(transcriptionFolderPath)) {
-            try {
-                Files.createDirectories(transcriptionFolderPath);
-            } catch (IOException e) {
-                throw new MCRException(e);
-            }
-        }
-        DEATEISplitter splitter = new DEATEISplitter(new DEATEISplitter.TeiFile(objectID.toString(), tei));
-        List<DEATEISplitter.TeiFile> split = splitter.split();
-        split.stream()
-            .filter(file -> file.name() != null)
-            .forEach(teiFile -> {
-                String name = teiFile.name();
-
-                try (OutputStream os = Files.newOutputStream(transcriptionFolderPath.resolve(name + ".xml"))) {
-                    XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
-                    xmlOutputter.output(teiFile.doc(), os);
-                } catch (IOException e) {
-                    throw new MCRException(e);
-                }
-
-            });
     }
 
     @Override
@@ -336,7 +224,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
 
         try {
             MCRMetadataManager.checkCreatePrivilege(
-                    MCRObjectID.getInstance(MCRObjectID.formatID(project, "tei", 0)));
+                MCRObjectID.getInstance(MCRObjectID.formatID(project, "tei", 0)));
         } catch (MCRAccessException e) {
             throw new MCRUploadForbiddenException("mcr.upload.forbidden");
         }
