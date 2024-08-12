@@ -86,19 +86,19 @@ function setDockerValues() {
     fi
 
     if [ -n "${JDBC_NAME}" ]; then
-      sed -ri "s/(name=\"javax.persistence.jdbc.user\" value=\").*(\")/\1${JDBC_NAME_ESCAPED}\2/" "${PERSISTENCE_XML}"
+      sed -ri "s/(name=\"jakarta.persistence.jdbc.user\" value=\").*(\")/\1${JDBC_NAME_ESCAPED}\2/" "${PERSISTENCE_XML}"
     fi
 
     if [ -n "${JDBC_PASSWORD}" ]; then
-      sed -ri "s/(name=\"javax.persistence.jdbc.password\" value=\").*(\")/\1${JDBC_PASSWORD_ESCAPED}\2/" "${PERSISTENCE_XML}"
+      sed -ri "s/(name=\"jakarta.persistence.jdbc.password\" value=\").*(\")/\1${JDBC_PASSWORD_ESCAPED}\2/" "${PERSISTENCE_XML}"
     fi
 
     if [ -n "${JDBC_DRIVER}" ]; then
-      sed -ri "s/(name=\"javax.persistence.jdbc.driver\" value=\").*(\")/\1${JDBC_DRIVER_ESCAPED}\2/" "${PERSISTENCE_XML}"
+      sed -ri "s/(name=\"jakarta.persistence.jdbc.driver\" value=\").*(\")/\1${JDBC_DRIVER_ESCAPED}\2/" "${PERSISTENCE_XML}"
     fi
 
     if [ -n "${JDBC_URL}" ]; then
-      sed -ri "s/(name=\"javax.persistence.jdbc.url\" value=\").*(\")/\1${JDBC_URL_ESCAPED}\2/" "${PERSISTENCE_XML}"
+      sed -ri "s/(name=\"jakarta.persistence.jdbc.url\" value=\").*(\")/\1${JDBC_URL_ESCAPED}\2/" "${PERSISTENCE_XML}"
     fi
 
     if [ -n "${SOLR_CLASSIFICATION_CORE}" ]; then

@@ -5,6 +5,7 @@
 
     <xsl:template match="import-tei-snapshot">
         <xsl:variable name="project" select="@project"/>
+        <xsl:variable name="uploadHandler" select="@uploadHandler" />
         <script>
             window["mycoreUploadSettings"] = {
             webAppBaseURL:"<xsl:value-of select='$WebApplicationBaseURL' />"
@@ -20,7 +21,7 @@
                  style="margin-top:1em"
                  data-upload-project="{$project}"
                  data-upload-target="/"
-                 data-upload-handler="TEI"
+                 data-upload-handler="{$uploadHandler}"
             >
 
                 <i class="fa fa-upload" style="float:left;font-size:275%;margin-right:0.5em"></i>

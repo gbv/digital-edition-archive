@@ -141,12 +141,6 @@
       </fieldset>
       <input type="submit" value="erstellen" />
     </form>
-    <xsl:variable name="objectBaseURL">
-      <xsl:value-of select="concat($WebApplicationBaseURL,'receive/')" />
-    </xsl:variable>
-    <xsl:variable name="staticURL">
-      <xsl:value-of select="concat($objectBaseURL,@ID)" />
-    </xsl:variable>
   </xsl:template>
 
   <!-- Generates a header for the metadata output -->
