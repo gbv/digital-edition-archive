@@ -81,5 +81,40 @@
       "type": "text_general",
       "stored": true
     }
+  },
+  {
+    "add-field": {
+      "name": "dea.edition.title",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.edition.editor.forename",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.edition.editor.surname",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.edition.resp.forename",
+      "type": "text_general",
+      "stored": true
+    }
+  },
+  {
+    "add-field": {
+      "name": "dea.edition.resp.surname",
+      "type": "text_general",
+      "stored": true
+    }
   }
 ]

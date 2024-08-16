@@ -73,7 +73,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <a href="{$hitHref}">
-                        <xsl:value-of select="./arr[@name='dea.tei.title']/str[1]"/>
+                        <xsl:choose>
+                            <xsl:when test="./str[@name='objectType'] = 'tei'">
+                                <xsl:value-of select="./arr[@name='dea.tei.title']/str[1]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="./arr[@name='dea.edition.title']/str[1]"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </a>
                 </div>
             </div>
