@@ -3,8 +3,8 @@ init superuser
 reload solr configuration main in core main
 reload solr configuration classification in core classification
 
-update classification from uri resource:mycore-classifications/rfc5646.xml
-update classification from uri resource:mycore-classifications/derivate_types.xml
+update classification from uri resource:classifications/rfc5646.xml
+update classification from uri resource:classifications/derivate_types.xml
 update classification from uri resource:mycore-classifications/state.xml
 update classification from uri resource:mycore-classifications/mcr-roles.xml
 update classification from uri resource:mycore-classifications/marcrelator.xml

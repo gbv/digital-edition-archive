@@ -22,6 +22,7 @@ public class DEAImportCommands {
 
     private static final Logger LOGGER = LogManager.getLogger(DEAImportCommands.class);
 
+    /*
     @MCRCommand(syntax = "import blumenbach tei folders from root {0}", order = 1)
     public static void importTEIFolders(String rootPath) throws MCRUploadServerException, IOException {
         LOGGER.info("Importing TEI folders from root {}", rootPath);
@@ -32,7 +33,7 @@ public class DEAImportCommands {
             throw new IllegalArgumentException("Path " + rootPath + " does not exist");
         }
 
-        BlumenbachTEIUploadHandler uploader = new BlumenbachTEIUploadHandler();
+        DEATEIUploadHandler uploader = new DEATEIUploadHandler();
 
         MCRCategoryID id = MCRCategoryID.fromString("derivate_types:content");
         MCRMetaClassification classification = new MCRMetaClassification("classification", 0, null,
@@ -48,4 +49,6 @@ public class DEAImportCommands {
 
         }
     }
+
+     */
 }

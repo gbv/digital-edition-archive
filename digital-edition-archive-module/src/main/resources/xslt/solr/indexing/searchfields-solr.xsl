@@ -27,28 +27,89 @@
         <field name="digital-edition-archive.hasFiles">
             <xsl:value-of select="count(structure/derobjects/derobject)&gt;0"/>
         </field>
-        <field name="digital-edition-archive.title">
-            <xsl:value-of select="metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']"/>
+
+
+        <xsl:variable name="type" select="substring-before(substring-after(@ID,'_'), '_')"/>
+        <xsl:choose>
+            <xsl:when test="$type = 'tei'">
+                <field name="digital-edition-archive.title">
+                    <xsl:value-of
+                            select="metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']"/>
+                </field>
+                <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader" mode="tei"/>
+            </xsl:when>
+            <xsl:when test="$type = 'edition'">
+                <field name="digital-edition-archive.title">
+                    <xsl:value-of
+                            select="metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+                </field>
+                <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"
+                                     mode="edition"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+
+    <!-- Edition -->
+
+    <xsl:template match="tei:teiHeader" mode="edition">
+        <xsl:apply-templates select="tei:fileDesc/tei:editionStmt/tei:edition" mode="edition"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:editionStmt/tei:editor" mode="edition"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:editionStmt/tei:publicationStmt/tei:respStmt" mode="edition"/>
+
+    </xsl:template>
+
+    <xsl:template match="tei:edition" mode="edition">
+        <field name="dea.edition.title">
+            <xsl:value-of select="."/>
         </field>
-
-        <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"/>
     </xsl:template>
 
-    <xsl:template match="tei:teiHeader">
-        <xsl:apply-templates select="tei:fileDesc/tei:titleStmt/tei:title[@type='main']" />
-        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:author"/>
-        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:editor"/>
-        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:publisher"/>
+    <xsl:template match="tei:editor" mode="edition">
+        <xsl:if test="string-length(tei:persName/tei:forename) &gt; 0">
+            <field name="dea.edition.editor.forename">
+                <xsl:value-of select="tei:persName/tei:forename"/>
+            </field>
+        </xsl:if>
+        <xsl:if test="string-length(tei:persName/tei:surname) &gt; 0">
+            <field name="dea.edition.editor.surname">
+                <xsl:value-of select="tei:persName/tei:surname"/>
+            </field>
+        </xsl:if>
     </xsl:template>
 
-    <xsl:template match="tei:title">
+    <xsl:template match="tei:respStmt" mode="edition">
+        <xsl:if test="tei:resp and tei:persName/tei:forename">
+            <field name="dea.edition.resp.forename">
+                <xsl:value-of select="concat(tei:resp, ':' ,tei:persName/tei:forename)"/>
+            </field>
+        </xsl:if>
+
+        <xsl:if test="tei:resp and tei:persName/tei:surname">
+            <field name="dea.edition.resp.surname">
+                <xsl:value-of select="concat(tei:resp, ':' ,tei:persName/tei:surname)"/>
+            </field>
+        </xsl:if>
+    </xsl:template>
+
+
+    <!-- TEI -->
+
+    <xsl:template match="tei:teiHeader" mode="tei">
+        <xsl:apply-templates select="tei:fileDesc/tei:titleStmt/tei:title[@type='main']" mode="tei"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:author" mode="tei"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:editor" mode="tei"/>
+        <xsl:apply-templates select="tei:fileDesc/tei:publicationStmt/tei:publisher" mode="tei"/>
+    </xsl:template>
+
+    <xsl:template match="tei:title" mode="tei">
         <field name="dea.tei.title">
             <xsl:value-of select="."/>
         </field>
     </xsl:template>
 
 
-    <xsl:template match="tei:author">
+    <xsl:template match="tei:author" mode="tei">
         <field name="dea.tei.author.plain">
             <xsl:value-of select="."/>
         </field>
@@ -60,7 +121,7 @@
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="tei:editor">
+    <xsl:template match="tei:editor" mode="tei">
         <field name="dea.tei.editor.plain">
             <xsl:value-of select="."/>
         </field>
@@ -72,7 +133,7 @@
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="tei:publisher">
+    <xsl:template match="tei:publisher" mode="tei">
         <field name="dea.tei.publisher.plain">
             <xsl:value-of select="."/>
         </field>
@@ -84,7 +145,7 @@
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="tei:persName">
+    <xsl:template match="tei:persName" mode="tei">
         <xsl:param name="role"/>
 
         <xsl:choose>
@@ -106,7 +167,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="tei:orgName">
+    <xsl:template match="tei:orgName" mode="tei">
         <xsl:param name="role"/>
 
         <xsl:choose>

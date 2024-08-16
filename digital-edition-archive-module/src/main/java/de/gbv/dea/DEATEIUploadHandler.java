@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,14 +46,15 @@ import org.mycore.webtools.upload.exception.MCRUploadServerException;
 
 import de.gbv.dea.shelfmark.ShelfMarkMappingManager;
 
-public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
+public class DEATEIUploadHandler implements MCRUploadHandler {
 
     public static final String FILE_NAME_PATTERN = "(?<number>[0-9]{6}).*\\.xml";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications)
+    public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications, MCRObjectID parent)
         throws MCRUploadServerException, MCRInvalidFileException, IOException {
         Objects.requireNonNull(project, () -> MCRTranslation.translate("fileupload.tei.project.missing"));
+        Objects.requireNonNull(parent, () -> MCRTranslation.translate("fileupload.tei.parent.missing"));
         try {
             if (Files.isDirectory(fileOrDirectory)) {
                 // file is a directory and should be named like 000001, 000002, 000003, ...
@@ -72,7 +71,7 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
                         .orElseGet(()-> MCRMetadataManager.getMCRObjectIDGenerator().getNextFreeId(project,"tei"));
 
 
-                Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications);
+                Document tei = importOrUpdateTEIMyCoReObject(teiFile, objectID, classifications, parent);
 
                 Path imagesDirectory = findImagesDirectory(fileOrDirectory, objectID);
                 MCRObjectID contentDerivate = DEAUtils.createDerivateIfNotExists(objectID,
@@ -96,9 +95,14 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
                     throw new MCRInvalidFileException(fileOrDirectory.toString(),
                         "File name does not match pattern. [0-9]{6}.*\\.xml");
                 }
-
-                MCRObjectID objectID = getObjectIDFromFile(fileOrDirectory, project);
-                importOrUpdateTEIMyCoReObject(fileOrDirectory, objectID, classifications);
+                Document parsedTEI = parseTEI(fileOrDirectory);
+                String shelfmark = getShelfmarkFromTEIFile(parsedTEI).orElseThrow(
+                        () -> new MCRInvalidFileException(fileOrDirectory.toString(), "fileupload.tei.file.missingShelfmark", true,
+                                fileOrDirectory.toString()));
+                MCRObjectID objectID = ShelfMarkMappingManager.getMappedMycoreID(shelfmark, project)
+                        .map(MCRObjectID::getInstance)
+                        .orElseGet(()-> MCRMetadataManager.getMCRObjectIDGenerator().getNextFreeId(project,"tei"));
+                importOrUpdateTEIMyCoReObject(fileOrDirectory, objectID, classifications, parent);
                 return objectID;
             }
         } catch (Throwable t) {
@@ -136,29 +140,8 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
         }
     }
 
-    public MCRObjectID getObjectIDFromFile(Path file, String project) throws IllegalArgumentException {
-        if (!Files.isRegularFile(file)) {
-            throw new IllegalArgumentException("File is not a regular file.");
-        }
-
-        String fileName = file.getFileName().toString();
-        Pattern pattern = Pattern.compile(FILE_NAME_PATTERN);
-        Matcher matcher = pattern.matcher(fileName);
-        String numberStr;
-
-        if (matcher.find()) {
-            numberStr = matcher.group("number");
-        } else {
-            throw new IllegalArgumentException("File name does not match pattern. [0-9]{6}.*\\.xml");
-        }
-
-        int number = Integer.parseInt(numberStr);
-        String formattedIDString = MCRObjectID.formatID(project + "_tei_", number);
-        return MCRObjectID.getInstance(formattedIDString);
-    }
-
     public Document importOrUpdateTEIMyCoReObject(Path teiFile, MCRObjectID objectID,
-        List<MCRMetaClassification> classifications) throws IOException,
+        List<MCRMetaClassification> classifications, MCRObjectID parent) throws IOException,
         MCRInvalidFileException {
         boolean exists = MCRMetadataManager.exists(objectID);
         Document teiDocument = parseTEI(teiFile);
@@ -189,6 +172,8 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
             throw new MCRInvalidFileException(fileName, "fileupload.tei.file.invalid", true, fileName, e.getMessage());
         }
 
+        object.getStructure().setParent(parent);
+
         try {
             MCRMetadataManager.update(object);
         } catch (MCRAccessException e) {
@@ -212,19 +197,20 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
     @Override
     public String begin(Map<String, List<String>> parameters) throws MCRUploadForbiddenException,
         MCRUploadServerException, MCRMissingParameterException, MCRInvalidUploadParameterException {
-        String project;
-        if (parameters.containsKey("project")) {
-            project = parameters.get("project").get(0);
-            if (project.isEmpty()) {
-                throw new MCRInvalidUploadParameterException("project", "", "empty");
+        String parentStr;
+        if (parameters.containsKey("parent")) {
+            parentStr = parameters.get("parent").get(0);
+            if (parentStr.isEmpty()) {
+                throw new MCRInvalidUploadParameterException("parent", "", "empty");
             }
         } else {
-            throw new MCRMissingParameterException("project");
+            throw new MCRMissingParameterException("parent");
         }
+        MCRObjectID parent = MCRObjectID.getInstance(parentStr);
 
         try {
             MCRMetadataManager.checkCreatePrivilege(
-                MCRObjectID.getInstance(MCRObjectID.formatID(project, "tei", 0)));
+                MCRObjectID.getInstance(MCRObjectID.formatID(parent.getProjectId(), "tei", 0)));
         } catch (MCRAccessException e) {
             throw new MCRUploadForbiddenException("mcr.upload.forbidden");
         }
@@ -235,14 +221,14 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
     @Override
     public URI commit(MCRFileUploadBucket bucket) throws MCRUploadException {
         Map<String, List<String>> parameters = bucket.getParameters();
-        String project = getProject(bucket.getParameters());
+        MCRObjectID parent = getParent(bucket.getParameters());
         List<MCRMetaClassification> classifications = MCRDefaultUploadHandler.getClassifications(parameters);
         Path rootPath = bucket.getRoot();
         try (Stream<Path> files = Files.list(rootPath)) {
             return new URI(MCRFrontendUtil.getBaseURL() + "receive/" + files
                 .map((f) -> {
                     try {
-                        return this.traverse(f, project, classifications);
+                        return this.traverse(f, parent.getProjectId(), classifications, parent);
                     } catch (MCRUploadServerException | MCRInvalidFileException | IOException e) {
                         throw new MCRException(e);
                     }
@@ -265,8 +251,16 @@ public class BlumenbachTEIUploadHandler implements MCRUploadHandler {
         }
     }
 
-    private String getProject(Map<String, List<String>> parameters) {
-        return parameters.get("project").get(0);
+    private MCRObjectID getParent(Map<String, List<String>> parameters) throws MCRInvalidUploadParameterException {
+        String parent = parameters.get("parent").get(0);
+        if (parent.isEmpty()) {
+            throw new MCRInvalidUploadParameterException("parent", "", "empty");
+        }
+        if(MCRObjectID.isValid(parent)) {
+            return MCRObjectID.getInstance(parent);
+        } else {
+            throw new MCRInvalidUploadParameterException("parent", parent, "invalid");
+        }
     }
 
     @Override

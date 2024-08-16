@@ -18,18 +18,19 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:mcrproperty="http://www.mycore.de/xslt/property"
-                xmlns:mcriview2="http://www.mycore.de/xslt/iview2"
-                xmlns:mcracl="http://www.mycore.de/xslt/acl"
+                xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
                 xmlns:mcrclass="http://www.mycore.de/xslt/classification"
-                xmlns:mcrderivate="http://www.mycore.de/xslt/derivate"
                 version="3.0">
 
     <xsl:template match="/mycoreobject[contains(@ID,'_edition_')]" mode="frontpage">
+        <h1 class="mb-5 text-center">
+            <xsl:value-of
+                    select="metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+        </h1>
         <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader" mode="edition" />
         <xsl:call-template name="teiUploader" />
+        <xsl:apply-templates select="structure/children[count(child) &gt; 0]" mode="childList"/>
     </xsl:template>
 
     <xsl:template name="teiUploader">
@@ -44,10 +45,10 @@
         <link rel="stylesheet" type="text/css" href="{$WebApplicationBaseURL}modules/webtools/upload/css/upload-gui.css" />
 
 
-        <div class="import-tei-snapshot">
+        <div class="import-tei-snapshot mt-5 text-center">
             <div class="file-upload-box well well-sm col-10 col-offset-1"
                  style="margin-top:1em"
-                 data-upload-project="{@ID}"
+                 data-upload-parent="{ @ID }"
                  data-upload-target="/"
                  data-upload-handler="tei"
             >
@@ -181,6 +182,24 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="children" mode="childList">
+        <xsl:call-template name="displayMetadataKV">
+            <xsl:with-param name="key" select="mcri18n:translate('metadata.tei.childList')"/>
+            <xsl:with-param name="value">
+                <div class="list-group mt-5">
+                    <xsl:for-each select="child">
+                        <xsl:variable name="childObj" select="document(concat('mcrobject:', @xlink:href))"/>
+                        <a class="list-group-item list-group-item-action"
+                           href="{concat($WebApplicationBaseURL, 'receive/', @xlink:href)}">
+                            <xsl:value-of
+                                    select="$childObj/mycoreobject/metadata/def.teiContainer/teiContainer/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+                        </a>
+                    </xsl:for-each>
+                </div>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
 </xsl:stylesheet>
