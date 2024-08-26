@@ -40,7 +40,7 @@ public class ShelfMarkUtil {
     public static Optional<String> getShelfmark(String objectID, Element tei) {
         XPathFactory xFactory = XPathFactory.instance();
         XPathExpression<Attribute> expr = xFactory.compile(
-                "//tei:teiHeader/tei:fileDesc/@xml:id",
+                "(.|/tei:teiHeader)/tei:fileDesc/@xml:id",
                 Filters.attribute(), null, TEI_NS, MCRConstants.XML_NAMESPACE);
 
         List<Attribute> xpResult = expr.evaluate(tei);
