@@ -48,7 +48,7 @@ import de.gbv.dea.shelfmark.ShelfMarkMappingManager;
 
 public class DEATEIUploadHandler implements MCRUploadHandler {
 
-    public static final String FILE_NAME_PATTERN = "(?<number>[0-9]{6}).*\\.xml";
+    public static final String FILE_NAME_PATTERN = ".*.xml";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications, MCRObjectID parent)
