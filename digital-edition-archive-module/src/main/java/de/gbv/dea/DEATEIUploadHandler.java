@@ -48,7 +48,7 @@ import de.gbv.dea.shelfmark.ShelfMarkMappingManager;
 
 public class DEATEIUploadHandler implements MCRUploadHandler {
 
-    public static final String FILE_NAME_PATTERN = "(?<number>[0-9]{6}).*\\.xml";
+    public static final String FILE_NAME_PATTERN = ".*.xml";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public MCRObjectID traverse(Path fileOrDirectory, String project, List<MCRMetaClassification> classifications, MCRObjectID parent)
@@ -163,6 +163,7 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
             DEAUtils.setTEI(object, teiHeader);
         }
         object.getService().setState("published");
+        object.getStructure().setParent(parent);
 
         try {
             MCREditorOutValidator ev = new MCREditorOutValidator(object.createXML(), objectID);
@@ -171,8 +172,6 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
             String fileName = teiFile.getFileName().toString();
             throw new MCRInvalidFileException(fileName, "fileupload.tei.file.invalid", true, fileName, e.getMessage());
         }
-
-        object.getStructure().setParent(parent);
 
         try {
             MCRMetadataManager.update(object);
