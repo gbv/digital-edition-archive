@@ -114,7 +114,7 @@ public class DEATEISplitter {
     }
 
     public List<TeiFile> split() {
-        if (splitDocumentList.size() > 0) {
+        if (!splitDocumentList.isEmpty()) {
             splitDocumentList = new ArrayList<>();
         }
 
