@@ -102,7 +102,11 @@ public class DEATEIUploadHandler implements MCRUploadHandler {
                 MCRObjectID objectID = ShelfMarkMappingManager.getMappedMycoreID(shelfmark, project)
                         .map(MCRObjectID::getInstance)
                         .orElseGet(()-> MCRMetadataManager.getMCRObjectIDGenerator().getNextFreeId(project,"tei"));
-                importOrUpdateTEIMyCoReObject(fileOrDirectory, objectID, classifications, parent);
+                Document tei = importOrUpdateTEIMyCoReObject(fileOrDirectory, objectID, classifications, parent);
+                MCRObjectID contentDerivate = DEAUtils.createDerivateIfNotExists(objectID,
+                        DEAUtils.DERIVATE_TYPES_CONTENT);
+                DEAUtils.splitTEIFileToDerivate(tei, objectID, MCRPath.getPath(contentDerivate.toString(), "/"));
+
                 return objectID;
             }
         } catch (Throwable t) {

@@ -1,18 +1,13 @@
 package de.gbv.dea;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.util.List;
-
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
+import org.jdom2.filter.Filters;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.jdom2.xpath.XPathFactory;
 import org.mycore.access.MCRAccessException;
 import org.mycore.common.MCRException;
 import org.mycore.datamodel.metadata.MCRDerivate;
@@ -26,8 +21,17 @@ import org.mycore.datamodel.niofs.MCRPath;
 import org.mycore.datamodel.niofs.utils.MCRRecursiveDeleter;
 import org.mycore.datamodel.niofs.utils.MCRTreeCopier;
 import org.mycore.frontend.fileupload.MCRUploadHelper;
+import org.mycore.mets.model.Mets;
 import org.mycore.webtools.upload.MCRDefaultUploadHandler;
 import org.mycore.webtools.upload.exception.MCRUploadServerException;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class DEAUtils {
 
@@ -147,12 +151,28 @@ public class DEAUtils {
     }
 
     /**
+     * Returns the first title element of the given TEI file.
+     *
+     * @param tei the TEI file
+     * @return the title of the TEI file
+     */
+    public static String getTitle(Element tei) {
+        XPathFactory xPathFactory = XPathFactory.instance();
+        return xPathFactory.compile("(.|tei:teiHeader)/tei:fileDesc/tei:titleStmt/tei:title[1]",
+                        Filters.element(),
+                        null,
+                        DEAUtils.TEI_NS)
+                .evaluateFirst(tei)
+                .getTextNormalize();
+    }
+
+    /**
      * Splits the given TEI file into several files and stores them in the derivate of the given object.
      * @param tei the TEI file to split
      * @param objectID the object id of the derivate to which the MCRPath belongs
      * @param root the root path of the derivate
      */
-    public static void splitTEIFileToDerivate(Document tei, MCRObjectID objectID, MCRPath root) {
+    public static void splitTEIFileToDerivate(Document tei, MCRObjectID objectID, MCRPath root) throws MCRUploadServerException {
         Path transcriptionFolderPath = root.resolve("tei/").resolve("transcription");
         if (!Files.exists(transcriptionFolderPath)) {
             try {
@@ -167,15 +187,28 @@ public class DEAUtils {
             .filter(file -> file.name() != null)
             .forEach(teiFile -> {
                 String name = teiFile.name();
-
                 try (OutputStream os = Files.newOutputStream(transcriptionFolderPath.resolve(name + ".xml"))) {
                     XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
                     xmlOutputter.output(teiFile.doc(), os);
                 } catch (IOException e) {
                     throw new MCRException(e);
                 }
-
             });
+
+        DEATEIMetsGenerator metsGenerator = new DEATEIMetsGenerator(root, split, DEAUtils.getTitle(tei.getRootElement()));
+        try {
+            metsGenerator.generate();
+        } catch (IOException e) {
+            throw new MCRUploadServerException("mcr.upload.import.failed", e);
+        }
+        Mets mets = metsGenerator.getMets();
+        Document document = mets.asDocument();
+        try (OutputStream os = Files.newOutputStream(root.resolve("mets.xml"), StandardOpenOption.TRUNCATE_EXISTING)) {
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            xmlOutputter.output(document, os);
+        } catch (IOException e) {
+            throw new MCRException(e);
+        }
     }
 
 
