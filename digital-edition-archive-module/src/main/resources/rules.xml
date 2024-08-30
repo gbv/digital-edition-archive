@@ -91,4 +91,10 @@
             <action>read</action>
         </and>
     </or>
+    <or>
+        <and>
+            <action>read</action>
+            <regex>restapi:/.*</regex>
+        </and>
+    </or>
 </or>
