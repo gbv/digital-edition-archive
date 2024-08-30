@@ -203,7 +203,8 @@ public class DEAUtils {
         }
         Mets mets = metsGenerator.getMets();
         Document document = mets.asDocument();
-        try (OutputStream os = Files.newOutputStream(root.resolve("mets.xml"), StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (OutputStream os = Files.newOutputStream(root.resolve("mets.xml"), StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.CREATE)) {
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             xmlOutputter.output(document, os);
         } catch (IOException e) {
