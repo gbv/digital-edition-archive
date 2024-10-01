@@ -49,7 +49,7 @@ public class DEATEISplitter {
         return size;
     }
 
-    private Stub copyAncestors(Element pbElement, String name) {
+    private Stub copyAncestors(Element pbElement, String name, String n) {
         Element parent = pbElement;
         Element lastClone = null;
         Element firstClone = null;
@@ -64,7 +64,7 @@ public class DEATEISplitter {
             lastClone = cloned;
         }
 
-        TeiFile teiFile = new TeiFile(name, new Document(lastClone));
+        TeiFile teiFile = new TeiFile(name, new Document(lastClone), n);
         this.splitDocumentList.add(teiFile);
         return new Stub(firstClone, teiFile);
     }
@@ -78,7 +78,9 @@ public class DEATEISplitter {
                     if(facs.startsWith("images/")){
                         facs = facs.substring("images/".length());
                     }
-                    Stub newStub = copyAncestors(element, facs);
+                    final var n = contentElement.getAttributeValue("n");
+
+                    Stub newStub = copyAncestors(element, facs, n);
                     copyTarget = newStub.newEl;
                     continue;
                 }
@@ -121,7 +123,7 @@ public class DEATEISplitter {
         Element originalText = this.original.doc()
             .getRootElement().getChild("text", TEI_NS);
 
-        Stub newStub = copyAncestors(originalText.getChildren().get(0), null);
+        Stub newStub = copyAncestors(originalText.getChildren().get(0), null, null);
         copyTarget = newStub.newEl;
 
         traverse(originalText);
@@ -129,7 +131,7 @@ public class DEATEISplitter {
         return splitDocumentList;
     }
 
-    public record TeiFile(String name, Document doc) {
+    public record TeiFile(String name, Document doc, String n) {
     }
 
     public record Stub(Element newEl, TeiFile teiFile) {
