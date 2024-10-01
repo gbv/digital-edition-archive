@@ -181,13 +181,13 @@ public class DEAUtils {
                 throw new MCRException(e);
             }
         }
-        DEATEISplitter splitter = new DEATEISplitter(new DEATEISplitter.TeiFile(objectID.toString(), tei));
+        DEATEISplitter splitter = new DEATEISplitter(new DEATEISplitter.TeiFile(objectID.toString(), tei, "0"));
         List<DEATEISplitter.TeiFile> split = splitter.split();
         split.stream()
             .filter(file -> file.name() != null)
             .forEach(teiFile -> {
                 String name = teiFile.name();
-                try (OutputStream os = Files.newOutputStream(transcriptionFolderPath.resolve(name + ".xml"))) {
+                try (OutputStream os = Files.newOutputStream(transcriptionFolderPath.resolve(removeFileEnding(name) + ".xml"))) {
                     XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
                     xmlOutputter.output(teiFile.doc(), os);
                 } catch (IOException e) {
@@ -210,6 +210,10 @@ public class DEAUtils {
         } catch (IOException e) {
             throw new MCRException(e);
         }
+    }
+
+    public static String removeFileEnding(String name) {
+        return name.substring(0, name.lastIndexOf('.'));
     }
 
 

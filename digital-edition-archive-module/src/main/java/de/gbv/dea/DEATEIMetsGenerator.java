@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class DEATEIMetsGenerator {
@@ -72,6 +73,8 @@ public class DEATEIMetsGenerator {
         String mainLogicalID = "log_" + UUID.randomUUID();
         mets.getLogicalStructMap().setDivContainer(new LogicalDiv(mainLogicalID, "monograph", title));
 
+        int fileCount = 0;
+
         for (DEATEISplitter.TeiFile teiFile : teiFiles) {
             String name = teiFile.name();
             Optional<MCRPath> file = files.stream()
@@ -93,13 +96,20 @@ public class DEATEIMetsGenerator {
 
             String transcriptionFileID = "file_transcription_" + UUID.randomUUID();
             File metsTranscriptionFile = new File(transcriptionFileID, "text/xml");
-            MCRPath transcriptionPath = MCRPath.toMCRPath(fileRoot.resolve("tei/transcription/" + name + ".xml"));
+            MCRPath transcriptionPath = MCRPath.toMCRPath(fileRoot.resolve("tei/transcription/" + DEAUtils.removeFileEnding(name) + ".xml"));
             metsTranscriptionFile.setFLocat(new FLocat(LOCTYPE.URL, transcriptionPath.getOwnerRelativePath().substring(1)));
             transcriptionFileGroup.addFile(metsTranscriptionFile);
 
             mets.getPhysicalStructMap().setDivContainer(mainDiv);
             String physID = "phys_" + UUID.randomUUID();
             PhysicalSubDiv page = new PhysicalSubDiv(physID, "page");
+
+            if(teiFile.n() != null) {
+                page.setOrderLabel(teiFile.n());
+            } else {
+                page.setOrderLabel(String.valueOf(++fileCount));
+            }
+
             page.add(new Fptr(masterFileID));
             page.add(new Fptr(transcriptionFileID));
             mainDiv.add(page);
@@ -112,7 +122,7 @@ public class DEATEIMetsGenerator {
     public MCRPath findMatchingFile(String name, List<MCRPath> files) {
         return files.stream()
                 .filter(p -> p.getOwnerRelativePath()
-                .startsWith("/" + name))
+                .equals("/" + name))
                 .findFirst()
                 .orElse(null);
     }
