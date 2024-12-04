@@ -58,7 +58,8 @@ public class ShelfMarkMappingEventHandler extends MCREventHandlerBase {
     }
 
     private static boolean checkObjectType(MCRObject obj) {
-        if (!obj.getId().getTypeId().equals("tei")) {
+        String typeId = obj.getId().getTypeId();
+        if (!typeId.equals("tei") && !typeId.equals("bibl")) {
             LOGGER.info("Object {} is not a TEI object (skip it)", obj.getId());
             return true;
         }
