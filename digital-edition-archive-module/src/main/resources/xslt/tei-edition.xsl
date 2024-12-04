@@ -21,6 +21,7 @@
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
                 xmlns:mcrclass="http://www.mycore.de/xslt/classification"
+                exclude-result-prefixes="mcri18n mcrclass tei xsl xlink"
                 version="3.0">
 
     <xsl:template match="/mycoreobject[contains(@ID,'_edition_')]" mode="frontpage">

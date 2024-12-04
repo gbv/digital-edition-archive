@@ -17,12 +17,6 @@
   ~ along with MyCoRe.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<!DOCTYPE xsl:stylesheet [
-  <!ENTITY html-output SYSTEM "xsl/xsl-output-html.fragment">
-]>
-<!-- ============================================== -->
-<!-- $Revision: 1.21 $ $Date: 2007-11-12 09:37:14 $ -->
-<!-- ============================================== -->
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mcracl="http://www.mycore.de/xslt/acl"
@@ -30,7 +24,6 @@
                 xmlns:mcr="http://www.mycore.org/"
                 xmlns:mcrurl="http://www.mycore.de/xslt/url"
                 exclude-result-prefixes="xlink mcr mcri18n mcracl">
-  &html-output;
   <xsl:include href="MyCoReLayout.xsl"/>
   <!-- include custom templates for supported objecttypes -->
   <xsl:include href="xslInclude:objectTypes"/>

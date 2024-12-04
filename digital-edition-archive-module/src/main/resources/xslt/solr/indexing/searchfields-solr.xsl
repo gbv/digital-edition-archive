@@ -46,6 +46,17 @@
                 <xsl:apply-templates select="metadata/def.teiContainer/teiContainer/tei:teiHeader"
                                      mode="edition"/>
             </xsl:when>
+            <xsl:when test="$type='bibl'">
+                <field name="digital-edition-archive.title">
+                    <xsl:value-of
+                            select="metadata/def.teiContainer/teiContainer/tei:biblStruct/tei:monogr/tei:title[@type='main']"/>
+                </field>
+            </xsl:when>
+            <xsl:otherwise>
+                <field name="digital-edition-archive.title">
+                    <xsl:value-of select="@ID"/>
+                </field>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
