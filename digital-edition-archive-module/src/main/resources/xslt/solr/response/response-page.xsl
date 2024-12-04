@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:mcri18n="http://www.mycore.de/xslt/i18n"
+                exclude-result-prefixes="mcri18n xsl"
                 version="3.0">
 
     <xsl:template match="/response/result|lst[@name='grouped']/lst[@name='returnId']" priority="10">
@@ -75,10 +77,16 @@
                     <a href="{$hitHref}">
                         <xsl:choose>
                             <xsl:when test="./str[@name='objectType'] = 'tei'">
-                                <xsl:value-of select="./arr[@name='dea.tei.title']/str[1]"/>
+                                <xsl:value-of select="./arr[@name='digital-edition-archive.title']/str[1]"/>
+                            </xsl:when>
+                            <xsl:when test="./str[@name='objectType'] = 'edition'">
+                                <xsl:value-of select="./arr[@name='digital-edition-archive.title']/str[1]"/>
+                            </xsl:when>
+                            <xsl:when test="./str[@name='objectType'] = 'bibl'">
+                                <xsl:value-of select="./arr[@name='digital-edition-archive.title']/str[1]"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="./arr[@name='dea.edition.title']/str[1]"/>
+                                <xsl:value-of select="./arr[@name='digital-edition-archive.title']/str[1]"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </a>

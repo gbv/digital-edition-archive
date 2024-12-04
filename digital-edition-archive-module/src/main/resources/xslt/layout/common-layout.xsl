@@ -5,7 +5,7 @@
                 xmlns:mcrproperty="http://www.mycore.de/xslt/property"
                 xmlns:mcrurl="http://www.mycore.de/xslt/url"
                 xmlns:mcrlayoututils="http://www.mycore.de/xslt/layoututils"
-                exclude-result-prefixes="mcri18n mcrstring mcrproperty mcrurl"
+                exclude-result-prefixes="mcri18n mcrlayoututils mcrstring mcrproperty mcrurl"
                 version="3.0">
   <xsl:strip-space elements="*"/>
 
