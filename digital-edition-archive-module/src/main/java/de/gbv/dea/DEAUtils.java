@@ -174,13 +174,20 @@ public class DEAUtils {
      */
     public static void splitTEIFileToDerivate(Document tei, MCRObjectID objectID, MCRPath root) throws MCRUploadServerException {
         Path transcriptionFolderPath = root.resolve("tei/").resolve("transcription");
-        if (!Files.exists(transcriptionFolderPath)) {
+        if (Files.exists(transcriptionFolderPath)) {
+            // files already exist, delete them and recreate the folder
             try {
-                Files.createDirectories(transcriptionFolderPath);
+                Files.walkFileTree(transcriptionFolderPath, MCRRecursiveDeleter.instance());
             } catch (IOException e) {
                 throw new MCRException(e);
             }
         }
+        try {
+            Files.createDirectories(transcriptionFolderPath);
+        } catch (IOException e) {
+            throw new MCRException(e);
+        }
+
         DEATEISplitter splitter = new DEATEISplitter(new DEATEISplitter.TeiFile(objectID.toString(), tei, "0"));
         List<DEATEISplitter.TeiFile> split = splitter.split();
         split.stream()
