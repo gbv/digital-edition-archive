@@ -25,7 +25,7 @@
 
   <xsl:template name="loginMenu">
     <xsl:variable name="loginURL"
-                  select="concat( $ServletsBaseURL, 'MCRLoginServlet',$HttpSession,'?url=', encode-for-uri( string( $RequestURL ) ) )"/>
+                  select="concat( $ServletsBaseURL, 'MCRLoginServlet', '?url=', encode-for-uri( string( $RequestURL ) ) )"/>
     <xsl:variable name="currentUserInfo" select="document('currentUserInfo:attribute=realName')"/>
     <xsl:choose>
       <xsl:when test="$currentUserInfo/user/@id=mcrproperty:one('MCR.Users.Guestuser.UserName')">
