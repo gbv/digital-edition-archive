@@ -328,10 +328,6 @@ function setDockerValues() {
       setOrAddProperty "MCR.JPA.DefaultSchema" "${HIBERNATE_SCHEMA}"
     fi
 
-    if [ -n "${SOLR_CLASSIFICATION_CORE}" ]; then
-      sed -ri "s/(name=\"hibernate.default_schema\" value=\").*(\")/\1${HIBERNATE_SCHEMA_ESCAPED}\2/" "${PERSISTENCE_XML}"
-    fi
-
     setOrAddProperty "MCR.JPA.Hbm2ddlAuto" "update"
     setOrAddProperty "MCR.JPA.PersistenceUnit.dea.Class" "org.mycore.backend.jpa.MCRSimpleConfigPersistenceUnitDescriptor"
     setOrAddProperty "MCR.JPA.PersistenceUnitName" "dea"
@@ -367,7 +363,6 @@ function setUpMyCoRe {
     echo "Set up MyCoRe!"
     /opt/dea/dea/bin/digital-edition-archive.sh create configuration directory
     setupLog4jConfig
-    sed -ri -r 's/(<\/properties>)/<property name=\"hibernate\.connection\.provider_class\" value=\"org\.hibernate\.hikaricp\.internal\.HikariCPConnectionProvider\" \/>\n<property name=\"hibernate\.hikari\.maximumPoolSize\" value=\"30\" \/>\n<property name=\"hibernate\.hikari\.leakDetectionThreshold\" value=\"9000\" \/>\n<property name=\"hibernate\.hikari\.registerMbeans\" value=\"true\" \/>\n\1/' "${PERSISTENCE_XML}"
     setDockerValues
     /opt/dea/dea/bin/digital-edition-archive.sh reload mappings in jpa configuration file
     /opt/dea/dea/bin/digital-edition-archive.sh process resource setup-commands.txt
