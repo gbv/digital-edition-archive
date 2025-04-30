@@ -1,6 +1,14 @@
 
 # digital-edition-archive
 
+## Migration instructions
+
+To migrate the project from 2023 to 2024, add the following environment variable to your docker-compose file:
+
+```yaml
+ - RUN_MIGRATION_SCRIPTS: true
+```
+
 ## Installation instructions
 
 ### Version control

@@ -384,8 +384,14 @@ else
   exit 1
 fi
 
-migrate_user_table_2023_2024
-mcrjobparameter_2023_2024
+# check if migration scripts should be run
+if [[ "$RUN_MIGRATION_SCRIPTS" == "true" ]]; then
+  echo "Running migration scripts..."
+  migrate_user_table_2023_2024
+  mcrjobparameter_2023_2024
+else
+  echo "Skipping migration scripts."
+fi
 
 [ "$(ls -A "$MCR_CONFIG_DIR")" ] && setDockerValues || setUpMyCoRe
 
