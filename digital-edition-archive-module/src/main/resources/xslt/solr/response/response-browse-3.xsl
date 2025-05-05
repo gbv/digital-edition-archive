@@ -14,7 +14,7 @@
   <xsl:template match="/response">
     <xsl:variable name="ResultPages">
       <xsl:call-template name="solr.Pagination">
-        <xsl:with-param name="href" select="concat($proxyBaseURL,$HttpSession,$solrParams)" />
+        <xsl:with-param name="href" select="concat($proxyBaseURL,$solrParams)" />
         <xsl:with-param name="size" select="$rows" />
         <xsl:with-param name="currentpage" select="$currentPage" />
         <xsl:with-param name="totalpage" select="$totalPages" />
@@ -54,7 +54,7 @@
 
           <xsl:variable name="origRows" select="lst[@name='responseHeader']/lst[@name='params']/str[@name='origrows']" />
           <xsl:variable name="newStart" select="$start - ($start mod $origRows)" />
-          <xsl:variable name="href" select="concat($proxyBaseURL,'?', $HttpSession, $params, '&amp;start=', $newStart)" />
+          <xsl:variable name="href" select="concat($proxyBaseURL,'?', $params, '&amp;start=', $newStart)" />
 
           <a href="{$href}">
             <xsl:value-of select="mcri18n:translate('component.solr.searchresult.back')" />
@@ -89,12 +89,12 @@
         <xsl:variable name="linkToDocument">
           <xsl:value-of select="$staticUrl" />
         </xsl:variable>
-        <a href="{concat($staticUrl,$HttpSession)}">
+        <a href="{$staticUrl}">
           <xsl:value-of select="$staticUrl" />
         </a>
       </span>
     </div>
-    <!-- change url in browser -->
+    <!-- change url in browser
     <script type="text/javascript">
       <xsl:value-of select="concat('var pageurl = &quot;', $staticUrl, '&quot;;')" />
       if(typeof window.history.replaceState == &quot;function&quot;){
@@ -105,7 +105,7 @@
           window.history.replaceState({path:originalPage.url}, originalPage.title, originalPage.url);
         }
       }
-    </script>
+    </script> -->
     <xsl:apply-templates select="document(concat('mcrobject:',$objId))/mycoreobject" />
   </xsl:template>
 

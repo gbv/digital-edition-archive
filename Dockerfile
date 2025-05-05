@@ -1,4 +1,4 @@
-FROM tomcat:10-jdk17-temurin-jammy
+FROM tomcat:10-jdk21-temurin-jammy
 RUN groupadd -r mcr -g 501 && \
     useradd -d /home/mcr -u 501 -m -s /bin/bash -g mcr mcr
 WORKDIR /usr/local/tomcat/
@@ -18,6 +18,7 @@ RUN set -eux; \
     chmod 555 /usr/local/bin/dea.sh; \
 	apt-get update; \
 	apt-get install -y gosu; \
+    apt-get install -y postgresql-client; \
 	rm -rf /var/lib/apt/lists/*;
 RUN rm -rf /usr/local/tomcat/webapps/* && \
     mkdir /opt/dea/ && \
