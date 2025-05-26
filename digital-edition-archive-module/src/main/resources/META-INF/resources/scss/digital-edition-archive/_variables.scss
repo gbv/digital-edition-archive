@@ -5,7 +5,7 @@
 
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, sans-serif;
 
-$primary-: white;
+$primary-:     white;
 $primary:      #4c74b0;
 $secondary:    #4c74b0;
 $info:         #146d9d;
@@ -32,6 +32,8 @@ $pagination-bg: $primary;
 $pagination-hover-bg: lighten($pagination-bg, 10%);
 $pagination-disabled-bg: $gray-light;
 
+$input-font-size: 0.875rem !default;
+$input-btn-font-size: 0.875rem !default;
 /* ---------------------------------------------------------------------------
    project specific variables
 ----------------------------------------------------------------------------*/

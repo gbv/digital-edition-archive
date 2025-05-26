@@ -1,111 +1,836 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE MyCoReWebPage>
-<MyCoReWebPage>
-  <section xml:lang="all" title="Erfassungsmaske LOD-Header">
+<MyCoReWebPage xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xed="http://www.mycore.de/xeditor">
+  <section xml:lang="all" title="Erfassungsmaske TEI-Metadaten">
 
-    <xed:form xmlns:xed="http://www.mycore.de/xeditor" xmlns:tei="http://www.tei-c.org/ns/1.0" method="post" role="form" class="form-horizontal">
+    <xed:form method="post" role="form" class="form-horizontal">
       <xed:source uri="mcrobject:{$id}" />
       <xed:cancel url="../index.xml" />
+
+      <!-- <xed:post-processor class="de.gbv.dea.DEATEISorter" /> -->
+
       <xed:bind xpath="/mycoreobject">
         <xed:bind xpath="@ID" initially="lod_tei_00000000" />
-        <xed:bind xpath="metadata/def.teiContainer[@class='MCRMetaXML'][@notinherit='true']/teiContainer/tei:teiHeader">
-          <div class="card">
-            <div class="card-header">
-              <h3><xed:output i18n="editor.legend.lod_tei" /></h3>
-            </div>
-            <div class="card-body">
-              <!-- Input Title -->
-              <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                <div class="form-group row {$xed-validation-marker}">
-                  <label class="col-md-4 control-label" for="title">
-                    <xed:output i18n="editor.label.title" />
-                  </label>
-                  <div class="col-md-6">
-                    <input id="title" placeholder="{i18n:editor.placeholder.title}" class="form-control input-md"
-                           type="text" />
-                  </div>
-                  <xed:validate display="here" required="true">
-                    <xed:output i18n="editor.validate.title" />
-                  </xed:validate>
-                </div>
-              </xed:bind>
+        <xed:bind
+          xpath="structure/parents[@class='MCRMetaLinkID']/parent[@inherited='0'][@xlink:type='locator'][@xlink:href='lod_edition_00000001']" />
+        <xed:bind
+          xpath="metadata/def.teiContainer[@class='MCRMetaXML'][@notinherit='true']/teiContainer/tei:teiHeader">
 
-              <!-- Input Author -->
-              <xed:bind xpath="tei:fileDesc/tei:titleStmt">
-                <div class="form-group row">
-                  <label class="col-md-4 control-label" for="creator">
-                    <xed:output i18n="editor.label.author" />
+          <h3>
+            <xed:output i18n="lod.editor.metadata.add_docuement.headline" />
+          </h3>
+
+          <!-- general information -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.general_information.legend" />
+            </legend>
+
+            <!-- document state -->
+            <xed:bind
+              xpath="../../../../service/servstates[@class='MCRMetaClassification']/servstate[@classid='state']/@categid">
+              <div class="form-group row">
+                <div class="col-md-3 col-12">
+                  <label for="state-{xed:generate-id()}"
+                    class="col-form-label state-label">
+                    <xed:output i18n="editor.label.project.state" />
                   </label>
-                  <div class="col-md-6">
-                    <xed:repeat xpath="tei:author">
-                      <xed:bind xpath="tei:persName/tei:surname[@xml:lang='en']">
-                        <div class="form-group row">
-                          <div class="col-sm-8">
-                            <input id="creator" placeholder="{i18n:editor.placeholder.author}" class="form-control input-md"
-                                   type="text" />
+                </div>
+                <div class="col-md-9 col-12">
+                  <select id="state-{xed:generate-id()}"
+                    class="form-control state-select">
+                    <option value="">
+                      <xed:output i18n="editor.label.choose" />
+                    </option>
+                    <xed:include
+                      uri="xslStyle:items2options:classification:editor:-1:children:state" />
+                    <!--<xed:validate
+                    display="here" required="true"
+                      i18n="editor.label.validate.project.state" />-->
+                  </select>
+                </div>
+              </div>
+            </xed:bind>
+
+
+            <!-- title -->
+            <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+              <xed:bind xpath="@xml:lang" initially="en" />
+              <div class="form-group row">
+                <label for="title-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label title-label">
+                  <xed:output i18n="lod.editor.metadata.title.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="title-{xed:generate-id()}" type="text"
+                    class="form-control title-input {$xed-validation-marker}" />
+                  <!--<xed:validate
+                  display="here" required="true"
+                    i18n="lod.editor.metadata.title.validation" />-->
+                </div>
+              </div>
+            </xed:bind>
+
+            <!-- original title -->
+            <!---
+            tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc/tei:p[1]-->
+            <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:title[@type='original']">
+              <div class="form-group row">
+                <label for="original-title-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label original-title-label">
+                  <xed:output i18n="lod.editor.metadata.original_title.label" />
+                </label>
+                <div class="col-md-6 col-12">
+                  <input id="original-title-{xed:generate-id()}"
+                    type="text"
+                    class="form-control original-title-input {$xed-validation-marker}" />
+                </div>
+                <div class="col-3">
+                  <xed:bind xpath="@xml:lang">
+                    <select id="languages-{xed:generate-id()}"
+                      class="form-control languages-select">
+                      <option value="">
+                        <xed:output i18n="editor.label.language.select" />
+                      </option>
+                      <xed:include
+                        uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                    </select>
+                  </xed:bind>
+                </div>
+              </div>
+            </xed:bind>
+
+            <!--/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:respStmt/tei:persName-->
+
+            <xed:bind xpath="tei:fileDesc/tei:titleStmt/tei:respStmt">
+              <xed:bind xpath="tei:resp" default="author of description" />
+              <xed:repeat xpath="tei:persName">
+                <div class="list-group-item p-3 border-left border-right border-top">
+                  <fieldset class="">
+                    <div class="form-group row">
+                      <xed:bind xpath="@xml:id">
+                        <label class="col-md-3 col-12">
+                          <xed:output i18n="lod.editor.metadata.author_of_description.label" />
+                        </label>
+                        <div class="col-md-2 col-12">
+                          <input id="sender-persname-id" type="text" placeholder="ID"
+                            class="form-control sender-persname-id-input {$xed-validation-marker}" />
+                          <!--<xed:validate
+                          display="here" required="true"
+                                i18n="lod.editor.metadata.persname_id.validation" />-->
+                        </div>
+                      </xed:bind>
+                      <div class="col-md-7 text-right">
+                        <div class="btn-group">
+                          <xed:controls>append remove up down</xed:controls>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <xed:repeat xpath="tei:forename">
+                        <div class="col-md-3 col-12 pr-1">
+                          <label for="forename-{xed:generate-id()}"
+                            class="col-form-label fore-name-label pl-2">
+                            <xed:output
+                              i18n="lod.editor.metadata.person.forname.label" />
+                          </label>
+                        </div>
+                        <div class="col-md-4 col-12 pr-1">
+                          <input id="forename-{xed:generate-id()}" type="text"
+                            class="form-control forename-input {$xed-validation-marker}" />
+                        </div>
+                        <div class="col-md-2 col-12 pl-1 pr-1">
+                          <xed:bind xpath="@xml:lang">
+                            <select id="languages-{xed:generate-id()}"
+                              class="form-control languages-select">
+                              <option value="">
+                                <xed:output i18n="editor.label.language.select" />
+                              </option>
+                              <xed:include
+                                uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                            </select>
+                          </xed:bind>
+                        </div>
+                        <div class="col-md-2 text-left">
+                          <div class="btn-group">
+                            <xed:controls>append remove up down</xed:controls>
                           </div>
-                          <div class="col-sm-4">
-                            <div class="btn-group btn-group-sm pull-right">
-                              <xed:controls />
+                        </div>
+                      </xed:repeat>
+                    </div>
+                    <div class="form-group row">
+                      <xed:repeat xpath="tei:surname">
+                        <div class="col-md-3 col-12 pr-1">
+                          <label for="surname-{xed:generate-id()}"
+                            class="col-form-label surname-label pl-2">
+                            <xed:output
+                              i18n="lod.editor.metadata.person.surname.label" />
+                          </label>
+                        </div>
+                        <div class="col-md-4 col-12 pr-1">
+                          <input id="surname-{xed:generate-id()}" type="text"
+                            class="form-control surname-input {$xed-validation-marker}" />
+                        </div>
+                        <div class="col-md-2 col-12 pl-1 pr-1">
+                          <xed:bind xpath="@xml:lang">
+                            <select id="languages-{xed:generate-id()}"
+                              class="form-control languages-select">
+                              <option value="">
+                                <xed:output i18n="editor.label.language.select" />
+                              </option>
+                              <xed:include
+                                uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                            </select>
+                          </xed:bind>
+                        </div>
+                        <div class="col-md-2 text-left">
+                          <div class="btn-group">
+                            <xed:controls>append remove up down</xed:controls>
+                          </div>
+                        </div>
+                      </xed:repeat>
+                    </div>
+
+                  </fieldset>
+                </div>
+              </xed:repeat>
+            </xed:bind>
+
+          </fieldset>
+
+          <fieldset class="mt-4 p-3 border">
+            <xed:bind
+              xpath="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:orgName"
+              default="null" />
+
+            <!-- document ID -->
+            <!-- TODO: Check xpath for ID -->
+            <!-- <xed:bind xpath="tei:fileDesc/@xml:id"> -->
+            <xed:bind xpath="tei:fileDesc/tei:publicationStmt/tei:idno">
+              <div class="form-group row">
+                <label for="document-id-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label">
+                  <xed:output i18n="lod.editor.metadata.doc_id.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="document-id-{xed:generate-id()}" type="text"
+                    class="form-control doc_id-input {$xed-validation-marker}" />
+                  <!--<xed:validate
+                  display="here" required="true"
+                    i18n="lod.editor.metadata.doc_id.validation" />-->
+                </div>
+              </div>
+            </xed:bind>
+
+          </fieldset>
+
+
+          <!-- comments section -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.additional_information.label" />
+            </legend>
+
+            <!-- Comments -->
+            <xed:bind xpath="tei:fileDesc/tei:notesStmt">
+              <div class="form-group row">
+                <label class="col-md-3 col-12 col-form-label comments-label">
+                  <xed:output i18n="lod.editor.metadata.comments.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <xed:repeat xpath="tei:note[@n='general']" min="1" max="5">
+                    <div class="row">
+                      <div class="col-9">
+                        <textarea
+                          class="form-control mb-2 comments-textarea {$xed-validation-marker}"></textarea>
+                      </div>
+                      <div class="col-3 text-right">
+                        <div class="btn-group">
+                          <xed:controls>append remove up down</xed:controls>
+                        </div>
+                      </div>
+                    </div>
+                  </xed:repeat>
+                </div>
+              </div>
+            </xed:bind>
+          </fieldset>
+          <!-- archive information section -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.archive_information.label" />
+            </legend>
+
+            <!-- archive -->
+            <xed:bind
+              xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:repository">
+              <div class="form-group row {$xed-validation-marker}">
+                <label for="archive-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label archive-label">
+                  <xed:output i18n="lod.editor.metadata.archive_information.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="archive-{xed:generate-id()}" type="text"
+                    class="form-control archive-input" />
+                </div>
+              </div>
+            </xed:bind>
+
+            <!-- archival reference -->
+            <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno">
+              <div class="form-group row {$xed-validation-marker}">
+                <label for="publication-date-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label publication-date-label">
+                  <xed:output i18n="lod.editor.metadata.archival_reference.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="publication-date-{xed:generate-id()}" type="text"
+                    class="form-control publication-date-input" />
+                </div>
+              </div>
+            </xed:bind>
+
+            <!-- number of folios -->
+            <!-- tei:fileDesc/tei:extent/tei:measure[@unit='folio'] -->
+            <xed:bind
+              xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc/tei:p[@n='extent']">
+              <div class="form-group row {$xed-validation-marker}">
+                <label for="folios-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label folios-label">
+                  <xed:output i18n="lod.editor.metadata.num_of_folios" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="folios-{xed:generate-id()}" type="text"
+                    class="form-control folios-input" />
+                </div>
+              </div>
+            </xed:bind>
+          </fieldset>
+
+          <!-- summary -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.summary.label" />
+            </legend>
+            <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msContents/tei:summary">
+              <div class="form-group row">
+                <label class="col-md-3 col-12 col-form-label document-summary-label">
+                  <xed:output i18n="lod.editor.metadata.summary.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <textarea
+                    class="form-control mb-2 document-summary-textarea {$xed-validation-marker}"></textarea>
+                </div>
+              </div>
+            </xed:bind>
+          </fieldset>
+
+          <!-- Correspondence Description -->
+          <xed:bind xpath="tei:profileDesc/tei:correspDesc">
+            <fieldset class="mt-4 p-3 border">
+              <legend>
+                <xed:output i18n="lod.editor.metadata.correspDesc.legend" />
+              </legend>
+
+              <!-- sender information -->
+              <xed:bind xpath="tei:correspAction[1]">
+                <xed:bind xpath="@type" default="send" />
+                <div class="list-group">
+                  <xed:repeat xpath="tei:persName">
+                    <div class="list-group-item p-3 border-left border-right border-top">
+                      <fieldset class="">
+                        <div class="form-group row">
+                          <xed:bind xpath="@xml:id">
+                            <legend class="col-md-3 col-12">
+                              <xed:output i18n="lod.editor.metadata.sender.label" />
+                            </legend>
+                            <div class="col-md-2 col-12">
+                              <input id="sender-persname-id" type="text" placeholder="ID"
+                                class="form-control sender-persname-id-input {$xed-validation-marker}" />
+                              <!--<xed:validate
+                              display="here" required="true"
+                                i18n="lod.editor.metadata.persname_id.validation" />-->
+                            </div>
+                          </xed:bind>
+                          <div class="col-md-7 text-right">
+                            <div class="btn-group">
+                              <xed:controls>append remove up down</xed:controls>
                             </div>
                           </div>
                         </div>
+                        <div class="form-group row">
+                          <xed:repeat xpath="tei:forename">
+                            <div class="col-md-3 col-12 pr-1">
+                              <label for="forename-{xed:generate-id()}"
+                                class="col-form-label fore-name-label pl-2">
+                                <xed:output
+                                  i18n="lod.editor.metadata.person.forname.label" />
+                              </label>
+                            </div>
+                            <div class="col-md-4 col-12 pr-1">
+                              <input id="forename-{xed:generate-id()}" type="text"
+                                class="form-control forename-input {$xed-validation-marker}" />
+                            </div>
+                            <div class="col-md-2 col-12 pl-1 pr-1">
+                              <xed:bind xpath="@xml:lang">
+                                <select id="languages-{xed:generate-id()}"
+                                  class="form-control languages-select">
+                                  <option value="">
+                                    <xed:output i18n="editor.label.language.select" />
+                                  </option>
+                                  <xed:include
+                                    uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                                </select>
+                              </xed:bind>
+                            </div>
+                            <div class="col-md-2 text-left">
+                              <div class="btn-group">
+                                <xed:controls>append remove up down</xed:controls>
+                              </div>
+                            </div>
+                          </xed:repeat>
+                        </div>
+                        <div class="form-group row">
+                          <xed:repeat xpath="tei:surname">
+                            <div class="col-md-3 col-12 pr-1">
+                              <label for="surname-{xed:generate-id()}"
+                                class="col-form-label surname-label pl-2">
+                                <xed:output
+                                  i18n="lod.editor.metadata.person.surname.label" />
+                              </label>
+                            </div>
+                            <div class="col-md-4 col-12 pr-1">
+                              <input id="surname-{xed:generate-id()}" type="text"
+                                class="form-control surname-input {$xed-validation-marker}" />
+                            </div>
+                            <div class="col-md-2 col-12 pl-1 pr-1">
+                              <xed:bind xpath="@xml:lang">
+                                <select id="languages-{xed:generate-id()}"
+                                  class="form-control languages-select">
+                                  <option value="">
+                                    <xed:output i18n="editor.label.language.select" />
+                                  </option>
+                                  <xed:include
+                                    uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                                </select>
+                              </xed:bind>
+                            </div>
+                            <div class="col-md-2 text-left">
+                              <div class="btn-group">
+                                <xed:controls>append remove up down</xed:controls>
+                              </div>
+                            </div>
+                          </xed:repeat>
+                        </div>
+
+                      </fieldset>
+                    </div>
+                  </xed:repeat>
+                </div>
+                <fieldset class="form-group mt-4 p-3 border">
+                  <div class="form-group row {$xed-validation-marker}">
+                    <legend class="col-md-3 col-12">
+                      <xed:output i18n="lod.editor.metadata.sender_dates.legend" />
+                    </legend>
+                  </div>
+                  <div class="form-group row {$xed-validation-marker}">
+                    <div class="col-md-3 col-12 pr-1">
+                      <label for="date-sender"
+                        class="col-form-label date-label pl-2">
+                        <xed:output i18n="lod.editor.metadata.date.label" />
+                      </label>
+                    </div>
+                    <div class="col-md-4 col-12 pr-1">
+                      <xed:bind xpath="tei:date">
+                        <input id="date-sender" type="text"
+                          placeholder="{lod.editor.metadata.date.placeholder}"
+                          class="form-control date-input {$xed-validation-marker}" />
                       </xed:bind>
+                    </div>
+                    <div class="col-md-2 col-12 pr-1">
+                      <xed:bind xpath="tei:date[@type='timeline']">
+                        <input id="timeline-date-{xed:generate-id()}" type="date"
+                          placeholder="{lod.editor.metadata.timeline.placeholder}"
+                          class="form-control timeline-date-input {$xed-validation-marker}" />
+                      </xed:bind>
+                    </div>
+                  </div>
+                </fieldset>
+                <!-- geo data section -->
+                <fieldset class="form-group mt-4 p-3 border">
+                  <div class="form-group row {$xed-validation-marker}">
+                    <legend class="col-md-3 col-12">
+                      <xed:output i18n="lod.editor.metadata.geo_data.label" />
+                    </legend>
+                  </div>
+                  <div class="form-group row {$xed-validation-marker}">
+                    <!-- GeoData Sender -->
+                    <xed:repeat
+                      xpath="tei:settlement">
+                      <label for="geo-data-{xed:generate-id()}"
+                        class="col-md-3 col-12 col-form-label geo-data-label">
+                        <xed:output i18n="lod.editor.metadata.geodata_sender.label" />
+                      </label>
+                      <div class="col-md-2 col-12">
+                        <xed:bind xpath="@key">
+                          <input id="geo-data-{xed:generate-id()}" type="text"
+                            class="form-control geo-data-input" placeholder="ID" />
+                        </xed:bind>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <xed:bind xpath=".">
+                          <input id="geo-data-{xed:generate-id()}" type="text"
+                            class="form-control geo-data-input" placeholder="Place" />
+                        </xed:bind>
+                      </div>
+                      <div class="col-md-2 text-left">
+                        <div class="btn-group">
+                          <xed:controls>append remove up down</xed:controls>
+                        </div>
+                      </div>
                     </xed:repeat>
                   </div>
+                </fieldset>
+              </xed:bind>
+
+
+              <!-- recipient -->
+              <xed:bind xpath="tei:correspAction[2]">
+                <xed:bind xpath="@type" default="received" />
+                <div class="list-group">
+                  <xed:repeat xpath="tei:persName">
+                    <div class="list-group-item p-3 border-left border-right border-top">
+                      <fieldset class="">
+                        <div class="form-group row">
+                          <xed:bind xpath="@xml:id">
+                            <legend class="col-md-3 col-12">
+                              <xed:output i18n="lod.editor.metadata.recipient.label" />
+                            </legend>
+                            <div class="col-md-2 col-12">
+                              <input id="recipient-persname-id" type="text" placeholder="ID"
+                                class="form-control recipient-persname-id-input {$xed-validation-marker}" />
+                              <!--<xed:validate
+                              display="here" required="true"
+                                i18n="lod.editor.metadata.persname_id.validation" />-->
+                            </div>
+                          </xed:bind>
+                          <div class="col-md-7 text-right">
+                            <div class="btn-group">
+                              <xed:controls>append remove up down</xed:controls>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <xed:repeat xpath="tei:forename">
+                            <div class="col-md-3 col-12 pr-1">
+                              <label for="forename-{xed:generate-id()}"
+                                class="col-form-label fore-name-label pl-2">
+                                <xed:output
+                                  i18n="lod.editor.metadata.person.forname.label" />
+                              </label>
+                            </div>
+                            <div class="col-md-4 col-12 pr-1">
+                              <input id="forename-{xed:generate-id()}" type="text"
+                                class="form-control forename-input {$xed-validation-marker}" />
+                            </div>
+                            <div class="col-md-2 col-12 pl-1 pr-1">
+                              <xed:bind xpath="@xml:lang">
+                                <select id="languages-{xed:generate-id()}"
+                                  class="form-control languages-select">
+                                  <option value="">
+                                    <xed:output i18n="editor.label.language.select" />
+                                  </option>
+                                  <xed:include
+                                    uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                                </select>
+                              </xed:bind>
+                            </div>
+                            <div class="col-md-2 text-left">
+                              <div class="btn-group">
+                                <xed:controls>append remove up down</xed:controls>
+                              </div>
+                            </div>
+                          </xed:repeat>
+                        </div>
+                        <div class="form-group row">
+                          <xed:repeat xpath="tei:surname">
+                            <div class="col-md-3 col-12 pr-1">
+                              <label for="surname-{xed:generate-id()}"
+                                class="col-form-label surname-label pl-2">
+                                <xed:output
+                                  i18n="lod.editor.metadata.person.surname.label" />
+                              </label>
+                            </div>
+                            <div class="col-md-4 col-12 pr-1">
+                              <input id="surname-{xed:generate-id()}" type="text"
+                                class="form-control surname-input {$xed-validation-marker}" />
+                            </div>
+                            <div class="col-md-2 col-12 pl-1 pr-1">
+                              <xed:bind xpath="@xml:lang">
+                                <select id="languages-{xed:generate-id()}"
+                                  class="form-control languages-select">
+                                  <option value="">
+                                    <xed:output i18n="editor.label.language.select" />
+                                  </option>
+                                  <xed:include
+                                    uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                                </select>
+                              </xed:bind>
+                            </div>
+                            <div class="col-md-2 text-left">
+                              <div class="btn-group">
+                                <xed:controls>append remove up down</xed:controls>
+                              </div>
+                            </div>
+                          </xed:repeat>
+                        </div>
+
+                      </fieldset>
+                    </div>
+                  </xed:repeat>
                 </div>
               </xed:bind>
-              <xed:bind xpath="tei:fileDesc/tei:publicationStmt/tei:publisher/tei:orgName[@xml:id='MWS']" default="Max-Weber-Stiftung" />
-              <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:repository" default="DEA" />
-
-              <!-- Input Archivnummer -->
-              <xed:bind xpath="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno">
+              <fieldset class="form-group mt-4 p-3 border">
                 <div class="form-group row {$xed-validation-marker}">
-                  <label class="col-md-4 control-label" for="archivnr">
-                    <xed:output i18n="editor.label.archivnr" />
-                  </label>
-                  <div class="col-md-6">
-                    <input id="title" placeholder="{i18n:editor.placeholder.archivnr}" class="form-control input-md"
-                           type="text" />
-                  </div>
-                  <xed:validate display="here" required="true">
-                    <xed:output i18n="editor.validate.archivnr" />
-                  </xed:validate>
+                  <legend class="col-md-3 col-12">
+                    <xed:output i18n="lod.editor.metadata.recipient_dates.legend" />
+                  </legend>
                 </div>
-              </xed:bind>
+                <div class="form-group row {$xed-validation-marker}">
+                  <div class="col-md-3 col-12 pr-1">
+                    <label for="date-recipient"
+                      class="col-form-label date-label pl-2">
+                      <xed:output i18n="lod.editor.metadata.date.label" />
+                    </label>
+                  </div>
+                  <div class="col-md-4 col-12 pr-1">
+                    <xed:bind xpath="tei:date">
+                      <input id="date-recipient" type="text"
+                        placeholder="{lod.editor.metadata.date.placeholder}"
+                        class="form-control date-input {$xed-validation-marker}" />
+                    </xed:bind>
+                  </div>
+                  <div class="col-md-2 col-12 pr-1">
+                    <xed:bind xpath="tei:date[@type='timeline']">
+                      <input id="timeline-date-{xed:generate-id()}" type="date"
+                        placeholder="{lod.editor.metadata.timeline.placeholder}"
+                        class="form-control timeline-date-input {$xed-validation-marker}" />
+                    </xed:bind>
+                  </div>
+                </div>
+              </fieldset>
+              <!-- geo data section -->
+              <fieldset class="form-group mt-4 p-3 border">
+                <div class="form-group row {$xed-validation-marker}">
+                  <legend class="col-md-3 col-12">
+                    <xed:output i18n="lod.editor.metadata.geo_data.label" />
+                  </legend>
+                </div>
+                <div class="form-group row {$xed-validation-marker}">
+                  <!-- GeoData recipient -->
+                  <xed:repeat
+                    xpath="tei:settlement">
+                    <label for="geo-data-{xed:generate-id()}"
+                      class="col-md-3 col-12 col-form-label geo-data-label">
+                      <xed:output i18n="lod.editor.metadata.recipient.label" />
+                    </label>
+                    <div class="col-md-2 col-12">
+                      <xed:bind xpath="@key">
+                        <input id="geo-data-{xed:generate-id()}" type="text"
+                          class="form-control geo-data-input" placeholder="ID" />
+                      </xed:bind>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <xed:bind xpath=".">
+                        <input id="geo-data-{xed:generate-id()}" type="text"
+                          class="form-control geo-data-input" placeholder="Place" />
+                      </xed:bind>
+                    </div>
+                    <div class="col-md-2 text-left">
+                      <div class="btn-group">
+                        <xed:controls>append remove up down</xed:controls>
+                      </div>
+                    </div>
+                  </xed:repeat>
+                </div>
+              </fieldset>
+            </fieldset>
 
-              <!-- Button (Double) -->
-              <div class="form-group row">
-                <label class="col-md-4 control-label" for="save"></label>
-                <div class="col-md-8">
-                  <xed:choose>
-                    <xed:when test="contains(/mycoreobject/@ID, '_00000000')">
-                      <button id="save" class="btn btn-success createobject" type="submit" xed:target="servlet"
-                        xed:href="CreateObjectServlet">
-                        <xed:output i18n="common.button.save" />
-                      </button>
-                    </xed:when>
-                    <xed:otherwise>
-                      <button id="save" class="btn btn-success updateobject" type="submit" xed:target="servlet"
-                        xed:href="UpdateObjectServlet">
-                        <xed:output i18n="common.button.save" />
-                      </button>
-                    </xed:otherwise>
-                  </xed:choose>
-                  <xed:output value="'&#160;'" />
-                  <button id="cancel" class="btn btn-danger" type="submit" xed:target="cancel">
-                    <xed:output i18n="common.button.cancel" />
-                  </button>
-                  <xed:output value="'&#160;'" />
-                  <button id="debug" class="btn btn-info" type="submit" xed:target="debug">
-                    <xed:output i18n="common.button.debug" />
-                  </button>
+          </xed:bind>
+
+          <!-- language information section -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.language_information.legend" />
+            </legend>
+
+            <!-- languages -->
+            <xed:bind xpath="tei:profileDesc/tei:langUsage">
+              <div class="form-group row {$xed-validation-marker}">
+                <label
+                  class="col-md-3 col-12 col-form-label languages-label">
+                  <xed:output i18n="lod.editor.metadata.language.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <xed:repeat xpath="tei:language" min="1" max="5">
+                    <div class="row">
+                      <div class="col-9">
+                        <xed:bind xpath="@ident">
+                          <select id="languages-{xed:generate-id()}"
+                            class="form-control languages-select"
+                            onchange="this.nextElementSibling.value = this.options[this.selectedIndex].text">
+                            <option value="">
+                              <xed:output i18n="editor.label.choose" />
+                            </option>
+                            <xed:include
+                              uri="xslStyle:items2options:classification:editor:-1:children:rfc5646" />
+                          </select>
+                        </xed:bind>
+                        <xed:bind xpath=".">
+                          <input type="hidden" />
+                        </xed:bind>
+                      </div>
+                      <div class="col-3 text-right">
+                        <div class="btn-group">
+                          <xed:controls>append remove up down</xed:controls>
+                        </div>
+                      </div>
+                    </div>
+                  </xed:repeat>
                 </div>
               </div>
+            </xed:bind>
+
+            <!-- translation -->
+            <xed:bind xpath="tei:fileDesc/tei:notesStmt">
+              <div class="form-group row {$xed-validation-marker}">
+                <label for="translation-yes-{xed:generate-id()}"
+                  class="col-md-3 col-12 col-form-label translation-label">
+                  <xed:output i18n="lod.editor.metadata.translation.label" />
+                </label>
+                <div class="col-md-9 col-12">
+                  <input id="translation-yes-{xed:generate-id()}" type="radio"
+                    name="translation-language"
+                    value="Translation into"
+                    class="translation-input ml-2 mr-1 mt-2"
+                    onclick="document.getElementById('translation-languages').style.display='block'">
+                    Yes</input>
+                  <input id="translation-no-{xed:generate-id()}" type="radio"
+                    name="translation-language"
+                    class="translation-input ml-2 mr-1 mt-2"
+                    onclick="document.getElementById('translation-languages').style.display='block'"
+                    checked="True">No</input>
+
+                  <!-- translators -->
+                  <div id="translation-languages" style="display:block">
+                    <xed:repeat xpath="tei:note[@n='translation']" min="1" max="5">
+                      <div class="row">
+                        <div class="col-md-2 col-12">
+                          <xed:bind xpath="@key">
+                            <input id="geo-data-{xed:generate-id()}" type="text"
+                              class="form-control geo-data-input" placeholder="ID" />
+                          </xed:bind>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <xed:bind xpath=".">
+                            <input id="geo-data-{xed:generate-id()}" type="text"
+                              class="form-control geo-data-input" placeholder="Translator" />
+                          </xed:bind>
+                        </div>
+                        <div class="col-3 text-right">
+                          <div class="btn-group">
+                            <xed:controls>append remove up down</xed:controls>
+                          </div>
+                        </div>
+                      </div>
+                    </xed:repeat>
+                  </div>
+
+                </div>
+              </div>
+            </xed:bind>
+          </fieldset>
+
+          <!-- 
+          - original/copy
+          - translation
+          - translator
+          - translation source reference
+          - use of languages comment
+          X cited person id
+          X cited organisation
+          - transcription available
+          - scan available
+          -->
+
+
+          <!-- document classification section -->
+          <fieldset class="mt-4 p-3 border">
+            <legend>
+              <xed:output i18n="lod.editor.metadata.document_class.label" />
+            </legend>
+
+            <!-- textclass -->
+            <div class="form-group row">
+              <label class="col-md-3 col-12 col-form-label text-class-label">
+                <xed:output i18n="lod.editor.metadata.text_class.label" />
+              </label>
+              <div class="col-md-9 col-12">
+                <xed:repeat xpath="tei:profileDesc/tei:textClass/tei:classCode" min="1">
+                  <xed:bind xpath="@scheme"
+                    default="http://localhost:8291/dea/api/v2/classifications/lod_document_types" />
+                  <div class="row">
+                    <div class="col-9">
+                      <input id="text-class-{xed:generate-id()}"
+                        class="form-control mb-2 text-class-select {$xed-validation-marker}"></input>
+                    </div>
+                    <div class="col-3 text-right">
+                      <div class="btn-group">
+                        <xed:controls>append remove up down</xed:controls>
+                      </div>
+                    </div>
+                  </div>
+                </xed:repeat>
+              </div>
             </div>
-          </div>
+          </fieldset>
+
         </xed:bind>
       </xed:bind>
+
+      <xed:cleanup-rule xpath="//tei:*[not(node())]" relevant-if="false()" />
+
+      <!-- Button group -->
+      <div class="form-group row mt-4">
+        <label class="col-md-4 control-label" for="save"></label>
+        <div class="col-md-8">
+          <xed:choose>
+            <xed:when test="contains(/mycoreobject/@ID, '_00000000')">
+              <button id="save" class="btn btn-success createobject" type="submit"
+                xed:target="servlet"
+                xed:href="CreateObjectServlet">
+                <xed:output i18n="common.button.save" />
+              </button>
+            </xed:when>
+            <xed:otherwise>
+              <button id="save" class="btn btn-success updateobject" type="submit"
+                xed:target="servlet"
+                xed:href="UpdateObjectServlet">
+                <xed:output i18n="common.button.save" />
+              </button>
+            </xed:otherwise>
+          </xed:choose>
+          <xed:output value="'&#160;'" />
+          <button id="cancel" class="btn btn-danger" type="submit" xed:target="cancel">
+            <xed:output i18n="common.button.cancel" />
+          </button>
+          <xed:output value="'&#160;'" />
+          <button id="debug" class="btn btn-info" type="submit" xed:target="debug">
+            <xed:output i18n="common.button.debug" />
+          </button>
+        </div>
+      </div>
+
     </xed:form>
 
   </section>
