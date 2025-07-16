@@ -16,12 +16,10 @@
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.source>21</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>11.0.15
-        </jetty.version>        <!-- specifiy the MyCoRe version here (release nr or *-SNAPSHOT): -->
-        <mycore.version>2024.06.1-SNAPSHOT</mycore.version>
-
-    </properties>    <!-- put your Git or SVN URLs here -->
-    <scm>
+        <jetty.version>11.0.15</jetty.version>
+        <mycore.version>2024.06.2-SNAPSHOT</mycore.version>
+    </properties>
+    <scm>    <!-- put your Git or SVN URLs here -->
         <connection>scm:git:http://***</connection>
         <developerConnection>scm:git:https://***</developerConnection>
         <url>http://***</url>
