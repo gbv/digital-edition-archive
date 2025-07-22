@@ -80,7 +80,7 @@ public class DEATEISplitter {
                     }
                     final var n = contentElement.getAttributeValue("n");
 
-                    Stub newStub = copyAncestors(element, facs, n);
+                    Stub newStub = copyAncestors(contentElement, facs, n);
                     copyTarget = newStub.newEl;
                     continue;
                 }
